@@ -3,6 +3,10 @@ This project aims to provide a way for the user to visualize what is
 happening when sorting algorithms are in execution. The program runs
 on a browser window and allows the user to interact with it.
 
+Current stage: Quick Sort and Merge Sort implemented, other sorting
+algorithms have yet to be implemented. Visualization functionality is 
+not complete.
+
 Acknowledgement: This project was inspired by Clement Mihailescu's 
 project with the same purpose. Some parts of the code have been reused 
 from his project.
