@@ -1,5 +1,5 @@
 # Sorting Algorithm Visualizer
-This project aims to provide a way for the user to visualize what is
+This project aims to provide a way for users to visualize what is
 happening when sorting algorithms are in execution. The program runs
 on a browser window and allows the user to interact with it.
 
