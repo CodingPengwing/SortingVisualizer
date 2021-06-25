@@ -15,19 +15,19 @@ function partition(array, start, end, updateState) {
         while (array[i] <= pivot && i < j) {
             // setTimeout(() => {updateState(array, [pivot, i])}, 1000);
             // TODO: Check animation logic
-            updateState(array, [pivot, i])
+            // updateState(array, [pivot, i])
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
             // setTimeout(() => {updateState(array, [pivot, j])}, 1000);
             // TODO: Check animation logic
-            updateState(array, [pivot, j])
+            // updateState(array, [pivot, j])
             j -= 1;
         }
         if (i < j) {
             // setTimeout(() => {updateState(array, [i, j])}, 1000);
             // TODO: Check animation logic
-            updateState(array, [i, j])
+            // updateState(array, [i, j])
             const tmp = array[i];
             array[i] = array[j];
             array[j] = tmp;

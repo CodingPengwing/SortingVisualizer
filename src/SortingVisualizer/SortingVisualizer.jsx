@@ -38,10 +38,10 @@ export default class SortingVisualizer extends React.Component {
             array: this.state.array.slice(), 
             updateState: this.updateState
         }
-        const array = mergeSort.sort(props);
+        const sortedArray = mergeSort.sort(props);
         // TODO: Comment this out when implementing animation logic
-        this.setState({array: array, highlights: []});
-        return array;
+        this.setState({array: sortedArray, highlights: []});
+        return sortedArray;
     }
 
     quickSort() {
@@ -80,7 +80,7 @@ export default class SortingVisualizer extends React.Component {
             <div>
                 {array.map((value, idx) => {
                     let color = '#00a1c9';
-                    if (this.state.highlights.includes(idx)) color = 'green';
+                    if (this.state.highlights.includes(idx)) color = 'red';
                     return (
                         <div 
                             className="array-bar" 
@@ -97,7 +97,7 @@ export default class SortingVisualizer extends React.Component {
     render() {
         return (
             <div className="array-container">
-                {this.renderArray([])}
+                {this.renderArray()}
                 <div>
                     <button onClick={() => this.resetArray()}>Generate New Array</button>
                     <button onClick={() => this.mergeSort()}>Merge Sort</button>
