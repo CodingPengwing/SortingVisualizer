@@ -104,6 +104,3 @@ export function sort(props) {
 //       mainArray[k++] = auxiliaryArray[j++];
 //     }
 //   }
-
-
-
