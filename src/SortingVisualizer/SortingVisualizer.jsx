@@ -118,7 +118,7 @@ export default class SortingVisualizer extends React.Component {
         wait(100);
         this.test2();
         this.forceUpdate()
-        wait(1000);
+        wait(100);
         this.test3();
         this.forceUpdate()
         wait(100);
