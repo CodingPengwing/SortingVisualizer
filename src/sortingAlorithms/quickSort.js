@@ -86,6 +86,7 @@ export function sort(props) {
     let p = partition(props);
     sort({state: props.state, range: [start, p-1], updateState: props.updateState});
     sort({state: props.state, range: [p+1, end], updateState: props.updateState});
+    
     return array;
 }
 
