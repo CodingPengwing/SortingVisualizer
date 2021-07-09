@@ -121,14 +121,6 @@ export default class SortingVisualizer extends React.Component {
 
 
 
-
-
-//     <button onClick={() => this.mergeSort()}>Merge Sort</button>
-//     <button onClick={() => this.heapSort()}>Heap Sort</button>
-//     <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-//     <button onClick={() => this.testSorts()}>Test Sorts</button>
-
-
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max-min+1) + min);
 }
