@@ -45,6 +45,43 @@ class Array extends React.Component {
     }
 }
 
+
+class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+  
+    componentDidMount() {
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
+    }
+  
+    // componentWillUnmount() {
+    //   clearInterval(this.timerID);
+    // }
+  
+    tick() {
+      this.setState({
+        date: new Date()
+      });
+      console.log("ticking");
+    }
+  
+    render() {
+      return (
+        <div>
+          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        </div>
+      );
+    }
+}
+
+
+
+
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -61,6 +98,14 @@ export default class SortingVisualizer extends React.Component {
     componentDidMount() {
         this.updateState(this.state.array, this.state.highlights);
         // this.resetArray();
+        // this.timerID = setInterval(
+        //     () => this.tick(),
+        //     100
+        // );
+    }
+
+    tick() {
+        this.updateState(this.state.array, this.state.highlights);
     }
 
     // resetArray() {
@@ -112,31 +157,12 @@ export default class SortingVisualizer extends React.Component {
     }
 
     testAll() {
-        wait(100);
-        this.test1();
-        this.forceUpdate()
-        wait(100);
-        this.test2();
-        this.forceUpdate()
-        wait(100);
-        this.test3();
-        this.forceUpdate()
-        wait(100);
-        this.test4();
-        this.forceUpdate()
-        wait(100);
-        this.test5();
-        this.forceUpdate()
-        wait(100);
-        this.test6();
-        this.forceUpdate()
-
-        // setTimeout(this.test1(), 1000);
-        // setTimeout(this.test2(), 1000);
-        // setTimeout(this.test3(), 1000);
-        // setTimeout(this.test4(), 1000);
-        // setTimeout(this.test5(), 1000);
-        // setTimeout(this.test6(), 1000);
+        setTimeout(() => this.test1(), 1000);
+        setTimeout(() => this.test2(), 2000);
+        setTimeout(() => this.test3(), 3000);
+        setTimeout(() => this.test4(), 4000);
+        setTimeout(() => this.test5(), 5000);
+        setTimeout(() => this.test6(), 6000);
     }
 
     render() {
@@ -146,6 +172,7 @@ export default class SortingVisualizer extends React.Component {
                     array={this.state.array}
                     highlights={this.state.highlights}
                 />
+                <Clock/>
                 <div className="buttons">
                     <button onClick={() => this.test1()}>Test</button>
                     <button onClick={() => this.test2()}>Test</button>
