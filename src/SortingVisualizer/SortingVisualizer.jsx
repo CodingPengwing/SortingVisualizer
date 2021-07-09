@@ -5,7 +5,7 @@ import * as quickSort from '../sortingAlorithms/quickSort';
 import './SortingVisualizer.css';
 
 function Bar(props) {
-    let color = '#00a1c9';
+    var color = '#00a1c9';
     if (props.highlighted === true) {
         color = '#930390';
     }
@@ -32,7 +32,7 @@ class Array extends React.Component {
     }
 
     render() {
-        const bars = [];
+        var bars = [];
         for (let i=0; i < this.props.array.length; i++) {
             bars.push(this.renderBar(i));
         }
@@ -49,7 +49,7 @@ export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            array: [500, 400, 300, 200, 100],
+            array: [],
             highlights: [],
         };
 
@@ -59,31 +59,28 @@ export default class SortingVisualizer extends React.Component {
     }
 
     componentDidMount() {
-        this.updateState(this.state.array, this.state.highlights);
-        // this.resetArray();
-        // this.timerID = setInterval(
-        //     () => this.tick(),
-        //     100
-        // );
+        // this.updateState(this.state.array, this.state.highlights);
+        this.resetArray();
     }
 
-    tick() {
-        this.updateState(this.state.array, this.state.highlights);
+    resetArray() {
+        const array = [];
+        for (let i=0; i<100; i++) {
+            array.push(randomIntFromInterval(5, 500));
+        }
+        this.setState({array: array, highlights: []});
     }
-
-    // resetArray() {
-    //     const array = [];
-    //     for (let i=0; i<200; i++) {
-    //         array.push(randomIntFromInterval(5, 500));
-    //     }
-    //     // console.log(array);
-    //     this.setState({array: array, highlights: []});
-    // }
 
     quickSort() {
-        const sortedArray = quickSort.sort(this.state.array, 0, this.state.array.length-1, this.updateState);
+        const sortedArray = quickSort.sort({
+            state: this.state, 
+            start: 0, 
+            end: this.state.array.length-1, 
+            updateState: this.updateState,
+            step: 0
+        });
         // Comment this out when implementing animation logic
-        this.setState({array: sortedArray, highlights: []});
+        // this.setState({array: sortedArray, highlights: []});
         return sortedArray;
     }
 
@@ -95,37 +92,13 @@ export default class SortingVisualizer extends React.Component {
     //     console.log(arraysAreEqual(trueSortedArray, quickSortedArray));
     // }
 
-    test1() {
-        this.updateState([500, 400, 300, 200, 100], [0, 4]);
-    }
-
-    test2() {
-        this.updateState([100, 400, 300, 200, 500], [0, 4]);
-    }
-
-    test3() {
-        this.updateState([100, 400, 300, 200, 500], []);
-    }
-
-    test4() {
-        this.updateState([100, 400, 300, 200, 500], [1, 3]);
-    }
-
-    test5() {
-        this.updateState([100, 200, 300, 400, 500], [1, 3]);
-    }
-
-    test6() {
-        this.updateState([100, 200, 300, 400, 500], []);
-    }
-
     testAll() {
-        setTimeout(() => this.test1(), 1000);
-        setTimeout(() => this.test2(), 2000);
-        setTimeout(() => this.test3(), 3000);
-        setTimeout(() => this.test4(), 4000);
-        setTimeout(() => this.test5(), 5000);
-        setTimeout(() => this.test6(), 6000);
+        setTimeout(() => this.updateState([500, 400, 300, 200, 100], [0, 4]), 1000);
+        setTimeout(() => this.updateState([100, 400, 300, 200, 500], [0, 4]), 2000);
+        setTimeout(() => this.updateState([100, 400, 300, 200, 500], []), 3000);
+        setTimeout(() => this.updateState([100, 400, 300, 200, 500], [1, 3]), 4000);
+        setTimeout(() => this.updateState([100, 200, 300, 400, 500], [1, 3]), 5000);
+        setTimeout(() => this.updateState([100, 200, 300, 400, 500], []), 6000);
     }
 
     render() {
@@ -136,13 +109,9 @@ export default class SortingVisualizer extends React.Component {
                     highlights={this.state.highlights}
                 />
                 <div className="buttons">
-                    <button onClick={() => this.test1()}>Test</button>
-                    <button onClick={() => this.test2()}>Test</button>
-                    <button onClick={() => this.test3()}>Test</button>
-                    <button onClick={() => this.test4()}>Test</button>
-                    <button onClick={() => this.test5()}>Test</button>
-                    <button onClick={() => this.test6()}>Test</button>
-                    <button onClick={() => this.testAll()}>Test All</button>
+                    <button onClick={() => this.testAll()}>Test Animations</button>
+                    <button onClick={() => this.resetArray()}>Generate New Array</button>
+                    <button onClick={() => this.quickSort()}>Quick Sort</button>
                 </div>
             </div>
         );
@@ -154,19 +123,10 @@ export default class SortingVisualizer extends React.Component {
 
 
 
-
-
-
-
-
-
-// {
-//     /* <button onClick={() => this.resetArray()}>Generate New Array</button>
 //     <button onClick={() => this.mergeSort()}>Merge Sort</button>
-//     <button onClick={() => this.quickSort()}>Quick Sort</button>
 //     <button onClick={() => this.heapSort()}>Heap Sort</button>
 //     <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-//     <button onClick={() => this.testSorts()}>Test Sorts</button> */}
+//     <button onClick={() => this.testSorts()}>Test Sorts</button>
 
 
 function randomIntFromInterval(min, max) {
