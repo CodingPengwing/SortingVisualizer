@@ -135,7 +135,6 @@ export default class SortingVisualizer extends React.Component {
                     array={this.state.array}
                     highlights={this.state.highlights}
                 />
-                <Clock/>
                 <div className="buttons">
                     <button onClick={() => this.test1()}>Test</button>
                     <button onClick={() => this.test2()}>Test</button>
