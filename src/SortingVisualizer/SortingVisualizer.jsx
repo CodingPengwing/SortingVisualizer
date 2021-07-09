@@ -74,8 +74,7 @@ export default class SortingVisualizer extends React.Component {
     quickSort() {
         const sortedArray = quickSort.sort({
             state: this.state, 
-            start: 0, 
-            end: this.state.array.length-1, 
+            range: [0, this.state.array.length-1], 
             updateState: this.updateState,
             step: 0
         });
@@ -119,14 +118,6 @@ export default class SortingVisualizer extends React.Component {
 }
 
 
-
-
-
-
-//     <button onClick={() => this.mergeSort()}>Merge Sort</button>
-//     <button onClick={() => this.heapSort()}>Heap Sort</button>
-//     <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-//     <button onClick={() => this.testSorts()}>Test Sorts</button>
 
 
 function randomIntFromInterval(min, max) {
