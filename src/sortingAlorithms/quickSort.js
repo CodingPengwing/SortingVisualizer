@@ -23,7 +23,6 @@ function partition(props) {
     let updateState = props.updateState;
     let step = props.step;
 
-
     if (end <= start) return start;
     const pivot = array[start];
     let i = start + 1;
