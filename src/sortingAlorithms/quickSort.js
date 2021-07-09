@@ -1,3 +1,5 @@
+import React from 'react';
+
 // export function sort(props) {
 //     let array = props.state.array;
 //     let start = props.start;
@@ -64,6 +66,16 @@
 // }
 
 
+// export class StepCounter extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.step = 0;
+
+//         this.incrementStep = () => { this.step += 1; }
+//     };
+// }
+
+let step = 0;
 
 export function sort(props) {
     let array = props.state.array;
@@ -89,18 +101,24 @@ function partition(props) {
     let j = end;
     while (true) {
         while (array[i] <= pivot && i < j) {
+            let arraycopy = array.slice();
             console.log([start, i]);
-            setTimeout(() => {updateState(array, [start, i])}, 500);
+            step += 1;
+            setTimeout(() => {updateState(arraycopy, [start, i])}, 50*step);
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
+            let arraycopy = array.slice();
             console.log([start, j]);
-            setTimeout(() => {updateState(array, [start, j])}, 500);
+            step += 1;
+            setTimeout(() => {updateState(arraycopy, [start, j])}, 50*step);
             j -= 1;
         }
         if (i < j) {
+            let arraycopy = array.slice();
             console.log([i, j]);
-            setTimeout(() => {updateState(array, [i, j])}, 500);
+            step += 1;
+            setTimeout(() => {updateState(arraycopy, [i, j])}, 50*step);
             const tmp = array[i];
             array[i] = array[j];
             array[j] = tmp;
@@ -109,13 +127,19 @@ function partition(props) {
         }
     }
     
+
     // Swap pivot into position
     const tmp = array[start];
     array[start] = array[j];
     array[j] = tmp;
 
+
+    let arraycopy = array.slice();
     console.log([start, j]);
-    setTimeout(() => updateState(array, [start, j]), 500);
+    step += 1;
+    setTimeout(() => updateState(arraycopy, [start, j]), 50*step);
+    step += 1;
+    setTimeout(() => updateState(arraycopy, []), 50*step);
 
     return j;
 }
