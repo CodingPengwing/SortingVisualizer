@@ -45,43 +45,6 @@ class Array extends React.Component {
     }
 }
 
-
-class Clock extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {date: new Date()};
-    }
-  
-    componentDidMount() {
-      this.timerID = setInterval(
-        () => this.tick(),
-        1000
-      );
-    }
-  
-    // componentWillUnmount() {
-    //   clearInterval(this.timerID);
-    // }
-  
-    tick() {
-      this.setState({
-        date: new Date()
-      });
-      console.log("ticking");
-    }
-  
-    render() {
-      return (
-        <div>
-          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-        </div>
-      );
-    }
-}
-
-
-
-
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
