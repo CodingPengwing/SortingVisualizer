@@ -74,8 +74,7 @@ export default class SortingVisualizer extends React.Component {
     quickSort() {
         const sortedArray = quickSort.sort({
             state: this.state, 
-            start: 0, 
-            end: this.state.array.length-1, 
+            range: [0, this.state.array.length-1], 
             updateState: this.updateState,
             step: 0
         });

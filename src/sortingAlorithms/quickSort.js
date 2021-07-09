@@ -67,21 +67,20 @@
 
 export function sort(props) {
     let array = props.state.array;
-    let start = props.start;
-    let end = props.end;
-    let updateState = props.updateState;
+    let start = props.range[0];
+    let end = props.range[1];
 
     if (end <= start) return array;
     let p = partition(props);
-    sort({state: props.state, start: start, end: p-1, updateState: updateState});
-    sort({state: props.state, start: p+1, end: end, updateState: updateState});
+    sort({state: props.state, range: [start, p-1], updateState: props.updateState});
+    sort({state: props.state, range: [p+1, end], updateState: props.updateState});
     return array;
 }
 
 function partition(props) {
     let array = props.state.array;
-    let start = props.start;
-    let end = props.end;
+    let start = props.range[0];
+    let end = props.range[1];
     let updateState = props.updateState;
 
     if (end <= start) return start;
