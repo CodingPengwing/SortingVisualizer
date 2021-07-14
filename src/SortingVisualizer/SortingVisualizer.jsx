@@ -72,34 +72,8 @@ export default class SortingVisualizer extends React.Component {
     }
 
     animateHistory() {
-        // // for testing
-        // let history = [{
-        //     array: [500, 400, 300, 200, 100],
-        //     highlights: [0, 4]
-        // }, {
-        //     array: [100, 400, 300, 200, 500],
-        //     highlights: [0, 4]
-        // }, {
-        //     array: [100, 400, 300, 200, 500],
-        //     highlights: []
-        // }, {
-        //     array: [100, 400, 300, 200, 500],
-        //     highlights: [1, 3]
-        // }, {
-        //     array: [100, 200, 300, 400, 500],
-        //     highlights: [1, 3]
-        // }, {
-        //     array: [100, 200, 300, 400, 500],
-        //     highlights: []
-        // }
-        // ];
-
-        // for (let i=0; i<history.length; i++) {
-        //     this.addToHistory(history[i]);
-        // }
-
         for (let i=0; i<this.history.length; i++) {
-            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, 500*i);
+            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, 100*i);
         }
     }
 
@@ -120,9 +94,12 @@ export default class SortingVisualizer extends React.Component {
         const sortedArray = quickSort.sort({
             state: this.state, 
             range: [0, this.state.array.length-1], 
+            addToHistory: this.addToHistory,
             updateState: this.updateState,
             step: 0
         });
+
+        this.animateHistory();
         // Comment this out when implementing animation logic
         // this.setState({array: sortedArray, highlights: []});
         return sortedArray;
