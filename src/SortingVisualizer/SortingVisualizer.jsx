@@ -4,10 +4,14 @@ import * as mergeSort from '../sortingAlorithms/mergeSort';
 import * as quickSort from '../sortingAlorithms/quickSort';
 import './SortingVisualizer.css';
 
+const ANIMATION_SPEED = 50;
+const PRIMARY_COLOR = '#00a1c9';
+const HIGHLIGHT_COLOR = '#930390';
+
 function Bar(props) {
-    var color = '#00a1c9';
+    var color = PRIMARY_COLOR;
     if (props.highlighted === true) {
-        color = '#930390';
+        color = HIGHLIGHT_COLOR;
     }
     return (
         <div 
@@ -73,12 +77,11 @@ export default class SortingVisualizer extends React.Component {
 
     animateHistory() {
         for (let i=0; i<this.history.length; i++) {
-            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, 100*i);
+            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, ANIMATION_SPEED*i);
         }
     }
 
     componentDidMount() {
-        // this.updateState(this.state.array, this.state.highlights);
         this.resetArray();
     }
 
@@ -91,17 +94,15 @@ export default class SortingVisualizer extends React.Component {
     }
 
     quickSort() {
+        this.clearHistory();
         const sortedArray = quickSort.sort({
             state: this.state, 
             range: [0, this.state.array.length-1], 
             addToHistory: this.addToHistory,
-            updateState: this.updateState,
             step: 0
         });
 
         this.animateHistory();
-        // Comment this out when implementing animation logic
-        // this.setState({array: sortedArray, highlights: []});
         return sortedArray;
     }
 
@@ -113,15 +114,6 @@ export default class SortingVisualizer extends React.Component {
     //     console.log(arraysAreEqual(trueSortedArray, quickSortedArray));
     // }
 
-    testAll() {
-        setTimeout(() => this.updateState([500, 400, 300, 200, 100], [0, 4]), 1000);
-        setTimeout(() => this.updateState([100, 400, 300, 200, 500], [0, 4]), 2000);
-        setTimeout(() => this.updateState([100, 400, 300, 200, 500], []), 3000);
-        setTimeout(() => this.updateState([100, 400, 300, 200, 500], [1, 3]), 4000);
-        setTimeout(() => this.updateState([100, 200, 300, 400, 500], [1, 3]), 5000);
-        setTimeout(() => this.updateState([100, 200, 300, 400, 500], []), 6000);
-    }
-
     render() {
         return (
             <div className="array-container">
@@ -130,10 +122,9 @@ export default class SortingVisualizer extends React.Component {
                     highlights={this.state.highlights}
                 />
                 <div className="buttons">
-                    <button onClick={() => this.testAll()}>Test Animations</button>
                     <button onClick={() => this.resetArray()}>Generate New Array</button>
                     <button onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button onClick={() => this.animateHistory()}>Test history</button>
+                    <button onClick={() => this.mergeSort()}>Merge Sort</button>
                 </div>
             </div>
         );
@@ -156,12 +147,3 @@ function arraysAreEqual(array1, array2) {
     }
     return true;
 }
-
-function wait(ms)
-{
-    var d = new Date();
-    var d2 = null;
-    do { d2 = new Date(); }
-    while(d2-d < ms);
-}
-    
