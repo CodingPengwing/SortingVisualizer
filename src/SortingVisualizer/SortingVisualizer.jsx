@@ -53,9 +53,29 @@ export default class SortingVisualizer extends React.Component {
             highlights: [],
         };
 
+        this.history = [{
+            array: [],
+            highlights: []
+        }];
+
         this.updateState = (array, highlights) => {
             this.setState({array: array, highlights: highlights});
+        };
+
+        this.addToHistory = (props) => {
+            this.history.put({
+                array: props.array.slice(), 
+                highlights: props.highlights.slice()
+            })
+        };
+
+        this.clearHistory = () => {
+            this.history = [];
         }
+    }
+
+    animateHistory() {
+        // this.history.forEach()
     }
 
     componentDidMount() {
