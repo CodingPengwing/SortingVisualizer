@@ -55,8 +55,25 @@ export default class SortingVisualizer extends React.Component {
 
         this.history = [];
 
+        this.updateState = (array, highlights) => {
+            this.setState({array: array, highlights: highlights});
+        };
+
+        this.addToHistory = (props) => {
+            this.history.push({
+                array: props.array.slice(), 
+                highlights: props.highlights.slice()
+            })
+        };
+
+        this.clearHistory = () => {
+            this.history = [];
+        }
+    }
+
+    animateHistory() {
         // // for testing
-        // this.history = [{
+        // let history = [{
         //     array: [500, 400, 300, 200, 100],
         //     highlights: [0, 4]
         // }, {
@@ -77,24 +94,10 @@ export default class SortingVisualizer extends React.Component {
         // }
         // ];
 
-        this.updateState = (array, highlights) => {
-            this.setState({array: array, highlights: highlights});
-        };
+        // for (let i=0; i<history.length; i++) {
+        //     this.addToHistory(history[i]);
+        // }
 
-        this.addToHistory = (props) => {
-            this.history.put({
-                array: props.array.slice(), 
-                highlights: props.highlights.slice()
-            })
-        };
-
-        this.clearHistory = () => {
-            this.history = [];
-        }
-    }
-
-    animateHistory() {
-        // this.history.forEach();
         for (let i=0; i<this.history.length; i++) {
             setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, 500*i);
         }
