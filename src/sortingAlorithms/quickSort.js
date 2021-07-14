@@ -1,7 +1,5 @@
 import React from 'react';
 
-let step = 0;
-
 export function sort(props) {
     let array = props.state.array;
     let start = props.range[0];
@@ -9,8 +7,8 @@ export function sort(props) {
 
     if (end <= start) return array;
     let p = partition(props);
-    sort({state: props.state, range: [start, p-1], updateState: props.updateState});
-    sort({state: props.state, range: [p+1, end], updateState: props.updateState});
+    sort({state: props.state, range: [start, p-1], addToHistory: props.addToHistory});
+    sort({state: props.state, range: [p+1, end], addToHistory: props.addToHistory});
     return array;
 }
 
@@ -18,7 +16,7 @@ function partition(props) {
     let array = props.state.array;
     let start = props.range[0];
     let end = props.range[1];
-    let updateState = props.updateState;
+    let addToHistory = props.addToHistory;
 
     if (end <= start) return start;
     const pivot = array[start];
@@ -26,24 +24,27 @@ function partition(props) {
     let j = end;
     while (true) {
         while (array[i] <= pivot && i < j) {
-            let arraycopy = array.slice();
-            console.log([start, i]);
-            step += 1;
-            setTimeout(() => {updateState(arraycopy, [start, i])}, 50*step);
+            addToHistory({
+                array: array.slice(), 
+                highlights: [start, i]
+            });
+
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
-            let arraycopy = array.slice();
-            console.log([start, j]);
-            step += 1;
-            setTimeout(() => {updateState(arraycopy, [start, j])}, 50*step);
+            addToHistory({
+                array: array.slice(), 
+                highlights: [start, j]
+            });
+
             j -= 1;
         }
         if (i < j) {
-            let arraycopy = array.slice();
-            console.log([i, j]);
-            step += 1;
-            setTimeout(() => {updateState(arraycopy, [i, j])}, 50*step);
+            addToHistory({
+                array: array.slice(), 
+                highlights: [i, j]
+            });
+
             const tmp = array[i];
             array[i] = array[j];
             array[j] = tmp;
@@ -52,19 +53,19 @@ function partition(props) {
         }
     }
     
-
     // Swap pivot into position
     const tmp = array[start];
     array[start] = array[j];
     array[j] = tmp;
 
-
-    let arraycopy = array.slice();
-    console.log([start, j]);
-    step += 1;
-    setTimeout(() => updateState(arraycopy, [start, j]), 50*step);
-    step += 1;
-    setTimeout(() => updateState(arraycopy, []), 50*step);
+    addToHistory({
+        array: array.slice(), 
+        highlights: [start, j]
+    });
+    addToHistory({
+        array: array.slice(), 
+        highlights: []
+    });
 
     return j;
 }
