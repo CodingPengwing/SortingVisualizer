@@ -53,10 +53,29 @@ export default class SortingVisualizer extends React.Component {
             highlights: [],
         };
 
-        this.history = [{
-            array: [],
-            highlights: []
-        }];
+        this.history = [];
+
+        // // for testing
+        // this.history = [{
+        //     array: [500, 400, 300, 200, 100],
+        //     highlights: [0, 4]
+        // }, {
+        //     array: [100, 400, 300, 200, 500],
+        //     highlights: [0, 4]
+        // }, {
+        //     array: [100, 400, 300, 200, 500],
+        //     highlights: []
+        // }, {
+        //     array: [100, 400, 300, 200, 500],
+        //     highlights: [1, 3]
+        // }, {
+        //     array: [100, 200, 300, 400, 500],
+        //     highlights: [1, 3]
+        // }, {
+        //     array: [100, 200, 300, 400, 500],
+        //     highlights: []
+        // }
+        // ];
 
         this.updateState = (array, highlights) => {
             this.setState({array: array, highlights: highlights});
@@ -75,7 +94,10 @@ export default class SortingVisualizer extends React.Component {
     }
 
     animateHistory() {
-        // this.history.forEach()
+        // this.history.forEach();
+        for (let i=0; i<this.history.length; i++) {
+            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, 500*i);
+        }
     }
 
     componentDidMount() {
@@ -131,6 +153,7 @@ export default class SortingVisualizer extends React.Component {
                     <button onClick={() => this.testAll()}>Test Animations</button>
                     <button onClick={() => this.resetArray()}>Generate New Array</button>
                     <button onClick={() => this.quickSort()}>Quick Sort</button>
+                    <button onClick={() => this.animateHistory()}>Test history</button>
                 </div>
             </div>
         );
