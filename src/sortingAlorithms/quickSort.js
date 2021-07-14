@@ -7,14 +7,8 @@ export function sort(props) {
 
     if (end <= start) return array;
     let p = partition(props);
-<<<<<<< HEAD
-    sort({state: props.state, range: [start, p-1], updateState: props.updateState});
-    sort({state: props.state, range: [p+1, end], updateState: props.updateState});
-    
-=======
     sort({state: props.state, range: [start, p-1], addToHistory: props.addToHistory});
     sort({state: props.state, range: [p+1, end], addToHistory: props.addToHistory});
->>>>>>> 02c24fa59c7d1800178c8563c58e86fe8d92f191
     return array;
 }
 
