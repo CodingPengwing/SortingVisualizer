@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 // import ReactDOM from 'react-dom';
-import * as mergeSort from '../sortingAlorithms/mergeSort';
-import * as quickSort from '../sortingAlorithms/quickSort';
+import * as mergeSort from '../sortingAlgorithms/mergeSort';
+import * as insertionSort from '../sortingAlgorithms/insertionSort';
+import * as quickSort from '../sortingAlgorithms/quickSort';
 import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
-const ANIMATION_SPEED = 10;
+const ARRAY_SIZE = 100;
+const ANIMATION_SPEED = 100;
 const PRIMARY_COLOR = '#00a1c9';
-const HIGHLIGHT_COLOR = '#930390';
+const HIGHLIGHT_COLOR = '#832380';
 
 function Bar(props) {
     var color = PRIMARY_COLOR;
@@ -58,6 +60,8 @@ export default class SortingVisualizer extends React.Component {
             highlights: [],
         };
 
+        this.originalArray = [];
+
         this.history = [];
 
         this.updateState = (array, highlights) => {
@@ -76,28 +80,48 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.generateRandomArray();
+    }
+
+    generateRandomArray() {
+        const array = [];
+        for (let i=0; i<ARRAY_SIZE; i++) {
+            array.push(randomIntFromInterval(5, 500));
+        }
+        this.originalArray = array.slice();
+        this.setState({array: array, highlights: []});
+    }
+
+    generateSortedArray() {
+        this.generateRandomArray();
+        this.originalArray = this.originalArray.slice().sort((a, b) => a - b);
+        this.setState({array: this.originalArray, highlights: []});
+    }
+
     animateHistory() {
         for (let i=0; i<this.history.length; i++) {
             setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, ANIMATION_SPEED*i);
         }
     }
 
-    componentDidMount() {
-        this.resetArray();
-    }
-
-    resetArray() {
-        const array = [];
-        for (let i=0; i<100; i++) {
-            array.push(randomIntFromInterval(5, 500));
-        }
-        this.setState({array: array, highlights: []});
-    }
-
     quickSort() {
         this.clearHistory();
         const sortedArray = quickSort.sort({
-            state: this.state, 
+            array: this.state.array, 
+            range: [0, this.state.array.length-1], 
+            addToHistory: this.addToHistory,
+            step: 0
+        });
+
+        this.animateHistory();
+        return sortedArray;
+    }
+
+    insertionSort() {
+        this.clearHistory();
+        const sortedArray = insertionSort.sort({
+            array: this.state.array, 
             range: [0, this.state.array.length-1], 
             addToHistory: this.addToHistory,
             step: 0
@@ -115,9 +139,11 @@ export default class SortingVisualizer extends React.Component {
                     highlights={this.state.highlights}
                 />
                 <div className="buttons">
-                    <StyledButton onClick={() => this.resetArray()}>Generate New Array</StyledButton>
+                    <StyledButton onClick={() => this.generateRandomArray()}>Generate Random Array</StyledButton>
+                    <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
+                    <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
                 </div>
             </div>
         );
