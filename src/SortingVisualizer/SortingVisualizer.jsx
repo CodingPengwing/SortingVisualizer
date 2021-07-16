@@ -8,7 +8,7 @@ import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 100;
+const ANIMATION_SPEED = 10;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -94,9 +94,8 @@ export default class SortingVisualizer extends React.Component {
         for (let i=0; i<ARRAY_SIZE; i++) {
             array.push(randomIntFromInterval(5, 500));
         }
-        console.log(array.slice());
         this.updateOriginalArray(array.slice());
-        this.updateState(this.originalArray, []);
+        this.updateState(this.originalArray.slice(), []);
         console.log(this.originalArray);
         console.log(this.state.array);
     }
@@ -105,6 +104,11 @@ export default class SortingVisualizer extends React.Component {
         this.generateRandomArray();
         this.originalArray = this.originalArray.slice().sort((a, b) => a - b);
         this.setState({array: this.originalArray, highlights: []});
+    }
+
+    reset() {
+        this.updateState(this.history[0].array, []);
+        this.clearHistory();
     }
 
     animateHistory() {
@@ -144,12 +148,13 @@ export default class SortingVisualizer extends React.Component {
     }
 
     testSortingAlgorithms() {
-        // for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 50; i++) {
+            this.generateRandomArray();
             const array = this.originalArray;
             const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
             const sortedArray = this.insertionSort();
             console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
-        // }
+        }
     }
 
     render() {
@@ -162,6 +167,7 @@ export default class SortingVisualizer extends React.Component {
                 <div className="buttons">
                     <StyledButton onClick={() => this.generateRandomArray()}>Generate Random Array</StyledButton>
                     <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
+                    <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
