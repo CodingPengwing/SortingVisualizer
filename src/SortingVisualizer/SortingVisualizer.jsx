@@ -3,11 +3,12 @@ import React, { useEffect } from 'react';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
+import * as heapSort from '../sortingAlgorithms/heapSort';
 import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 100;
+const ANIMATION_SPEED = 1000;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -64,6 +65,10 @@ export default class SortingVisualizer extends React.Component {
 
         this.history = [];
 
+        this.updateOriginalArray = (array) => {
+            this.originalArray = array.slice();
+        };
+
         this.updateState = (array, highlights) => {
             this.setState({array: array, highlights: highlights});
         };
@@ -89,8 +94,12 @@ export default class SortingVisualizer extends React.Component {
         for (let i=0; i<ARRAY_SIZE; i++) {
             array.push(randomIntFromInterval(5, 500));
         }
-        this.originalArray = array.slice();
-        this.setState({array: array, highlights: []});
+        // console.log(array.slice());
+        // console.log(this.originalArray);
+        // console.log(this.state.array);
+        // this.updateState(array.slice(), []);
+        this.state.array = array.slice();
+        this.updateOriginalArray(this.state.array.slice());
     }
 
     generateSortedArray() {
@@ -115,7 +124,11 @@ export default class SortingVisualizer extends React.Component {
         });
 
         this.animateHistory();
-        return sortedArray;
+        return sortedArray.slice();
+    }
+
+    heapSort() {
+
     }
 
     insertionSort() {
@@ -131,6 +144,15 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray;
     }
 
+    testSortingAlgorithms() {
+        // for (let i = 0; i < 50; i++) {
+            const array = this.originalArray;
+            const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+            const sortedArray = this.insertionSort();
+            console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+        // }
+    }
+
     render() {
         return (
             <div className="array-container">
@@ -144,6 +166,7 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
+                    <StyledButton onClick={() => this.testSortingAlgorithms()}>Tests</StyledButton>
                 </div>
             </div>
         );
