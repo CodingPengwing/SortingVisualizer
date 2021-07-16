@@ -4,7 +4,7 @@ import * as mergeSort from '../sortingAlorithms/mergeSort';
 import * as quickSort from '../sortingAlorithms/quickSort';
 import './SortingVisualizer.css';
 
-const ANIMATION_SPEED = 50;
+const ANIMATION_SPEED = 10;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#930390';
 

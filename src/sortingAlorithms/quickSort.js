@@ -28,7 +28,6 @@ function partition(props) {
                 array: array.slice(), 
                 highlights: [start, i]
             });
-
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
@@ -36,7 +35,6 @@ function partition(props) {
                 array: array.slice(), 
                 highlights: [start, j]
             });
-
             j -= 1;
         }
         if (i < j) {
@@ -44,24 +42,27 @@ function partition(props) {
                 array: array.slice(), 
                 highlights: [i, j]
             });
-
-            const tmp = array[i];
-            array[i] = array[j];
-            array[j] = tmp;
+            [array[i], array[j]] = [array[j], array[i]];
+            addToHistory({
+                array: array.slice(), 
+                highlights: [i, j]
+            });
         } else {
             break;
         }
     }
     
-    // Swap pivot into position
-    const tmp = array[start];
-    array[start] = array[j];
-    array[j] = tmp;
-
     addToHistory({
         array: array.slice(), 
         highlights: [start, j]
     });
+    // Swap pivot into position
+    [array[start], array[j]] = [array[j], array[start]];
+    addToHistory({
+        array: array.slice(), 
+        highlights: [start, j]
+    });
+    
     addToHistory({
         array: array.slice(), 
         highlights: []
