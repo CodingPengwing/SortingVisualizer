@@ -8,7 +8,7 @@ import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 1000;
+const ANIMATION_SPEED = 100;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -94,12 +94,11 @@ export default class SortingVisualizer extends React.Component {
         for (let i=0; i<ARRAY_SIZE; i++) {
             array.push(randomIntFromInterval(5, 500));
         }
-        // console.log(array.slice());
-        // console.log(this.originalArray);
-        // console.log(this.state.array);
-        // this.updateState(array.slice(), []);
-        this.state.array = array.slice();
-        this.updateOriginalArray(this.state.array.slice());
+        console.log(array.slice());
+        this.updateOriginalArray(array.slice());
+        this.updateState(this.originalArray, []);
+        console.log(this.originalArray);
+        console.log(this.state.array);
     }
 
     generateSortedArray() {
