@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 // import ReactDOM from 'react-dom';
 import * as mergeSort from '../sortingAlorithms/mergeSort';
 import * as quickSort from '../sortingAlorithms/quickSort';
+import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ANIMATION_SPEED = 10;
@@ -106,14 +107,6 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray;
     }
 
-    // testSorts() {
-    //     const trueSortedArray = this.state.array
-    //         .slice()
-    //         .sort((a, b) => a - b);
-    //     const quickSortedArray = this.quickSort();
-    //     console.log(arraysAreEqual(trueSortedArray, quickSortedArray));
-    // }
-
     render() {
         return (
             <div className="array-container">
@@ -122,9 +115,9 @@ export default class SortingVisualizer extends React.Component {
                     highlights={this.state.highlights}
                 />
                 <div className="buttons">
-                    <button onClick={() => this.resetArray()}>Generate New Array</button>
-                    <button onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button onClick={() => this.mergeSort()}>Merge Sort</button>
+                    <StyledButton onClick={() => this.resetArray()}>Generate New Array</StyledButton>
+                    <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
+                    <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
                 </div>
             </div>
         );

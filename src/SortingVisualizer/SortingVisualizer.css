@@ -1,5 +1,5 @@
 .array-container {
-    margin: auto;
+    margin-bottom: 2.5%;
     /* border: 3px solid green; */
     /* position: absolute;
     left: 200px;
@@ -12,4 +12,9 @@
     /* background-color: rgb(0, 161, 201); */
     display: inline-block;
     margin: 0 1px;
+    transition: 0.20s;
+}
+
+.array-bar:hover{
+    transform: scale(1.15);
 }

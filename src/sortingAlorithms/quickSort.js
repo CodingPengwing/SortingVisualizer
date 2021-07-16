@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function sort(props) {
     let array = props.state.array;
     let start = props.range[0];
@@ -70,4 +68,3 @@ function partition(props) {
 
     return j;
 }
-

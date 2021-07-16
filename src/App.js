@@ -1,13 +1,15 @@
-import './App.css';
+import AppStyles from './styles/App.module.css';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
+import {Bar} from './components/NavBar';
+import { WelcomeHeader } from './components/WelcomeHeader';
 
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <SortingVisualizer></SortingVisualizer>
+    <div className={AppStyles.App}>
+      <Bar/>
+      <WelcomeHeader/>
+      <SortingVisualizer/>
+
     </div>
   );
 }
-
-export default App;
