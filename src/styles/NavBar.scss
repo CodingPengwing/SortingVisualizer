@@ -1,0 +1,31 @@
+@import "./variables.scss";
+
+.navbar{
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, black 70%);
+    display: flex;
+    justify-content: left;
+    padding: 0;
+    padding-left: 2%;
+    font-size: 80%;
+    font-family: 'Roboto Mono', monospace;
+    align-items: center;
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-gap: 2%;
+        justify-content: end;
+        width: 86vw;
+    }
+    a {
+        color: inherit;
+    }
+}
+
+.author{
+    color: white;
+    font-family: $cursiveFont;
+    letter-spacing: 0.23em;
+    font-size: 2em;
+}
