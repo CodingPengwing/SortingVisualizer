@@ -17,9 +17,9 @@ export const Bar = (props) => {
 export const StyledButton = styled(Button)({
     color: "white",
     backgroundColor: "black",
-    marginRight: "3%",
-    marginTop: "3%",
-    padding: "1% 2%",
+    marginRight: "2.5%",
+    marginTop: "2.5%",
+    padding: "0.5% 2%",
     transition: "ease-in 0.2s",
 
     '&:hover': {

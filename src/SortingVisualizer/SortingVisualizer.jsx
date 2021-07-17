@@ -4,6 +4,7 @@ import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
+import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
 import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
@@ -11,7 +12,8 @@ import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
 import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
-const ARRAY_SIZE = 50;
+
+const ARRAY_SIZE = 100;
 const ANIMATION_SPEED = 10;
 const MIN_VALUE = 5;
 const MAX_VALUE = 500;
@@ -140,6 +142,32 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray.slice();
     }
 
+    heapSort() {
+
+    }
+
+    insertionSort() {
+        this.clearHistory();
+        const sortedArray = insertionSort.sort({
+            array: this.state.array, 
+            addToHistory: this.addToHistory
+        });
+
+        this.animateHistory();
+        return sortedArray;
+    }
+
+    selectionSort(){
+        this.clearHistory();
+        const sortedArray = selectionSort.sort({
+            array: this.state.array,
+            addToHistory: this.addToHistory,
+        });
+
+        this.animateHistory();
+        return sortedArray;
+    }
+
     test() {
         tester.testSortingAlgorithms();
     }
@@ -156,6 +184,8 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
                     <StyledButton onClick={() => this.generateReverseSortedArray()}>Generate Reverse Sorted Array</StyledButton>
                     <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
+                    <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
+                    <StyledButton onClick={() => this.selectionSort()}>Selection Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(quickSort.sort)}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(mergeSort.sort)}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(heapSort.sort)}>Heap Sort</StyledButton>
