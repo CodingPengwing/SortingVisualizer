@@ -5,8 +5,8 @@ import * as heapSort from './heapSort';
 
 const ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
-const MIN_VALUE = 5;
-const MAX_VALUE = 500;
+const MIN_VALUE = -2000;
+const MAX_VALUE = 2000;
 
 export function testSortingAlgorithms() {
     console.log("Testing Quick Sort:");
