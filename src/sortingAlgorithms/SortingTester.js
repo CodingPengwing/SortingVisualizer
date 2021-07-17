@@ -1,7 +1,7 @@
-import * as mergeSort from '../sortingAlgorithms/mergeSort';
-import * as insertionSort from '../sortingAlgorithms/insertionSort';
-import * as quickSort from '../sortingAlgorithms/quickSort';
-import * as heapSort from '../sortingAlgorithms/heapSort';
+import * as mergeSort from './mergeSort';
+import * as insertionSort from './insertionSort';
+import * as quickSort from './quickSort';
+import * as heapSort from './heapSort';
 
 const ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
