@@ -6,8 +6,12 @@ import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
 import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
+import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
+import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
+
 import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
+
 
 const ARRAY_SIZE = 100;
 const ANIMATION_SPEED = 10;
@@ -18,7 +22,7 @@ const HIGHLIGHT_COLOR = '#832380';
 
 function Bar(props) {
     var color = PRIMARY_COLOR;
-    if (props.highlighted === true) {
+    if (props.highlighted) {
         color = HIGHLIGHT_COLOR;
     }
     return (
@@ -75,7 +79,7 @@ export default class SortingVisualizer extends React.Component {
             this.history.push({
                 array: props.array.slice(), 
                 highlights: props.highlights.slice()
-            })
+            });
         };
 
         this.clearHistory = () => {
@@ -107,6 +111,12 @@ export default class SortingVisualizer extends React.Component {
         this.updateState(sortedArray.slice(), []);
     }
 
+    generateReverseSortedArray() {
+        const array = this.randomArray();
+        const reverseSortedArray = array.sort((a, b) => b - a);
+        this.updateState(reverseSortedArray.slice(), []);
+    }
+
     reset() {
         if (this.history.length > 0) {
             const firstState = this.history[0];
@@ -121,20 +131,9 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
-    quickSort() {
+    doSort(sortingAlgorithm) {
         this.clearHistory();
-        const sortedArray = quickSort.sort({
-            array: this.state.array, 
-            addToHistory: this.addToHistory
-        });
-
-        this.animateHistory();
-        return sortedArray.slice();
-    }
-
-    mergeSort() {
-        this.clearHistory();
-        const sortedArray = mergeSort.sort({
+        const sortedArray = sortingAlgorithm({
             array: this.state.array, 
             addToHistory: this.addToHistory
         });
@@ -183,11 +182,16 @@ export default class SortingVisualizer extends React.Component {
                 <div className="buttons">
                     <StyledButton onClick={() => this.generateRandomArray()}>Generate Random Array</StyledButton>
                     <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
+                    <StyledButton onClick={() => this.generateReverseSortedArray()}>Generate Reverse Sorted Array</StyledButton>
                     <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
-                    <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
-                    <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
                     <StyledButton onClick={() => this.selectionSort()}>Selection Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(quickSort.sort)}>Quick Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(mergeSort.sort)}>Merge Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(heapSort.sort)}>Heap Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(insertionSort.sort)}>Insertion Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(bubbleSort.sort)}>Bubble Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(cocktailShakerSort.sort)}>Cocktail Shaker Sort</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
             </div>
