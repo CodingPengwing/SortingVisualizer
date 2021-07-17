@@ -22,49 +22,27 @@ function partition(array, start, end, addToHistory) {
     let j = end;
     while (true) {
         while (array[i] <= pivot && i < j) {
-            addToHistory({
-                array: array.slice(), 
-                highlights: [start, i]
-            });
+            addToHistory({array: array.slice(), highlights: [start, i]});
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
-            addToHistory({
-                array: array.slice(), 
-                highlights: [start, j]
-            });
+            addToHistory({array: array.slice(), highlights: [start, j]});
             j -= 1;
         }
         if (i < j) {
-            addToHistory({
-                array: array.slice(), 
-                highlights: [i, j]
-            });
+            addToHistory({array: array.slice(), highlights: [i, j]});
             [array[i], array[j]] = [array[j], array[i]];
-            addToHistory({
-                array: array.slice(), 
-                highlights: [i, j]
-            });
+            addToHistory({array: array.slice(), highlights: [i, j]});
         } else {
             break;
         }
     }
     
-    addToHistory({
-        array: array.slice(), 
-        highlights: [start, j]
-    });
+    addToHistory({array: array.slice(), highlights: [start, j]});
     // Swap pivot into position
     [array[start], array[j]] = [array[j], array[start]];
-    addToHistory({
-        array: array.slice(), 
-        highlights: [start, j]
-    });
+    addToHistory({array: array.slice(), highlights: [start, j]});
     
-    addToHistory({
-        array: array.slice(), 
-        highlights: []
-    });
-
+    addToHistory({array: array.slice(), highlights: []});
     return j;
 }

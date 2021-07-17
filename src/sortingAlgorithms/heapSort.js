@@ -7,7 +7,7 @@ export function sort(props) {
 
 function heapSort(array, addToHistory) {
     if (array.length <= 1) return array;
-    
+
     // Add sentinel to top of list
     array.unshift(null);
     bottomUpHeapify(array, addToHistory);
@@ -15,34 +15,28 @@ function heapSort(array, addToHistory) {
     let heapSize = array.length;
     let arrayCopy;
     for (let i=array.length-1; i>0; i--) {
+        
+        // We have to remove the sentinel every time we add to history
+        arrayCopy = array.slice();
+        arrayCopy.shift();
+        addToHistory({array: arrayCopy, highlights: [1-1, i-1]});
+
+        [array[1], array[i]] = [array[i], array[1]];
 
         arrayCopy = array.slice();
         arrayCopy.shift();
-        addToHistory({
-            array: arrayCopy, 
-            highlights: [1-1, i-1]
-        });
-        [array[1], array[i]] = [array[i], array[1]];
-        arrayCopy = array.slice();
-        arrayCopy.shift();
-        addToHistory({
-            array: arrayCopy, 
-            highlights: [1-1, i-1]
-        });
+        addToHistory({array: arrayCopy, highlights: [1-1, i-1]});
 
         heapSize -= 1;
         maxHeapify(array, 1, heapSize, addToHistory);
     }
 
-    array.shift();
-
     arrayCopy = array.slice();
     arrayCopy.shift();
-    addToHistory({
-        array: arrayCopy, 
-        highlights: []
-    });
+    addToHistory({array: arrayCopy, highlights: []});
 
+    // Remove the sentinel and return a copy
+    array.shift();
     return array.slice();
 }
 
@@ -64,12 +58,10 @@ function maxHeapify(array, i, heapSize, addToHistory) {
     // rightChild = leftChild if this element only has one child
     let rightChild = (2*i+1 < heapSize) ? 2*i+1 : leftChild;
 
+    // Remove the sentinel and add to history
     arrayCopy = array.slice();
     arrayCopy.shift();
-    addToHistory({
-        array: arrayCopy, 
-        highlights: [i-1, leftChild-1, rightChild-1]
-    });
+    addToHistory({array: arrayCopy, highlights: [i-1, leftChild-1, rightChild-1]});
 
     let largest = i;
     // Find the largest element between the parent, left and right children.
@@ -82,10 +74,7 @@ function maxHeapify(array, i, heapSize, addToHistory) {
 
     arrayCopy = array.slice();
     arrayCopy.shift();
-    addToHistory({
-        array: arrayCopy, 
-        highlights: [i-1, largest-1]
-    });
+    addToHistory({array: arrayCopy, highlights: [i-1, largest-1]});
 
     // Swap elements if a child is bigger than the parent
     if (largest !== i) {
@@ -93,11 +82,9 @@ function maxHeapify(array, i, heapSize, addToHistory) {
 
         arrayCopy = array.slice();
         arrayCopy.shift();
-        addToHistory({
-            array: arrayCopy, 
-            highlights: [i-1, largest-1]
-        });
-
+        addToHistory({array: arrayCopy, highlights: [i-1, largest-1]});
+        
+        // Heapify again for the child's children
         maxHeapify(array, largest, heapSize, addToHistory);
     }
 }

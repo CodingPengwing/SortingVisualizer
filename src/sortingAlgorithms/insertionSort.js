@@ -10,30 +10,14 @@ function insertionSort(array, addToHistory) {
     
     for (let i=0; i<array.length; i++) {
         let j = i - 1;
-        addToHistory({
-            array: array.slice(), 
-            highlights: [j, i]
-        });
+        addToHistory({array: array.slice(), highlights: [j, i]});
         while (j >= 0 && array[j+1] < array[j]) {
-            addToHistory({
-                array: array.slice(), 
-                highlights: [j+1, j]
-            });
+            addToHistory({array: array.slice(), highlights: [j+1, j]});
             [array[j+1], array[j]] = [array[j], array[j+1]];
-            addToHistory({
-                array: array.slice(), 
-                highlights: [j+1, j]
-            });
+            addToHistory({array: array.slice(), highlights: [j+1, j]});
             j -= 1;
-            addToHistory({
-                array: array.slice(), 
-                highlights: []
-            });
         }
-        addToHistory({
-            array: array.slice(), 
-            highlights: []
-        });
+        addToHistory({array: array.slice(), highlights: []});
     }
     return array;
 }

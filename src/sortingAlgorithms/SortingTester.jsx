@@ -2,6 +2,7 @@ import * as quickSort from './quickSort';
 import * as mergeSort from './mergeSort';
 import * as heapSort from './heapSort';
 import * as insertionSort from './insertionSort';
+import * as selectionSort from './selectionSort';
 import * as bubbleSort from './bubbleSort';
 import * as cocktailShakerSort from './cocktailShakerSort';
 
@@ -17,6 +18,8 @@ export function testSortingAlgorithms() {
     testSort(heapSort.sort);
     console.log("Testing Insertion Sort:");
     testSort(insertionSort.sort);
+    console.log("Testing Selection Sort:");
+    testSort(selectionSort.sort);
     console.log("Testing Bubble Sort:");
     testSort(bubbleSort.sort);
     console.log("Testing Cocktail Shaker Sort:");
