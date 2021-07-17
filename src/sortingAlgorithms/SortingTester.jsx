@@ -6,7 +6,7 @@ import * as selectionSort from './selectionSort';
 import * as bubbleSort from './bubbleSort';
 import * as cocktailShakerSort from './cocktailShakerSort';
 
-const ARRAY_SIZE = 100;
+const ARRAY_SIZE = 10;
 const TEST_RUNS = 100;
 const MIN_VALUE = -2000;
 const MAX_VALUE = 2000;
@@ -14,6 +14,8 @@ const MAX_VALUE = 2000;
 export function testSortingAlgorithms() {
     console.log("Testing Quick Sort:");
     testSort(quickSort.sort);
+    // console.log("Testing Merge Sort:");
+    // testMergeSort();
     console.log("Testing Heap Sort:");
     testSort(heapSort.sort);
     console.log("Testing Insertion Sort:");
@@ -24,12 +26,10 @@ export function testSortingAlgorithms() {
     testSort(bubbleSort.sort);
     console.log("Testing Cocktail Shaker Sort:");
     testSort(cocktailShakerSort.sort);
-    // console.log("Testing Merge Sort:");
-    // testMergeSort();
 }
     
 function testSort(sortingAlgorithm) {
-    for (let i = 0; i < TEST_RUNS; i++) {
+    // for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
         const sortedArray = sortingAlgorithm({
@@ -38,7 +38,7 @@ function testSort(sortingAlgorithm) {
             addToHistory: () => {},
         });
         console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
-    }
+    // }
 }
 
 

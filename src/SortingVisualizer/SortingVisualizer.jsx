@@ -7,6 +7,7 @@ import * as quickSort from '../sortingAlgorithms/quickSort';
 import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
+import * as bogoSort from '../sortingAlgorithms/bogoSort';
 import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
 
 import { StyledButton } from '../components/NavBar';
@@ -164,6 +165,7 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.doSort(heapSort.sort)}>Heap Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(insertionSort.sort)}>Insertion Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(bubbleSort.sort)}>Bubble Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(bogoSort.sort)}>Bogo Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(cocktailShakerSort.sort)}>Cocktail Shaker Sort</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
