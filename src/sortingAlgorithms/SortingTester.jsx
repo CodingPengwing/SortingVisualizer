@@ -3,6 +3,7 @@ import * as mergeSort from './mergeSort';
 import * as heapSort from './heapSort';
 import * as insertionSort from './insertionSort';
 import * as bubbleSort from './bubbleSort';
+import * as cocktailShakerSort from './cocktailShakerSort';
 
 const ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
@@ -18,6 +19,8 @@ export function testSortingAlgorithms() {
     testSort(insertionSort.sort);
     console.log("Testing Bubble Sort:");
     testSort(bubbleSort.sort);
+    console.log("Testing Cocktail Shaker Sort:");
+    testSort(cocktailShakerSort.sort);
     // console.log("Testing Merge Sort:");
     // testMergeSort();
 }
