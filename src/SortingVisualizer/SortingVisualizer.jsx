@@ -4,12 +4,13 @@ import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
+import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 50;
+const ANIMATION_SPEED = 10;
 const MIN_VALUE = 5;
 const MAX_VALUE = 500;
 const PRIMARY_COLOR = '#00a1c9';
@@ -157,6 +158,17 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray;
     }
 
+    selectionSort(){
+        this.clearHistory();
+        const sortedArray = selectionSort.sort({
+            array: this.state.array,
+            addToHistory: this.addToHistory,
+        });
+
+        this.animateHistory();
+        return sortedArray;
+    }
+
     test() {
         tester.testSortingAlgorithms();
     }
@@ -175,6 +187,7 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
+                    <StyledButton onClick={() => this.selectionSort()}>Selection Sort</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
             </div>
