@@ -1,4 +1,3 @@
-// TODO: Implement animation logic
 export function sort(props) {
     const array = props.array;
     

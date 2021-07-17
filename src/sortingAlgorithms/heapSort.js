@@ -6,6 +6,8 @@ export function sort(props) {
 }
 
 function heapSort(array, addToHistory) {
+    if (array.length <= 1) return array;
+    
     // Add sentinel to top of list
     array.unshift(null);
     bottomUpHeapify(array, addToHistory);

@@ -3,6 +3,8 @@ export function sort(props) {
 }
 
 function cocktailShakerSort(array, addToHistory) {
+    if (array.length <= 1) return array;
+    
     let sorted = false;
     let i = 1;
     let lowerLimit = 0;
@@ -50,7 +52,7 @@ function cocktailShakerSort(array, addToHistory) {
         }
         lowerLimit++;
         if (sorted) { break; }
-        
+
         i = lowerLimit+1;
     }
 

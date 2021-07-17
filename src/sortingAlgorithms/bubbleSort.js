@@ -3,6 +3,8 @@ export function sort(props) {
 }
 
 function bubbleSort(array, addToHistory) {
+    if (array.length <= 1) return array;
+    
     let sorted = false;
     while (!sorted) {
         sorted = true;
