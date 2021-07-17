@@ -33,6 +33,14 @@ function heapSort(array, addToHistory) {
     }
 
     array.shift();
+
+    arrayCopy = array.slice();
+    arrayCopy.shift();
+    addToHistory({
+        array: arrayCopy, 
+        highlights: []
+    });
+
     return array.slice();
 }
 
