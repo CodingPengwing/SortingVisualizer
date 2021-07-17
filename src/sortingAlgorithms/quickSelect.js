@@ -2,7 +2,7 @@ export function sort(props) {
     const array = props.array;
     const start = 0;
     const end = array.length-1;
-    const sortedArray = quickSort(array, start, end, props.addToHistory);
+    const sortedArray = quickSelect(array, start, end, props.addToHistory);
     return sortedArray.slice();
 }
 
@@ -11,8 +11,8 @@ function quickSelect(array, start, end, k, addToHistory) {
     if (end <= start) return array;
 
     const storeIndex = partition(array, start, end, pivotIndex, addToHistory);
-    quickSort(array, start, storeIndex,-1, addToHistory);
-    quickSort(array, storeIndex+1, end, addToHistory);
+    quickSelect(array, start, storeIndex,-1, addToHistory);
+    quickSelect(array, storeIndex+1, end, addToHistory);
     return array;
 }
 

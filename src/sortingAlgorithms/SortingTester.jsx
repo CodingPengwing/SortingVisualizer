@@ -29,7 +29,7 @@ export function testSortingAlgorithms() {
 }
     
 function testSort(sortingAlgorithm) {
-    // for (let i = 0; i < TEST_RUNS; i++) {
+    for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
         const sortedArray = sortingAlgorithm({
@@ -38,7 +38,7 @@ function testSort(sortingAlgorithm) {
             addToHistory: () => {},
         });
         console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
-    // }
+    }
 }
 
 
