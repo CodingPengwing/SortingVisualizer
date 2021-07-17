@@ -1,23 +1,25 @@
-// TODO: Implement Heap Sort
+export function sort(props) {
+    const array = props.array;
+    const addToHistory = props.addToHistory;
+    const sortedArray = heapSort(array, addToHistory);
+    return sortedArray.slice();
+}
 
-function heapSort(array) {
+function heapSort(array, addToHistory) {
     // Add sentinel to top of list
     array.unshift(null);
-    heapify(array);
-    for (let i=array.length-1; i>0; i++) {
+    bottomUpHeapify(array);
+    for (let i=array.length-1; i>0; i--) {
         eject(array, i);
     }
-    return array.shift();
-}
-
-function heapify(array) {
-    bottomUpHeapify(array);
+    array.shift();
+    return array.slice();
 }
     
-function bottomUpHeapify(array) {
+function bottomUpHeapify(array, addToHistory) {
     const n = array.length;
     for (let i=Math.floor(n/2); i>0; i--) {
-        const p = array[i];
+        const elem_i = array[i];
         let heap = false;
         while (heap === false && 2*i < n) {
             let j = 2*i;
@@ -26,14 +28,14 @@ function bottomUpHeapify(array) {
                     j += 1;
                 }
             }
-            if (p >= array[j]) {
+            if (elem_i >= array[j]) {
                 heap = true;
             } else {
                 array[i] = array[j];
                 i = j;
             }
         }
-        array[i] = p;
+        array[i] = elem_i;
     }
     return array;
 }

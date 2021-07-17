@@ -1,14 +1,14 @@
-
-// TODO: Implement Insertion Sort
 export function sort(props) {
     const array = props.array;
-    const [start, end] = props.range;
-    // const end = props.range[1];
     const addToHistory = props.addToHistory;
-    const arrayLength = end - start + 1;
-    if (arrayLength <= 1) return array;
+    const sortedArray = insertionSort(array, addToHistory);
+    return sortedArray.slice();
+}
+
+function insertionSort(array, addToHistory) {
+    if (array.length <= 1) return array;
     
-    for (let i=0; i<arrayLength; i++) {
+    for (let i=0; i<array.length; i++) {
         let j = i - 1;
         addToHistory({
             array: array.slice(), 

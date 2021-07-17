@@ -1,19 +1,21 @@
 export function sort(props) {
     const array = props.array;
-    const [start, end] = props.range;
+    const start = 0;
+    const end = array.length-1;
+    const sortedArray = quickSort(array, start, end, props.addToHistory);
+    return sortedArray.slice();
+}
 
+function quickSort(array, start, end, addToHistory) {
     if (end <= start) return array;
-    const p = partition(props);
-    sort({array: props.array, range: [start, p-1], addToHistory: props.addToHistory});
-    sort({array: props.array, range: [p+1, end], addToHistory: props.addToHistory});
+
+    const p = partition(array, start, end, addToHistory);
+    quickSort(array, start, p-1, addToHistory);
+    quickSort(array, p+1, end, addToHistory);
     return array;
 }
 
-function partition(props) {
-    const array = props.array;
-    const [start, end] = props.range;
-    const addToHistory = props.addToHistory;
-
+function partition(array, start, end, addToHistory) {
     if (end <= start) return start;
     const pivot = array[start];
     let i = start + 1;

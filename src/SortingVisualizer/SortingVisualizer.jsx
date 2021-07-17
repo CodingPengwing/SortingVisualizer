@@ -124,7 +124,17 @@ export default class SortingVisualizer extends React.Component {
         this.clearHistory();
         const sortedArray = quickSort.sort({
             array: this.state.array, 
-            range: [0, this.state.array.length-1], 
+            addToHistory: this.addToHistory
+        });
+
+        this.animateHistory();
+        return sortedArray.slice();
+    }
+
+    mergeSort() {
+        this.clearHistory();
+        const sortedArray = mergeSort.sort({
+            array: this.state.array, 
             addToHistory: this.addToHistory
         });
 
@@ -140,7 +150,6 @@ export default class SortingVisualizer extends React.Component {
         this.clearHistory();
         const sortedArray = insertionSort.sort({
             array: this.state.array, 
-            range: [0, this.state.array.length-1], 
             addToHistory: this.addToHistory
         });
 

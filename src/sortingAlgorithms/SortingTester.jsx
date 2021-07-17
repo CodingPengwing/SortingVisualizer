@@ -11,8 +11,12 @@ const MAX_VALUE = 2000;
 export function testSortingAlgorithms() {
     console.log("Testing Quick Sort:");
     testQuickSort();
+    console.log("Testing Heap Sort:");
+    testHeapSort();
     console.log("Testing Insertion Sort:");
     testInsertionSort();
+    // console.log("Testing Merge Sort:");
+    // testMergeSort();
 }
 
 function randomArray() {
@@ -23,11 +27,11 @@ function randomArray() {
     return array.slice();
 }
     
-function testInsertionSort() {
+function testQuickSort() {
     for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-        const sortedArray = insertionSort.sort({
+        const sortedArray = quickSort.sort({
             array: array.slice(), 
             range: [0, array.length-1], 
             addToHistory: () => {},
@@ -35,12 +39,38 @@ function testInsertionSort() {
         console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
     }
 }
-    
-function testQuickSort() {
+
+function testMergeSort() {
     for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-        const sortedArray = quickSort.sort({
+        const sortedArray = mergeSort.sort({
+            array: array.slice(), 
+            range: [0, array.length-1], 
+            addToHistory: () => {},
+        });
+        console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+    }
+}
+
+function testHeapSort() {
+    for (let i = 0; i < TEST_RUNS; i++) {
+        const array = randomArray();
+        const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+        const sortedArray = heapSort.sort({
+            array: array.slice(), 
+            range: [0, array.length-1], 
+            addToHistory: () => {},
+        });
+        console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+    }
+}
+  
+function testInsertionSort() {
+    for (let i = 0; i < TEST_RUNS; i++) {
+        const array = randomArray();
+        const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+        const sortedArray = insertionSort.sort({
             array: array.slice(), 
             range: [0, array.length-1], 
             addToHistory: () => {},
