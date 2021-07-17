@@ -17,6 +17,7 @@ function quickSort(array, start, end, addToHistory) {
 
 function partition(array, start, end, addToHistory) {
     if (end <= start) return start;
+
     const pivot = array[start];
     let i = start + 1;
     let j = end;
@@ -44,5 +45,10 @@ function partition(array, start, end, addToHistory) {
     addToHistory({array: array.slice(), highlights: [start, j]});
     
     addToHistory({array: array.slice(), highlights: []});
-    return j;
+    let pivotIndex = j;
+    return pivotIndex;
+}
+
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max-min+1) + min);
 }

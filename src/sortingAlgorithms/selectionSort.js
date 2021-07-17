@@ -6,7 +6,7 @@ export function sort(props){
 }
 
 function selectionSort(array, addToHistory){
-    if (array.length <=1 ) {return array};
+    if (array.length <= 1) {return array};
     let length = array.length;
 
     for (let startIndex = 0; startIndex < length; startIndex++){
