@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-// import ReactDOM from 'react-dom';
+import React from 'react';
+
+import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
@@ -8,7 +9,9 @@ import { StyledButton } from '../components/NavBar';
 import './SortingVisualizer.css';
 
 const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 10;
+const ANIMATION_SPEED = 50;
+const MIN_VALUE = 5;
+const MAX_VALUE = 500;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -61,13 +64,7 @@ export default class SortingVisualizer extends React.Component {
             highlights: [],
         };
 
-        this.originalArray = [];
-
         this.history = [];
-
-        this.updateOriginalArray = (array) => {
-            this.originalArray = array.slice();
-        };
 
         this.updateState = (array, highlights) => {
             this.setState({array: array, highlights: highlights});
@@ -89,25 +86,31 @@ export default class SortingVisualizer extends React.Component {
         this.generateRandomArray();
     }
 
-    generateRandomArray() {
+    randomArray() {
         const array = [];
         for (let i=0; i<ARRAY_SIZE; i++) {
-            array.push(randomIntFromInterval(5, 500));
+            array.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
         }
-        this.updateOriginalArray(array.slice());
-        this.updateState(this.originalArray.slice(), []);
-        console.log(this.originalArray);
+        return array.slice();
+    }
+
+    generateRandomArray() {
+        const array = this.randomArray();
+        this.updateState(array.slice(), []);
         console.log(this.state.array);
     }
 
     generateSortedArray() {
-        this.generateRandomArray();
-        this.originalArray = this.originalArray.slice().sort((a, b) => a - b);
-        this.setState({array: this.originalArray, highlights: []});
+        const array = this.randomArray();
+        const sortedArray = array.sort((a, b) => a - b);
+        this.updateState(sortedArray.slice(), []);
     }
 
     reset() {
-        this.updateState(this.history[0].array, []);
+        if (this.history.length > 0) {
+            const firstState = this.history[0];
+            this.updateState(firstState.array.slice(), []);
+        }
         this.clearHistory();
     }
 
@@ -122,8 +125,7 @@ export default class SortingVisualizer extends React.Component {
         const sortedArray = quickSort.sort({
             array: this.state.array, 
             range: [0, this.state.array.length-1], 
-            addToHistory: this.addToHistory,
-            step: 0
+            addToHistory: this.addToHistory
         });
 
         this.animateHistory();
@@ -139,22 +141,15 @@ export default class SortingVisualizer extends React.Component {
         const sortedArray = insertionSort.sort({
             array: this.state.array, 
             range: [0, this.state.array.length-1], 
-            addToHistory: this.addToHistory,
-            step: 0
+            addToHistory: this.addToHistory
         });
 
         this.animateHistory();
         return sortedArray;
     }
 
-    testSortingAlgorithms() {
-        for (let i = 0; i < 50; i++) {
-            this.generateRandomArray();
-            const array = this.originalArray;
-            const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-            const sortedArray = this.insertionSort();
-            console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
-        }
+    test() {
+        tester.testSortingAlgorithms();
     }
 
     render() {
@@ -171,26 +166,13 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.quickSort()}>Quick Sort</StyledButton>
                     <StyledButton onClick={() => this.mergeSort()}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.insertionSort()}>Insertion Sort</StyledButton>
-                    <StyledButton onClick={() => this.testSortingAlgorithms()}>Tests</StyledButton>
+                    <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
             </div>
         );
     }
 }
 
-
-
-
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max-min+1) + min);
-}
-
-function arraysAreEqual(array1, array2) {
-    if (array1.length !== array2.length) {
-        return false;
-    }
-    for (let i = 0; i < array1.length; i++) {
-        if (array1[i] !== array2[i]) return false;
-    }
-    return true;
 }
