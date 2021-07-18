@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAA;EACL,UAAU,EAAE,EAAE;EACd,OAAO,EAAE,WAAW;CACvB",
+    "sources": [
+        "Selector.module.scss"
+    ],
+    "names": [],
+    "file": "Selector.module.css"
+}

@@ -1,4 +1,4 @@
-import AppStyles from './styles/App.module.css';
+import AppStyles from './styles/App.module.scss';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
 import {Bar} from './components/NavBar';
 import { WelcomeHeader } from './components/WelcomeHeader';
