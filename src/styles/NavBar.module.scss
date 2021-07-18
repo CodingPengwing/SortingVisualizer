@@ -11,9 +11,9 @@
 
 
     h1{
-        font-size: 3em;
-        font-family:  "Zen Loop";
-        font-weight: 600;
+        font-size: 2.5em;
+        font-family:  $cursiveFont;
+        font-weight: 200;
         letter-spacing: 0.2em;
     }
 
@@ -24,7 +24,7 @@
 
 .author{
     position: relative;
-    left: 74%;
+    left: 72%;
     color: white;
     font-family: $genFont;
     font-size: 1.3em;

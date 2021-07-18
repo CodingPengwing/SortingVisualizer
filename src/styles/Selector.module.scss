@@ -1,4 +1,7 @@
+@import "./variables.scss";
+
 .selector{
     margin-top: 2%;
     display: inline-flex;
+    font-family: $genFont;
 }

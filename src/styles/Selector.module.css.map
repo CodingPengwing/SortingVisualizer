@@ -1,8 +1,9 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAA;EACL,UAAU,EAAE,EAAE;EACd,OAAO,EAAE,WAAW;CACvB",
+    "mappings": "ACAA,OAAO,CAAC,qGAAI;AACZ,OAAO,CAAC,yFAAI;AACZ,OAAO,CAAC,8EAAI;ADAZ,AAAA,SAAS,CAAA;EACL,UAAU,EAAE,EAAE;EACd,OAAO,EAAE,WAAW;EACpB,WAAW,ECDL,aAAa,EAAE,SAAS;CDEjC",
     "sources": [
-        "Selector.module.scss"
+        "Selector.module.scss",
+        "variables.scss"
     ],
     "names": [],
     "file": "Selector.module.css"
