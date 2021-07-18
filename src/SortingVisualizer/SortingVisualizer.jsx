@@ -75,12 +75,14 @@ export default class SortingVisualizer extends React.Component {
             array: [],
             highlights: [],
             sortType: insertionSort.sort,
+            timeoutIDArray: [],
+            resumePoint: 0,
         };
 
         this.history = [];
 
-        this.updateState = (array, highlights) => {
-            this.setState({array: array, highlights: highlights});
+        this.updateState = (array, highlights, resumePoint) => {
+            this.setState({array: array, highlights: highlights, resumePoint: resumePoint});
         };
 
         this.addToHistory = (props) => {
@@ -97,6 +99,8 @@ export default class SortingVisualizer extends React.Component {
         this.changeGeneration = this.changeGeneration.bind(this);
         this.changeSort = this.changeSort.bind(this);
         this.doSort = this.doSort.bind(this);
+        this.reset = this.reset.bind(this);
+        this.pause = this.pause.bind(this);
     }
 
     componentDidMount() {
@@ -120,6 +124,9 @@ export default class SortingVisualizer extends React.Component {
         }
         else if (generationType === "Reverse Sorted"){
             this.generateReverseSortedArray();
+        }
+        else if (generationType == "Uniform"){
+            this.generateEqualArray();
         }
     }
 
@@ -182,9 +189,17 @@ export default class SortingVisualizer extends React.Component {
         this.clearHistory();
     }
 
+    pause(){
+        let arrLen = this.state.timeoutIDArray.length;
+        for (let i=this.state.resumePoint; i < arrLen; i++){
+            clearTimeout(this.state.timeoutIDArray[i]);
+        }
+    }
+
     animateHistory() {
         for (let i=0; i<this.history.length; i++) {
-            setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights)}, ANIMATION_SPEED*i);
+            let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*i);
+            this.state.timeoutIDArray.push(timeoutID);
         }
     }
 
@@ -205,9 +220,9 @@ export default class SortingVisualizer extends React.Component {
 
     render() {
         return (
-
             <div>
-                <Selector onChange = {this.changeGeneration} onChangeSort = {this.changeSort} sort = {this.doSort}/>
+                <Selector onChange = {this.changeGeneration} onChangeSort = {this.changeSort} sort = {this.doSort}
+                reset = {this.reset} pause = {this.pause}/>
                 <div className = {styles.arrayContainer}>
                     <Array
                         array={this.state.array}
