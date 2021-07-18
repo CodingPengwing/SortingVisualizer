@@ -4,7 +4,7 @@ import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
-import * as quickSortRandomPivot from '../sortingAlgorithms/quickSortOptimized';
+import * as quickSortOptimized from '../sortingAlgorithms/quickSortOptimized';
 import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
@@ -112,37 +112,37 @@ export default class SortingVisualizer extends React.Component {
     }
 
     changeGeneration(generationType){
-        if (generationType == "Random"){
+        if (generationType === "Random"){
             this.generateRandomArray();
         }
-        else if (generationType == "Sorted"){
+        else if (generationType === "Sorted"){
             this.generateSortedArray();
         }
-        else if (generationType == "Reverse Sorted"){
+        else if (generationType === "Reverse Sorted"){
             this.generateReverseSortedArray();
         }
     }
 
     changeSort(sortType){
-        if (sortType == "Insertion Sort"){
+        if (sortType === "Insertion Sort"){
             this.setState({sortType: insertionSort.sort});
         }
-        else if (sortType == "Selection Sort"){
+        else if (sortType === "Selection Sort"){
             this.setState({sortType: selectionSort.sort});
         }
-        else if (sortType == "Bubble Sort"){
+        else if (sortType === "Bubble Sort"){
             this.setState({sortType: bubbleSort.sort});
         }
-        else if (sortType == "Cocktail Sort"){
+        else if (sortType === "Cocktail Sort"){
             this.setState({sortType: cocktailShakerSort.sort});
         }
-        else if (sortType == "Quick Sort"){
+        else if (sortType === "Quick Sort"){
             this.setState({sortType: quickSort.sort});
         }
-        else if (sortType == "Merge Sort"){
+        else if (sortType === "Merge Sort"){
             this.setState({sortType: mergeSort.sort});
         }
-        else if (sortType == "Heap Sort"){
+        else if (sortType === "Heap Sort"){
             this.setState({sortType: heapSort.sort});
         }
     }
@@ -215,20 +215,7 @@ export default class SortingVisualizer extends React.Component {
                     />
                 </div>
                 <div className={styles.buttons}>
-                    <StyledButton onClick={() => this.generateRandomArray()}>Generate Random Array</StyledButton>
-                    <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
-                    <StyledButton onClick={() => this.generateReverseSortedArray()}>Generate Reverse Sorted Array</StyledButton>
-                    <StyledButton onClick={() => this.generateEqualArray()}>Generate Equal Array</StyledButton>
                     <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
-                    <StyledButton onClick={() => this.doSort(bogoSort.sort)}>Bogo Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(bubbleSort.sort)}>Bubble Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(selectionSort.sort)}>Selection Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(insertionSort.sort)}>Insertion Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(mergeSort.sort)}>Merge Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(heapSort.sort)}>Heap Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(quickSort.sort)}>Quick Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(quickSortRandomPivot.sort)}>Quick Sort (Random Pivot)</StyledButton>
-                    <StyledButton onClick={() => this.doSort(cocktailShakerSort.sort)}>Cocktail Shaker Sort</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
             </div>

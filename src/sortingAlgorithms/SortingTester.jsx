@@ -5,6 +5,8 @@ import * as heapSort from './heapSort';
 import * as insertionSort from './insertionSort';
 import * as selectionSort from './selectionSort';
 import * as bubbleSort from './bubbleSort';
+import * as gnomeSort from './gnomeSort';
+import * as shellSort from './shellSort';
 import * as cocktailShakerSort from './cocktailShakerSort';
 
 const ARRAY_SIZE = 10;
@@ -29,6 +31,10 @@ export function testSortingAlgorithms() {
     testSort(bubbleSort.sort);
     console.log("Testing Cocktail Shaker Sort:");
     testSort(cocktailShakerSort.sort);
+    console.log("Testing Gnome Sort:");
+    testSort(gnomeSort.sort);
+    console.log("Testing Shell Sort:");
+    testSort(shellSort.sort);
 }
     
 function testSort(sortingAlgorithm) {
@@ -43,8 +49,6 @@ function testSort(sortingAlgorithm) {
         console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
     }
 }
-
-
 
 function randomArray() {
     const array = [];
