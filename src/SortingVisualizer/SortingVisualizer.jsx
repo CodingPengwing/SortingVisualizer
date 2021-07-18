@@ -1,15 +1,18 @@
 import React from 'react';
 
 import * as tester from '../sortingAlgorithms/SortingTester';
-import * as mergeSort from '../sortingAlgorithms/mergeSort';
-import * as insertionSort from '../sortingAlgorithms/insertionSort';
-import * as quickSort from '../sortingAlgorithms/quickSort';
-import * as quickSortOptimized from '../sortingAlgorithms/quickSortOptimized';
-import * as selectionSort from '../sortingAlgorithms/selectionSort';
-import * as heapSort from '../sortingAlgorithms/heapSort';
-import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
-import * as bogoSort from '../sortingAlgorithms/bogoSort';
-import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
+import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
+import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
+import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
+import { sort as gnomeSort } from '../sortingAlgorithms/gnomeSort';
+import { sort as heapSort } from '../sortingAlgorithms/heapSort';
+import { sort as insertionSort } from '../sortingAlgorithms/insertionSort';
+import { sort as introSort } from '../sortingAlgorithms/introSort';
+import { sort as mergeSort } from '../sortingAlgorithms/mergeSort';
+import { sort as quickSort } from '../sortingAlgorithms/quickSort';
+import { sort as quickSortOptimized } from '../sortingAlgorithms/quickSortOptimized';
+import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
+import { sort as shellSort } from '../sortingAlgorithms/shellSort';
 
 import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
@@ -57,7 +60,9 @@ class Array extends React.Component {
         // Done to maintain the height of the array container
         bars.push(<div 
             className={styles.arrayBar}
-            style={{height: 500, backgroundColor: "black"}}>
+            style={{height: {MAX_VALUE}, backgroundColor: "black"}}
+            key={ARRAY_SIZE}
+            >
         </div>)
 
         return (
@@ -74,7 +79,7 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             highlights: [],
-            sortType: insertionSort.sort,
+            sortType: quickSortOptimized,
             timeoutIDArray: [],
             resumePoint: 0,
         };
@@ -125,32 +130,51 @@ export default class SortingVisualizer extends React.Component {
         else if (generationType === "Reverse Sorted"){
             this.generateReverseSortedArray();
         }
-        else if (generationType == "Uniform"){
+        else if (generationType === "Uniform"){
             this.generateEqualArray();
         }
     }
 
     changeSort(sortType){
-        if (sortType === "Insertion Sort"){
-            this.setState({sortType: insertionSort.sort});
-        }
-        else if (sortType === "Selection Sort"){
-            this.setState({sortType: selectionSort.sort});
-        }
-        else if (sortType === "Bubble Sort"){
-            this.setState({sortType: bubbleSort.sort});
-        }
-        else if (sortType === "Cocktail Sort"){
-            this.setState({sortType: cocktailShakerSort.sort});
-        }
-        else if (sortType === "Quick Sort"){
-            this.setState({sortType: quickSort.sort});
-        }
-        else if (sortType === "Merge Sort"){
-            this.setState({sortType: mergeSort.sort});
-        }
-        else if (sortType === "Heap Sort"){
-            this.setState({sortType: heapSort.sort});
+        switch (sortType) {
+            case "Bogo Sort":
+                this.setState({sortType: bogoSort});
+                break;
+            case "Bubble Sort":
+                this.setState({sortType: bubbleSort});
+                break;
+            case "Cocktail Shaker Sort":
+                this.setState({sortType: cocktailShakerSort});
+                break;
+            case "Gnome Sort":
+                this.setState({sortType: gnomeSort});
+                break;
+            case "Heap Sort":
+                this.setState({sortType: heapSort});
+                break;
+            case "Insertion Sort":
+                this.setState({sortType: insertionSort});
+                break;
+            case "Intro Sort":
+                this.setState({sortType: introSort});
+                break;
+            case "Merge Sort":
+                this.setState({sortType: mergeSort});
+                break;
+            case "Quick Sort":
+                this.setState({sortType: quickSort});
+                break;
+            case "Quick Sort Optimized":
+                this.setState({sortType: quickSortOptimized});
+                break;
+            case "Selection Sort":
+                this.setState({sortType: selectionSort});
+                break;
+            case "Shell Sort":
+                this.setState({sortType: shellSort});
+                break;
+            default:
+                this.setState({sortType: quickSortOptimized});
         }
     }
 
