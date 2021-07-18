@@ -149,6 +149,10 @@ export default class SortingVisualizer extends React.Component {
         }
         else{
             this.setState({disableSlider: false})
+            if (ARRAY_SIZE == 7){
+                ARRAY_SIZE = 100;
+                this.generateRandomArray();
+            }
         }
 
         switch (sortType) {

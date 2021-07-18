@@ -105,6 +105,9 @@ export const Selector = (props) => {
                     <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Bogo Sort")}>Bogo Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Gnome Sort")}>Gnome Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Optimized Quick Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
                 </DropdownButton>
                 <StyledButton onClick = {() => {props.pause();props.sort()}}>Run</StyledButton>
