@@ -70,8 +70,9 @@ export const Selector = (props) => {
                 </Typography>
                 <Slider
                     onChange = {(e, val) => {props.onChangeSize(val)}}
-                    defaultValue={100}
+                    defaultValue={(props.disableSlider)? 7 : 100}
                     valueLabelDisplay="auto"
+                    disabled = {props.disableSlider}
                     step={1}
                     min={5}
                     max={100}
@@ -81,7 +82,7 @@ export const Selector = (props) => {
                 </Typography>
                 <Slider
                     onChange = {(e, val) => {props.onChangeSpeed(val)}}
-                    defaultValue={70}
+                    defaultValue={100}
                     valueLabelDisplay="auto"
                     step={1}
                     min={1}
@@ -106,7 +107,7 @@ export const Selector = (props) => {
                     <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
                 </DropdownButton>
-                <StyledButton onClick = {() => props.sort()}>Run</StyledButton>
+                <StyledButton onClick = {() => {props.pause();props.sort()}}>Run</StyledButton>
                 <StyledButton2 onClick = {() => props.reset()}>Reset</StyledButton2>
                 <PauseButton onClick = {() => props.pause()}>Pause</PauseButton>
             </div>

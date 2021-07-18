@@ -19,7 +19,7 @@ import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
 var ARRAY_SIZE = 100;
-var ANIMATION_SPEED = 160;
+var ANIMATION_SPEED = 5;
 const MIN_VALUE = 5;
 const MAX_VALUE = 500;
 const PRIMARY_COLOR = '#00a1c9';
@@ -60,7 +60,7 @@ class Array extends React.Component {
         // Done to maintain the height of the array container
         bars.push(<div 
             className={styles.arrayBar}
-            style={{height: {MAX_VALUE}, backgroundColor: "black"}}
+            style={{height: 550, backgroundColor: "black"}}
             key={ARRAY_SIZE}
             >
         </div>)
@@ -79,9 +79,11 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             highlights: [],
-            sortType: quickSortOptimized,
+            sortType: insertionSort,
             timeoutIDArray: [],
             resumePoint: 0,
+            disableSlider: false,
+            arrayState: "random",
         };
 
         this.history = [];
@@ -140,6 +142,15 @@ export default class SortingVisualizer extends React.Component {
     }
 
     changeSort(sortType){
+        if (sortType === "Bogo Sort"){
+            this.setState({disableSlider: true})
+            ARRAY_SIZE = 7;
+            this.generateRandomArray();
+        }
+        else{
+            this.setState({disableSlider: false})
+        }
+
         switch (sortType) {
             case "Bogo Sort":
                 this.setState({sortType: bogoSort});
@@ -254,7 +265,7 @@ export default class SortingVisualizer extends React.Component {
 
     onChangeSortSpeed(speed){
         let percentageSpeed = speed / 100;
-        ANIMATION_SPEED = 510 - (500 * percentageSpeed);
+        ANIMATION_SPEED = 505 - (500 * percentageSpeed);
         this.pause();
         let count = 1;
         for (let i=this.state.resumePoint; i<this.history.length; i++){
@@ -269,7 +280,7 @@ export default class SortingVisualizer extends React.Component {
             <div>
                 <Selector onChange = {this.changeGeneration} onChangeSort = {this.changeSort} sort = {this.doSort}
                 reset = {this.reset} pause = {this.pause} onChangeSize = {this.onChangeArraySize}
-                onChangeSpeed = {this.onChangeSortSpeed}/>
+                onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
                 <div className = {styles.arrayContainer}>
                     <Array
                         array={this.state.array}
