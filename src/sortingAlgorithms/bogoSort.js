@@ -1,6 +1,8 @@
 export function sort(props) {
+    // Limit the size of bogoSort
     if (props.array.length > 7) return props.array.slice();
-    return bogoSort(props.array, props.addToHistory).slice();
+    const sortedArray = bogoSort(props.array, props.addToHistory);
+    return sortedArray.slice();
 }
 
 function bogoSort(array, addToHistory) {

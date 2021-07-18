@@ -1,7 +1,5 @@
 export function sort(props){
-    const array = props.array;
-    const addToHistory = props.addToHistory;
-    const sortedArray = selectionSort(array, addToHistory);
+    const sortedArray = selectionSort(props.array, props.addToHistory);
     return sortedArray.slice();
 }
 
