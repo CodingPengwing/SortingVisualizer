@@ -1,7 +1,23 @@
 @import "./variables.scss";
 
+.container{
+    margin: auto;
+}
+
 .selector{
+    margin-left: 10%;
+    width: 69%;
+    text-align: center;
     margin-top: 0.5%;
     display: inline-flex;
     font-family: $genFont;
+}
+
+.slider{
+    margin: auto;
+    width: 40%;
+    display: block;
+    position: relative;
+    margin-bottom: 2%;
+    margin-top: 2%;
 }

@@ -1,11 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&family=Zen+Loop&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+.container {
+  margin: auto;
+}
+
 .selector {
+  margin-left: 10%;
+  width: 69%;
+  text-align: center;
   margin-top: 0.5%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   font-family: "Roboto Mono", monospace;
+}
+
+.slider {
+  margin: auto;
+  width: 40%;
+  display: block;
+  position: relative;
+  margin-bottom: 2%;
+  margin-top: 2%;
 }
 /*# sourceMappingURL=Selector.module.css.map */
