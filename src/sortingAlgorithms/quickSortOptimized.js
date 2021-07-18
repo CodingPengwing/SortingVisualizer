@@ -1,3 +1,5 @@
+// https://www.techiedelight.com/quicksort-using-dutch-national-flag-algorithm/
+
 export function sort(props) {
     const array = props.array;
     const start = 0;
@@ -8,54 +10,51 @@ export function sort(props) {
 
 function quickSort(array, start, end, addToHistory) {
     if (end <= start) return array;
+    if (end - start === 1) {
+        addToHistory({array: array.slice(), highlights: [start, end]});
+        if (array[end] < array[start]) {
+            [array[start], array[end]] = [array[end], array[start]];
+            addToHistory({array: array.slice(), highlights: [start, end]});
+            return array;
+        }
+    }
 
-    const p = partition(array, start, end, addToHistory);
+    const [pivotLeft, pivotRight] = partition(array, start, end, addToHistory);
+    let range = [];
+    for (let i = start; i <= end; i++) { range.push(i); }
+    addToHistory({array: array.slice(), highlights: [start, end]});
 
-    // let left_p = 
-    // let right_p = 
-
-    quickSort(array, start, p-1, addToHistory);
-    quickSort(array, p+1, end, addToHistory);
+    quickSort(array, start, pivotLeft-1, addToHistory);
+    quickSort(array, pivotRight+1, end, addToHistory);
     return array;
 }
+
+
 
 function partition(array, start, end, addToHistory) {
     if (end <= start) return start;
 
     let pivotIndex = randomIntFromInterval(start, end);
     addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
-    [array[start], array[pivotIndex]] = [array[pivotIndex], array[start]];
+    [array[end], array[pivotIndex]] = [array[pivotIndex], array[end]];
     addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
 
-    const pivot = array[start];
-    let i = start + 1;
-    let j = end;
-    while (true) {
-        while (array[i] <= pivot && i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i]});
-            i += 1;
-        }
-        while (array[j] > pivot && i <= j) {
-            addToHistory({array: array.slice(), highlights: [start, j]});
-            j -= 1;
-        }
-        if (i < j) {
-            addToHistory({array: array.slice(), highlights: [i, j]});
-            [array[i], array[j]] = [array[j], array[i]];
-            addToHistory({array: array.slice(), highlights: [i, j]});
+    let mid = start;
+    let pivot = array[end];
+
+    while (mid <= end) {
+        if (array[mid] < pivot) {
+            [array[start], array[mid]] = [array[mid], array[start]];
+            start++;
+            mid++;
+        } else if (array[mid] > pivot) {
+            [array[mid], array[end]] = [array[end], array[mid]];
+            end--;
         } else {
-            break;
+            mid++;
         }
     }
-    
-    addToHistory({array: array.slice(), highlights: [start, j]});
-    // Swap pivot into position
-    [array[start], array[j]] = [array[j], array[start]];
-    addToHistory({array: array.slice(), highlights: [start, j]});
-    
-    addToHistory({array: array.slice(), highlights: []});
-    pivotIndex = j;
-    return pivotIndex;
+    return [start, mid-1];
 }
 
 function randomIntFromInterval(min, max) {
