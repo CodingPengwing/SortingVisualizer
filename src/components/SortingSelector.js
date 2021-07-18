@@ -23,7 +23,11 @@ const StyledButton = styled(Button)({
     cursor: "pointer",
     display: "inline-block",
     borderRadius: "25px",
-    backgroundImage: "linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%)",
+    backgroundImage: "linear-gradient(to left, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%)",
+
+    '&:hover':{
+        backgroundPosition: "right center",
+    }
 })
 
 export const Selector = (props) => {
