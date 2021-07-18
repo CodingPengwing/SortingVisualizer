@@ -1,6 +1,6 @@
 import React from "react";
 import styles from '../styles/NavBar.module.scss';
-import { styled, withTheme } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
 
 export const Bar = (props) => {

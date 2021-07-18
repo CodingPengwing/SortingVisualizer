@@ -10,6 +10,10 @@ function quickSort(array, start, end, addToHistory) {
     if (end <= start) return array;
 
     const p = partition(array, start, end, addToHistory);
+
+    // let left_p = 
+    // let right_p = 
+
     quickSort(array, start, p-1, addToHistory);
     quickSort(array, p+1, end, addToHistory);
     return array;
