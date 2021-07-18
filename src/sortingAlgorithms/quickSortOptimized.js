@@ -13,16 +13,8 @@ export function sort(props) {
 }
 
 function quickSort(array, start, end, addToHistory) {
-    // // Array has 1 or 0 elements
-    // if (end <= start) return array;
-
     while (start < end) {
-
         const [pivotLeft, pivotRight] = partition(array, start, end, addToHistory);
-        // let range = [];
-        // for (let i = start; i <= end; i++) { range.push(i); }
-        // addToHistory({array: array.slice(), highlights: range});
-
         if (pivotLeft - start < end - pivotRight) {
             quickSort(array, start, pivotLeft-1, addToHistory);
             start = pivotRight + 1;
@@ -40,15 +32,15 @@ function quickSort(array, start, end, addToHistory) {
 
 
 function partition(array, start, end, addToHistory) {
-    if (end <= start) return start;
+    if (end <= start) return [start, end];
 
     let pivotIndex = randomIntFromInterval(start, end);
     addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
-    [array[end], array[pivotIndex]] = [array[pivotIndex], array[end]];
+    [array[start], array[pivotIndex]] = [array[pivotIndex], array[start]];
     addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
 
-    let mid = start;
-    let pivot = array[end];
+    let mid = start + 1;
+    let pivot = array[start];
 
     while (mid <= end) {
         addToHistory({array: array.slice(), highlights: [mid, end]});
@@ -67,6 +59,12 @@ function partition(array, start, end, addToHistory) {
             mid++;
         }
     }
+
+    const pivotLeft = start, pivotRight = end;
+    let range = [];
+    for (let i = pivotLeft; i <= pivotRight; i++) { range.push(i); }
+    addToHistory({array: array.slice(), highlights: range.slice()});
+
     return [start, mid-1];
 }
 
