@@ -4,7 +4,7 @@ import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
-import * as quickSortRandomPivot from '../sortingAlgorithms/quickSortRandomPivot';
+import * as quickSortRandomPivot from '../sortingAlgorithms/quickSortOptimized';
 import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';

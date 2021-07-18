@@ -1,8 +1,7 @@
 export function sort(props) {
-    const array = props.array;
     const start = 0;
-    const end = array.length-1;
-    const sortedArray = quickSort(array, start, end, props.addToHistory);
+    const end = props.array.length-1;
+    const sortedArray = quickSort(props.array, start, end, props.addToHistory);
     return sortedArray.slice();
 }
 
@@ -47,8 +46,4 @@ function partition(array, start, end, addToHistory) {
     addToHistory({array: array.slice(), highlights: []});
     let pivotIndex = j;
     return pivotIndex;
-}
-
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max-min+1) + min);
 }

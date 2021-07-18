@@ -1,10 +1,11 @@
 export function sort(props) {
-    return bubbleSort(props.array, props.addToHistory).slice();
+    const sortedArray = bubbleSort(props.array, props.addToHistory);
+    return sortedArray.slice();
 }
 
 function bubbleSort(array, addToHistory) {
     if (array.length <= 1) return array;
-    
+
     let sorted = false;
     while (!sorted) {
         sorted = true;

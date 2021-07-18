@@ -1,4 +1,5 @@
 import * as quickSort from './quickSort';
+import * as quickSortOptimized from './quickSortOptimized';
 import * as mergeSort from './mergeSort';
 import * as heapSort from './heapSort';
 import * as insertionSort from './insertionSort';
@@ -14,6 +15,8 @@ const MAX_VALUE = 2000;
 export function testSortingAlgorithms() {
     console.log("Testing Quick Sort:");
     testSort(quickSort.sort);
+    console.log("Testing Quick Sort Optimized:");
+    testSort(quickSortOptimized.sort);
     // console.log("Testing Merge Sort:");
     // testMergeSort();
     console.log("Testing Heap Sort:");

@@ -1,7 +1,5 @@
 export function sort(props) {
-    const array = props.array;
-    const addToHistory = props.addToHistory;
-    const sortedArray = heapSort(array, addToHistory);
+    const sortedArray = heapSort(props.array, props.addToHistory);
     return sortedArray.slice();
 }
 
