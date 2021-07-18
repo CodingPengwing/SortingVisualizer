@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&family=Zen+Loop&display=swap");
+
 .App {
   text-align: center;
 }
 
-.welcomediv {
-  line-height: 1.7em;
+.welcomediv{
+  line-height:1.7em;
   text-align: center;
   margin-top: 3%;
 }
@@ -21,11 +22,10 @@
   font-size: 500%;
   font-family: "Zen Loop", cursive;
   letter-spacing: 0.1em;
-  -webkit-transition: letter-spacing 0.5s;
   transition: letter-spacing 0.5s;
 }
 
-.welcome2:hover {
+.welcome2:hover{
   letter-spacing: 0.23em;
 }
-/*# sourceMappingURL=App.module.css.map */
+/*# sourceMappingURL=App.css.map */

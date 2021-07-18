@@ -1,0 +1,28 @@
+.arrayContainer {
+  margin-bottom: 3%;
+  padding-top: 5%;
+  /* border: 3px solid green; */
+  /* position: absolute;
+    left: 200px;
+    top: 100px; 
+    bottom: 20px; */
+}
+
+.arrayBar {
+  width: 10px;
+  /* background-color: rgb(0, 161, 201); */
+  display: inline-block;
+  margin: 0 1px;
+  -webkit-transition: 0.20s;
+  transition: 0.20s;
+}
+
+.arrayBar:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+.buttons {
+  margin-bottom: 2%;
+}
+/*# sourceMappingURL=SortingVisualizer.module.css.map */
