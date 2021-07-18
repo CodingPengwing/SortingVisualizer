@@ -49,11 +49,11 @@ const PauseButton = styled(StyledButton)({
 
 export const Selector = (props) => {
 
-    const [arrayType, setArrayType] = useState("Random");
+    const [inputType, setInputType] = useState("Random");
     const [sortType, setSortType] = useState("Insertion Sort");
 
-    function changeArray(type){
-        setArrayType(type);
+    function changeInput(type){
+        setInputType(type);
         props.onChangeInput(type);
     };
 
@@ -90,12 +90,12 @@ export const Selector = (props) => {
                 />
             </div>
             <div className = {styles.selector}>
-                <DropdownButton id="dropdown-basic-button" title={arrayType} style = {{marginRight: "3%"}}>
-                    <Dropdown.Item onClick = {()=>changeArray("Random")}>Random Array</Dropdown.Item>
-                    <Dropdown.Item onClick = {()=>changeArray("Sorted")}>Sorted Array</Dropdown.Item>
-                    <Dropdown.Item onClick = {()=>changeArray("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
-                    <Dropdown.Item onClick = {()=>changeArray("Uniform")}>Uniform Array</Dropdown.Item>
-                    <Dropdown.Item onClick = {()=>changeArray("Partial Uniform")}>Partial Uniform Array</Dropdown.Item>
+                <DropdownButton id="dropdown-basic-button" title={inputType} style = {{marginRight: "3%"}}>
+                    <Dropdown.Item onClick = {()=>changeInput("Random")}>Random Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeInput("Sorted")}>Sorted Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeInput("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeInput("Uniform")}>Uniform Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeInput("Partial Uniform")}>Partial Uniform Array</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton id="dropdown-basic-button" title={sortType}>
                     <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
