@@ -4,6 +4,7 @@ export function sort(props) {
 }
 
 function shellSort(array, addToHistory) {
+    // Generate gaps sequence
     let h = 1;
     while (h < array.length) {
         h = 3*h +1;
