@@ -10,13 +10,14 @@ import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
 import * as bogoSort from '../sortingAlgorithms/bogoSort';
 import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
+import * as shellSort from '../sortingAlgorithms/shellSort';
 
 import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
-const ARRAY_SIZE = 100;
-const ANIMATION_SPEED = 10;
+var ARRAY_SIZE = 100;
+var ANIMATION_SPEED = 160;
 const MIN_VALUE = 5;
 const MAX_VALUE = 500;
 const PRIMARY_COLOR = '#00a1c9';
@@ -101,6 +102,8 @@ export default class SortingVisualizer extends React.Component {
         this.doSort = this.doSort.bind(this);
         this.reset = this.reset.bind(this);
         this.pause = this.pause.bind(this);
+        this.onChangeArraySize = this.onChangeArraySize.bind(this);
+        this.onChangeSortSpeed = this.onChangeSortSpeed.bind(this);
     }
 
     componentDidMount() {
@@ -146,6 +149,12 @@ export default class SortingVisualizer extends React.Component {
         else if (sortType === "Quick Sort"){
             this.setState({sortType: quickSort.sort});
         }
+        else if (sortType === "Shell Sort"){
+            this.setState({sortType: shellSort.sort});
+        }
+        else if (sortType === "Bogo Sort"){
+            this.setState({sortType: bogoSort.sort});
+        }
         else if (sortType === "Merge Sort"){
             this.setState({sortType: mergeSort.sort});
         }
@@ -186,6 +195,7 @@ export default class SortingVisualizer extends React.Component {
             const firstState = this.history[0];
             this.updateState(firstState.array.slice(), []);
         }
+        this.pause();
         this.clearHistory();
     }
 
@@ -218,11 +228,29 @@ export default class SortingVisualizer extends React.Component {
         tester.testSortingAlgorithms();
     }
 
+    onChangeArraySize(size){
+        ARRAY_SIZE = size;
+        this.generateRandomArray();
+    }
+
+    onChangeSortSpeed(speed){
+        let percentageSpeed = speed / 100;
+        ANIMATION_SPEED = 510 - (500 * percentageSpeed);
+        this.pause();
+        let count = 1;
+        for (let i=this.state.resumePoint; i<this.history.length; i++){
+            let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*count);
+            this.state.timeoutIDArray.push(timeoutID);
+            count++;
+        }
+    }
+
     render() {
         return (
             <div>
                 <Selector onChange = {this.changeGeneration} onChangeSort = {this.changeSort} sort = {this.doSort}
-                reset = {this.reset} pause = {this.pause}/>
+                reset = {this.reset} pause = {this.pause} onChangeSize = {this.onChangeArraySize}
+                onChangeSpeed = {this.onChangeSortSpeed}/>
                 <div className = {styles.arrayContainer}>
                     <Array
                         array={this.state.array}

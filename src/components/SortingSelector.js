@@ -2,6 +2,8 @@ import React from 'react';
 import { DropdownButton, Dropdown} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../styles/Selector.module.scss"
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 import { useState } from 'react';
 import { styled, Button } from '@material-ui/core';
@@ -61,25 +63,53 @@ export const Selector = (props) => {
     };
 
     return(
-        <div className = {styles.selector}>
-            <DropdownButton id="dropdown-basic-button" title={arrayType} style = {{marginRight: "3%", marginTop: "0.1%"}}>
-                <Dropdown.Item onClick = {()=>changeArray("Random")}>Random Array</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeArray("Sorted")}>Sorted Array</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeArray("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeArray("Uniform")}>Uniform Array</Dropdown.Item>
-            </DropdownButton>
-            <DropdownButton id="dropdown-basic-button" title={sortType} style = {{marginTop: "0.1%"}}>
-                <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Bubble Sort")}>Bubble Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Cocktail Sort")}>Cocktail Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
-            </DropdownButton>
-            <StyledButton onClick = {() => props.sort()}>Run</StyledButton>
-            <StyledButton2 onClick = {() => props.reset()}>Reset</StyledButton2>
-            <PauseButton onClick = {() => props.pause()}>Pause</PauseButton>
+        <div className = {styles.container}>
+            <div className = {styles.slider}>
+                <Typography gutterBottom style = {{fontFamily: "monospace", color: "white"}}>
+                    Array Size
+                </Typography>
+                <Slider
+                    onChange = {(e, val) => {props.onChangeSize(val)}}
+                    defaultValue={100}
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={5}
+                    max={100}
+                />
+                <Typography gutterBottom style = {{fontFamily: "monospace", color: "white"}}>
+                    Sorting Speed
+                </Typography>
+                <Slider
+                    onChange = {(e, val) => {props.onChangeSpeed(val)}}
+                    defaultValue={70}
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={100}
+                />
+            </div>
+            <div className = {styles.selector}>
+                <DropdownButton id="dropdown-basic-button" title={arrayType} style = {{marginRight: "3%"}}>
+                    <Dropdown.Item onClick = {()=>changeArray("Random")}>Random Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeArray("Sorted")}>Sorted Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeArray("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeArray("Uniform")}>Uniform Array</Dropdown.Item>
+                </DropdownButton>
+                <DropdownButton id="dropdown-basic-button" title={sortType}>
+                    <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Bubble Sort")}>Bubble Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Cocktail Sort")}>Cocktail Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Bogo Sort")}>Bogo Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
+                </DropdownButton>
+                <StyledButton onClick = {() => props.sort()}>Run</StyledButton>
+                <StyledButton2 onClick = {() => props.reset()}>Reset</StyledButton2>
+                <PauseButton onClick = {() => props.pause()}>Pause</PauseButton>
+            </div>
         </div>
     )
 }
