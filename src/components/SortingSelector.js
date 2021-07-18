@@ -38,7 +38,7 @@ const StyledButton2 = styled(StyledButton)({
 })
 
 const PauseButton = styled(StyledButton)({
-    backgroundImage: "linear-gradient(to left, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%)",
+    backgroundImage: "linear-gradient(to left, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)",
     borderRadius: "100px",
     '&:hover':{
         backgroundPosition: "right center",
@@ -66,6 +66,7 @@ export const Selector = (props) => {
                 <Dropdown.Item onClick = {()=>changeArray("Random")}>Random Array</Dropdown.Item>
                 <Dropdown.Item onClick = {()=>changeArray("Sorted")}>Sorted Array</Dropdown.Item>
                 <Dropdown.Item onClick = {()=>changeArray("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
+                <Dropdown.Item onClick = {()=>changeArray("Uniform")}>Uniform Array</Dropdown.Item>
             </DropdownButton>
             <DropdownButton id="dropdown-basic-button" title={sortType} style = {{marginTop: "0.1%"}}>
                 <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>

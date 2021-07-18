@@ -125,6 +125,9 @@ export default class SortingVisualizer extends React.Component {
         else if (generationType == "Reverse Sorted"){
             this.generateReverseSortedArray();
         }
+        else if (generationType == "Uniform"){
+            this.generateEqualArray();
+        }
     }
 
     changeSort(sortType){
