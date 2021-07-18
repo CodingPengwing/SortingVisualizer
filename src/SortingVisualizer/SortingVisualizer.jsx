@@ -196,7 +196,7 @@ export default class SortingVisualizer extends React.Component {
     generateRandomArray() {
         const array = this.randomArray();
         this.updateState(array.slice(), []);
-        console.log(this.state.array);
+        // console.log(this.state.array);
     }
 
     generateSortedArray() {
