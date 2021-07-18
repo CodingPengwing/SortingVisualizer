@@ -2,10 +2,11 @@ import * as quickSort from './quickSort';
 import * as mergeSort from './mergeSort';
 import * as heapSort from './heapSort';
 import * as insertionSort from './insertionSort';
+import * as selectionSort from './selectionSort';
 import * as bubbleSort from './bubbleSort';
 import * as cocktailShakerSort from './cocktailShakerSort';
 
-const ARRAY_SIZE = 100;
+const ARRAY_SIZE = 10;
 const TEST_RUNS = 100;
 const MIN_VALUE = -2000;
 const MAX_VALUE = 2000;
@@ -13,16 +14,18 @@ const MAX_VALUE = 2000;
 export function testSortingAlgorithms() {
     console.log("Testing Quick Sort:");
     testSort(quickSort.sort);
+    // console.log("Testing Merge Sort:");
+    // testMergeSort();
     console.log("Testing Heap Sort:");
     testSort(heapSort.sort);
     console.log("Testing Insertion Sort:");
     testSort(insertionSort.sort);
+    console.log("Testing Selection Sort:");
+    testSort(selectionSort.sort);
     console.log("Testing Bubble Sort:");
     testSort(bubbleSort.sort);
     console.log("Testing Cocktail Shaker Sort:");
     testSort(cocktailShakerSort.sort);
-    // console.log("Testing Merge Sort:");
-    // testMergeSort();
 }
     
 function testSort(sortingAlgorithm) {

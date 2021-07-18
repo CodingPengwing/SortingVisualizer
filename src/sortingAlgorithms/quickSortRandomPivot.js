@@ -2,25 +2,27 @@ export function sort(props) {
     const array = props.array;
     const start = 0;
     const end = array.length-1;
-    const sortedArray = quickSelect(array, start, end, props.addToHistory);
+    const sortedArray = quickSort(array, start, end, props.addToHistory);
     return sortedArray.slice();
 }
 
-// Select the k-th smallest element as the pivot for the array
-function quickSelect(array, start, end, k, addToHistory) {
+function quickSort(array, start, end, addToHistory) {
     if (end <= start) return array;
 
-    const storeIndex = partition(array, start, end, pivotIndex, addToHistory);
-    quickSelect(array, start, storeIndex,-1, addToHistory);
-    quickSelect(array, storeIndex+1, end, addToHistory);
+    const p = partition(array, start, end, addToHistory);
+    quickSort(array, start, p-1, addToHistory);
+    quickSort(array, p+1, end, addToHistory);
     return array;
 }
 
-function partition(array, start, end, pivotIndex, addToHistory) {
+function partition(array, start, end, addToHistory) {
     if (end <= start) return start;
 
-    // Swap the pivot into the first position
+    let pivotIndex = randomIntFromInterval(start, end);
+    addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
     [array[start], array[pivotIndex]] = [array[pivotIndex], array[start]];
+    addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
+
     const pivot = array[start];
     let i = start + 1;
     let j = end;
@@ -48,12 +50,10 @@ function partition(array, start, end, pivotIndex, addToHistory) {
     addToHistory({array: array.slice(), highlights: [start, j]});
     
     addToHistory({array: array.slice(), highlights: []});
-    return j;
+    pivotIndex = j;
+    return pivotIndex;
 }
 
-
-// function selectPivot(array, start, end, k, addToHistory) {
-//     if (end <= start) return start;
-
-
-// }
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max-min+1) + min);
+}

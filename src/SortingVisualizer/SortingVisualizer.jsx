@@ -4,9 +4,11 @@ import * as tester from '../sortingAlgorithms/SortingTester';
 import * as mergeSort from '../sortingAlgorithms/mergeSort';
 import * as insertionSort from '../sortingAlgorithms/insertionSort';
 import * as quickSort from '../sortingAlgorithms/quickSort';
+import * as quickSortRandomPivot from '../sortingAlgorithms/quickSortRandomPivot';
 import * as selectionSort from '../sortingAlgorithms/selectionSort';
 import * as heapSort from '../sortingAlgorithms/heapSort';
 import * as bubbleSort from '../sortingAlgorithms/bubbleSort';
+import * as bogoSort from '../sortingAlgorithms/bogoSort';
 import * as cocktailShakerSort from '../sortingAlgorithms/cocktailShakerSort';
 
 import { StyledButton } from '../components/NavBar';
@@ -163,6 +165,15 @@ export default class SortingVisualizer extends React.Component {
         this.updateState(reverseSortedArray.slice(), []);
     }
 
+    generateEqualArray() {
+        const value = randomIntFromInterval(MIN_VALUE, MAX_VALUE);
+        const array = [];
+        for (let i = 0; i < ARRAY_SIZE; i++) { 
+            array[i] = value; 
+        }
+        this.updateState(array.slice(), []);
+    }
+
     reset() {
         if (this.history.length > 0) {
             const firstState = this.history[0];
@@ -207,13 +218,16 @@ export default class SortingVisualizer extends React.Component {
                     <StyledButton onClick={() => this.generateRandomArray()}>Generate Random Array</StyledButton>
                     <StyledButton onClick={() => this.generateSortedArray()}>Generate Sorted Array</StyledButton>
                     <StyledButton onClick={() => this.generateReverseSortedArray()}>Generate Reverse Sorted Array</StyledButton>
+                    <StyledButton onClick={() => this.generateEqualArray()}>Generate Equal Array</StyledButton>
                     <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
+                    <StyledButton onClick={() => this.doSort(bogoSort.sort)}>Bogo Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(bubbleSort.sort)}>Bubble Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(selectionSort.sort)}>Selection Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(quickSort.sort)}>Quick Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(insertionSort.sort)}>Insertion Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(mergeSort.sort)}>Merge Sort</StyledButton>
                     <StyledButton onClick={() => this.doSort(heapSort.sort)}>Heap Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(insertionSort.sort)}>Insertion Sort</StyledButton>
-                    <StyledButton onClick={() => this.doSort(bubbleSort.sort)}>Bubble Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(quickSort.sort)}>Quick Sort</StyledButton>
+                    <StyledButton onClick={() => this.doSort(quickSortRandomPivot.sort)}>Quick Sort (Random Pivot)</StyledButton>
                     <StyledButton onClick={() => this.doSort(cocktailShakerSort.sort)}>Cocktail Shaker Sort</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
