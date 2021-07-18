@@ -54,7 +54,7 @@ export const Selector = (props) => {
 
     function changeArray(type){
         setArrayType(type);
-        props.onChange(type);
+        props.onChangeInput(type);
     };
 
     function changeSort(type){
@@ -95,6 +95,7 @@ export const Selector = (props) => {
                     <Dropdown.Item onClick = {()=>changeArray("Sorted")}>Sorted Array</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeArray("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeArray("Uniform")}>Uniform Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeArray("Partial Uniform")}>Partial Uniform Array</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton id="dropdown-basic-button" title={sortType}>
                     <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
@@ -109,6 +110,7 @@ export const Selector = (props) => {
                     <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Optimized Quick Sort</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeSort("Tim Sort")}>Tim Sort</Dropdown.Item>
                 </DropdownButton>
                 <StyledButton onClick = {() => {props.pause();props.sort()}}>Run</StyledButton>
                 <StyledButton2 onClick = {() => props.reset()}>Reset</StyledButton2>

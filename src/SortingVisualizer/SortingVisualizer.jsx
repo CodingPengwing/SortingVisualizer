@@ -54,14 +54,15 @@ class Array extends React.Component {
 
     render() {
         var bars = [];
-        for (let i=0; i < this.props.array.length; i++) {
+        let i;
+        for (i=0; i < this.props.array.length; i++) {
             bars.push(this.renderBar(i));
         }
         // Done to maintain the height of the array container
         bars.push(<div 
             className={styles.arrayBar}
-            style={{height: 550, backgroundColor: "black"}}
-            key={ARRAY_SIZE}
+            style={{height: 530, backgroundColor: "black"}}
+            key={i}
             >
         </div>)
 
@@ -103,7 +104,7 @@ export default class SortingVisualizer extends React.Component {
             this.history = [];
         }
 
-        this.changeGeneration = this.changeGeneration.bind(this);
+        this.changeInput = this.changeInput.bind(this);
         this.changeSort = this.changeSort.bind(this);
         this.doSort = this.doSort.bind(this);
         this.reset = this.reset.bind(this);
@@ -124,8 +125,8 @@ export default class SortingVisualizer extends React.Component {
         return array.slice();
     }
 
-    changeGeneration(generationType){
-        switch (generationType) {
+    changeInput(inputType){
+        switch (inputType) {
             case "Random":
                 this.generateRandomArray();
                 break;
@@ -136,20 +137,23 @@ export default class SortingVisualizer extends React.Component {
                 this.generateReverseSortedArray();
                 break;
             case "Uniform":
-                this.generateEqualArray();
+                this.generateUniformArray();
+                break;
+            case "Partial Uniform":
+                this.generatePartialUniformArray();
                 break;
         }
     }
 
     changeSort(sortType){
         if (sortType === "Bogo Sort"){
-            this.setState({disableSlider: true})
+            this.setState({disableSlider: true});
             ARRAY_SIZE = 7;
             this.generateRandomArray();
-        }
-        else{
-            this.setState({disableSlider: false})
-            if (ARRAY_SIZE == 7){
+        } 
+        else {
+            if (this.state.disableSlider) {
+                this.setState({disableSlider: false});
                 ARRAY_SIZE = 100;
                 this.generateRandomArray();
             }
@@ -215,11 +219,24 @@ export default class SortingVisualizer extends React.Component {
         this.updateState(reverseSortedArray.slice(), []);
     }
 
-    generateEqualArray() {
+    generateUniformArray() {
         const value = randomIntFromInterval(MIN_VALUE, MAX_VALUE);
         const array = [];
         for (let i = 0; i < ARRAY_SIZE; i++) { 
             array[i] = value; 
+        }
+        this.updateState(array.slice(), []);
+    }
+
+    generatePartialUniformArray() {
+        const values = [];
+        for (let i = 0; i < 5; i++) {
+            values.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
+        }
+
+        const array = [];
+        for (let i = 0; i < ARRAY_SIZE; i++) { 
+            array[i] = values[randomIntFromInterval(0, 4)]; 
         }
         this.updateState(array.slice(), []);
     }
@@ -247,7 +264,7 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
-    doSort(sortingAlgorithm) {
+    doSort() {
         this.clearHistory();
         const sortedArray = this.state.sortType({
             array: this.state.array, 
@@ -263,26 +280,30 @@ export default class SortingVisualizer extends React.Component {
     }
 
     onChangeArraySize(size){
-        ARRAY_SIZE = size;
-        this.generateRandomArray();
+        if (ARRAY_SIZE !== size) {
+            ARRAY_SIZE = size;
+            this.generateRandomArray();
+        }
     }
 
-    onChangeSortSpeed(speed){
-        let percentageSpeed = speed / 100;
-        ANIMATION_SPEED = 505 - (500 * percentageSpeed);
-        this.pause();
-        let count = 1;
-        for (let i=this.state.resumePoint; i<this.history.length; i++){
-            let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*count);
-            this.state.timeoutIDArray.push(timeoutID);
-            count++;
+    onChangeSortSpeed(speed) {
+        if (ANIMATION_SPEED !== speed) {
+            let percentageSpeed = speed / 100;
+            ANIMATION_SPEED = 505 - (500 * percentageSpeed);
+            this.pause();
+            let count = 1;
+            for (let i=this.state.resumePoint; i<this.history.length; i++){
+                let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*count);
+                this.state.timeoutIDArray.push(timeoutID);
+                count++;
+            }
         }
     }
 
     render() {
         return (
             <div>
-                <Selector onChange = {this.changeGeneration} onChangeSort = {this.changeSort} sort = {this.doSort}
+                <Selector onChangeInput = {this.changeInput} onChangeSort = {this.changeSort} sort = {this.doSort}
                 reset = {this.reset} pause = {this.pause} onChangeSize = {this.onChangeArraySize}
                 onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
                 <div className = {styles.arrayContainer}>
@@ -292,7 +313,6 @@ export default class SortingVisualizer extends React.Component {
                     />
                 </div>
                 <div className={styles.buttons}>
-                    <StyledButton onClick={() => this.reset()}>Reset</StyledButton>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
                 </div>
             </div>
