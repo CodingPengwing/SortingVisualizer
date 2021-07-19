@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { randomIntFromInterval, range, shuffle } from '../sortingAlgorithms/util';
-import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
+// import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
 import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
 import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
 import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
@@ -16,7 +16,7 @@ import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
 import { sort as shellSort } from '../sortingAlgorithms/shellSort';
 import { sort as timSort } from '../sortingAlgorithms/timSort';
 
-import { StyledButton } from '../components/NavBar';
+// import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
@@ -82,11 +82,11 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             highlights: [],
-            sortType: insertionSort,
+            sortType: quickSort,
             timeoutIDArray: [],
             resumePoint: 0,
             disableSlider: false,
-            arrayState: "random",
+            arrayState: "Steady",
         };
 
         this.history = [];
@@ -106,7 +106,7 @@ export default class SortingVisualizer extends React.Component {
             this.history = [];
         }
 
-        this.changeInput = this.changeInput.bind(this);
+        this.generateArray = this.generateArray.bind(this);
         this.changeSort = this.changeSort.bind(this);
         this.doSort = this.doSort.bind(this);
         this.reset = this.reset.bind(this);
@@ -116,45 +116,20 @@ export default class SortingVisualizer extends React.Component {
     }
 
     componentDidMount() {
-        this.generateRandomArray();
-    }
-
-    changeInput(inputType){
-        switch (inputType) {
-            case "Random":
-                this.generateRandomArray();
-                break;
-            case "Steady":
-                this.generateSteadyArray();
-                break;
-            case "Sorted":
-                this.generateSortedArray();
-                break;
-            case "Reverse Sorted":
-                this.generateReverseSortedArray();
-                break;
-            case "Uniform":
-                this.generateUniformArray();
-                break;
-            case "Partial Uniform":
-                this.generatePartialUniformArray();
-                break;
-            default:
-                break;
-        }
+        this.generateSteadyArray();
     }
 
     changeSort(sortType){
         if (sortType === "Bogo Sort"){
             this.setState({disableSlider: true});
             ARRAY_SIZE = 7;
-            this.generateRandomArray();
+            this.generateSteadyArray();
         } 
         else {
             if (this.state.disableSlider) {
                 this.setState({disableSlider: false});
                 ARRAY_SIZE = 100;
-                this.generateRandomArray();
+                this.generateSteadyArray();
             }
         }
 
@@ -197,6 +172,32 @@ export default class SortingVisualizer extends React.Component {
                 break;
             case "Tim Sort":
                 this.setState({sortType: timSort});
+                break;
+            default:
+                break;
+        }
+    }
+
+    generateArray(arrayType) {
+        this.pause();
+        switch (arrayType) {
+            case "Random":
+                this.generateRandomArray();
+                break;
+            case "Steady Random":
+                this.generateSteadyArray();
+                break;
+            case "Sorted":
+                this.generateSortedArray();
+                break;
+            case "Reverse Sorted":
+                this.generateReverseSortedArray();
+                break;
+            case "Uniform":
+                this.generateUniformArray();
+                break;
+            case "Partial Uniform":
+                this.generatePartialUniformArray();
                 break;
             default:
                 break;
@@ -311,26 +312,7 @@ export default class SortingVisualizer extends React.Component {
     onChangeArraySize(size, arrayType){
         if (ARRAY_SIZE !== size) {
             ARRAY_SIZE = size;
-            switch (arrayType) {
-                case "Random":
-                    this.generateRandomArray();
-                    break;
-                case "Steady":
-                    this.generateSteadyArray();
-                    break;
-                case "Sorted":
-                    this.generateSortedArray();
-                    break;
-                case "Reverse Sorted":
-                    this.generateReverseSortedArray();
-                    break;
-                case "Uniform":
-                    this.generateUniformArray();
-                    break;
-                case "Partial Uniform":
-                    this.generatePartialUniformArray();
-                    break;
-            }
+            this.generateArray(arrayType);
         }
     }
 
@@ -351,7 +333,7 @@ export default class SortingVisualizer extends React.Component {
     render() {
         return (
             <div>
-                <Selector onChangeInput = {this.changeInput} onChangeSort = {this.changeSort} sort = {this.doSort}
+                <Selector onChangeInput = {this.generateArray} onChangeSort = {this.changeSort} sort = {this.doSort}
                 reset = {this.reset} pause = {this.pause} onChangeSize = {this.onChangeArraySize}
                 onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
                 <div className = {styles.arrayContainer}>

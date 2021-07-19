@@ -50,12 +50,12 @@ const ResumeButton = styled(StyledButton)({
     }
 })
 
-const buttonStyle = {marginBottom: "2%"}
+// const buttonStyle = {marginBottom: "2%"}
 
 export const Selector = (props) => {
 
-    const [inputType, setInputType] = useState("Random");
-    const [sortType, setSortType] = useState("Insertion Sort");
+    const [inputType, setInputType] = useState("Steady Random");
+    const [sortType, setSortType] = useState("Quick Sort");
 
     function changeInput(type){
         setInputType(type);
@@ -75,8 +75,8 @@ export const Selector = (props) => {
                         Array
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={inputType} style = {{width: "53%"}}>
+                        <Dropdown.Item onClick = {()=>changeInput("Steady Random")}>Steady Random Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Random")}>Random Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Steady")}>Steady Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Sorted")}>Sorted Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Uniform")}>Uniform Array</Dropdown.Item>
