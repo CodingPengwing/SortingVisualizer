@@ -5,6 +5,8 @@
 // Optimizing using tail call
 // https://www.geeksforgeeks.org/quicksort-tail-call-optimization-reducing-worst-case-space-log-n/
 
+import { range, randomIntFromInterval } from '../sortingAlgorithms/util';
+
 export function sort(props) {
     const array = props.array;
     const start = 0;
@@ -58,15 +60,9 @@ function partition(array, start, end, addToHistory) {
             mid++;
         }
     }
-
-    const pivotLeft = start, pivotRight = end;
-    let range = [];
-    for (let i = pivotLeft; i <= pivotRight; i++) { range.push(i); }
-    addToHistory({array: array.slice(), highlights: range.slice()});
-
-    return [start, mid-1];
-}
-
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max-min+1) + min);
+    // start is now our left pivot position (inclusive)
+    // end is now our right pivot position (inclusive)
+    let pivotRange = range(start, end+1);
+    addToHistory({array: array.slice(), highlights: pivotRange.slice()});
+    return [start, end];
 }

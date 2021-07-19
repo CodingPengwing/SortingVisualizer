@@ -1,53 +1,64 @@
-import * as quickSort from './quickSort';
-import * as quickSortOptimized from './quickSortOptimized';
-import * as mergeSort from './mergeSort';
-import * as heapSort from './heapSort';
-import * as insertionSort from './insertionSort';
-import * as selectionSort from './selectionSort';
-import * as bubbleSort from './bubbleSort';
-import * as gnomeSort from './gnomeSort';
-import * as shellSort from './shellSort';
-import * as cocktailShakerSort from './cocktailShakerSort';
+import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
+import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
+import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
+import { sort as gnomeSort } from '../sortingAlgorithms/gnomeSort';
+import { sort as heapSort } from '../sortingAlgorithms/heapSort';
+import { sort as insertionSort } from '../sortingAlgorithms/insertionSort';
+import { sort as introSort } from '../sortingAlgorithms/introSort';
+import { sort as mergeSort } from '../sortingAlgorithms/mergeSort';
+import { sort as quickSort } from '../sortingAlgorithms/quickSort';
+import { sort as quickSortOptimized } from '../sortingAlgorithms/quickSortOptimized';
+import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
+import { sort as shellSort } from '../sortingAlgorithms/shellSort';
 
-const ARRAY_SIZE = 10;
+const ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
 const MIN_VALUE = -2000;
 const MAX_VALUE = 2000;
 
 export function testSortingAlgorithms() {
-    console.log("Testing Quick Sort:");
-    testSort(quickSort.sort);
-    console.log("Testing Quick Sort Optimized:");
-    testSort(quickSortOptimized.sort);
-    // console.log("Testing Merge Sort:");
-    // testMergeSort();
-    console.log("Testing Heap Sort:");
-    testSort(heapSort.sort);
-    console.log("Testing Insertion Sort:");
-    testSort(insertionSort.sort);
-    console.log("Testing Selection Sort:");
-    testSort(selectionSort.sort);
+    var success = true;
     console.log("Testing Bubble Sort:");
-    testSort(bubbleSort.sort);
+    if (!testSort(bubbleSort)) success = false;
     console.log("Testing Cocktail Shaker Sort:");
-    testSort(cocktailShakerSort.sort);
+    if (!testSort(cocktailShakerSort)) success = false;
     console.log("Testing Gnome Sort:");
-    testSort(gnomeSort.sort);
+    if (!testSort(gnomeSort)) success = false;
+    console.log("Testing Heap Sort:");
+    if (!testSort(heapSort)) success = false;
+    console.log("Testing Insertion Sort:");
+    if (!testSort(insertionSort)) success = false;
+    console.log("Testing Merge Sort:");
+    if (!testSort(mergeSort)) success = false;
+    console.log("Testing Quick Sort:");
+    if (!testSort(quickSort)) success = false;
+    console.log("Testing Quick Sort Optimized:");
+    if (!testSort(quickSortOptimized)) success = false;
+    console.log("Testing Selection Sort:");
+    if (!testSort(selectionSort)) success = false;
     console.log("Testing Shell Sort:");
-    testSort(shellSort.sort);
+    if (!testSort(shellSort)) success = false;
+
+    if (success) console.log("All tests completed successfully. Dope!");
+    else console.log("Testing failed, try again human.");
 }
     
 function testSort(sortingAlgorithm) {
+    var success = true;
     for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-        const sortedArray = sortingAlgorithm({
+        const mySortedArray = sortingAlgorithm({
             array: array.slice(), 
             range: [0, array.length-1], 
             addToHistory: () => {},
         });
-        console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+        if (!arraysAreEqual(javaScriptSortedArray, mySortedArray)) {
+            success = false;
+        }
+        console.log(success);
     }
+    return success;
 }
 
 function randomArray() {

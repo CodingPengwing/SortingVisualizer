@@ -1,105 +1,50 @@
+import { range } from '../sortingAlgorithms/util';
+
 export function sort(props) {
-    const array = props.array;
-    
-    if (array.length <= 1) return array;
-    const halfway = Math.floor(array.length / 2);
-    const left = sort({array: array.slice(0, halfway), updateState: props.updateState});
-    const right = sort({array: array.slice(halfway), updateState: props.updateState});
-    let i = 0, j = 0;
-    let merge = [];
-    while (i < left.length && j < right.length) {
-        // console.log(props);
-        props.updateState(array, [i, j]);
-        // props.updateState({array: array, highlights: [i, j]});
-        if (left[i] <= right[j]) {
-            merge.push(left[i++]);
-        } else {
-            merge.push(right[j++]);
-        }
-    }
-    while (i < left.length) merge.push(left[i++]);
-    while (j < right.length) merge.push(right[j++]);
-    return merge;
+    const start = 0;
+    const end = props.array.length-1;
+    let sortedArray = mergeSort(props.array, start, end, props.addToHistory);
+    return sortedArray.slice();
 }
 
+// start is the starting index of the array
+// end is the last index of the array (inclusive)
+function mergeSort(array, start, end, addToHistory) {
+    if (end <= start) return array;
 
-// In-place merge sort
-// Code borrowed from https://github.com/clementmihailescu/Sorting-Visualizer-Tutorial.git
+    // Split down the middle and recurse left, right
+    const len = end-start+1;
+    const splitIdx = Math.ceil(start + len/2);
+    mergeSort(array, start, splitIdx-1, addToHistory);
+    mergeSort(array, splitIdx, end, addToHistory);
 
-// export function getMergeSortAnimations(array) {
-//     // const animations = [];
-//     if (array.length <= 1) return array;
-//     const auxiliaryArray = array.slice();
-//     mergeSortHelper(array, 0, array.length - 1, auxiliaryArray, animations);
-//     return animations;
-//   }
-  
-//   function mergeSortHelper(
-//     mainArray,
-//     startIdx,
-//     endIdx,
-//     auxiliaryArray,
-//     animations,
-//   ) {
-//     if (startIdx === endIdx) return;
-//     const middleIdx = Math.floor((startIdx + endIdx) / 2);
-//     mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray, animations);
-//     mergeSortHelper(auxiliaryArray, middleIdx + 1, endIdx, mainArray, animations);
-//     doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animations);
-//   }
-  
-//   function doMerge(
-//     mainArray,
-//     startIdx,
-//     middleIdx,
-//     endIdx,
-//     auxiliaryArray,
-//     animations,
-//   ) {
-//     let k = startIdx;
-//     let i = startIdx;
-//     let j = middleIdx + 1;
-//     while (i <= middleIdx && j <= endIdx) {
-//       // These are the values that we're comparing; we push them once
-//       // to change their color.
-//       animations.push([i, j]);
-//       // These are the values that we're comparing; we push them a second
-//       // time to revert their color.
-//       animations.push([i, j]);
-//       if (auxiliaryArray[i] <= auxiliaryArray[j]) {
-//         // We overwrite the value at index k in the original array with the
-//         // value at index i in the auxiliary array.
-//         animations.push([k, auxiliaryArray[i]]);
-//         mainArray[k++] = auxiliaryArray[i++];
-//       } else {
-//         // We overwrite the value at index k in the original array with the
-//         // value at index j in the auxiliary array.
-//         animations.push([k, auxiliaryArray[j]]);
-//         mainArray[k++] = auxiliaryArray[j++];
-//       }
-//     }
-//     while (i <= middleIdx) {
-//       // These are the values that we're comparing; we push them once
-//       // to change their color.
-//       animations.push([i, i]);
-//       // These are the values that we're comparing; we push them a second
-//       // time to revert their color.
-//       animations.push([i, i]);
-//       // We overwrite the value at index k in the original array with the
-//       // value at index i in the auxiliary array.
-//       animations.push([k, auxiliaryArray[i]]);
-//       mainArray[k++] = auxiliaryArray[i++];
-//     }
-//     while (j <= endIdx) {
-//       // These are the values that we're comparing; we push them once
-//       // to change their color.
-//       animations.push([j, j]);
-//       // These are the values that we're comparing; we push them a second
-//       // time to revert their color.
-//       animations.push([j, j]);
-//       // We overwrite the value at index k in the original array with the
-//       // value at index j in the auxiliary array.
-//       animations.push([k, auxiliaryArray[j]]);
-//       mainArray[k++] = auxiliaryArray[j++];
-//     }
-//   }
+    // Show the current section that's being sorted
+    addToHistory({array: array.slice(), highlights: range(start, end+1)});
+
+    let merge = [];
+    let i = start, j = splitIdx;
+    while (i < splitIdx && j < end + 1) {
+        addToHistory({array: array.slice(), highlights: [i, j]});
+        if (array[i] <= array[j]) {
+            merge.push(array[i++]);
+        } else {
+            merge.push(array[j++]);
+        }
+    }
+    while (i < splitIdx) {
+        addToHistory({array: array.slice(), highlights: [i, j-1]});
+        merge.push(array[i++]);
+    }
+    while (j < end + 1) {
+        addToHistory({array: array.slice(), highlights: [i-1, j]});
+        merge.push(array[j++]);
+    }
+
+    for (let i = 0; i < merge.length; i++) {
+        addToHistory({array: array.slice(), highlights: [start+i]});
+        array[start+i] = merge[i];
+    }
+
+    addToHistory({array: array.slice(), highlights: []});
+    return array;
+}

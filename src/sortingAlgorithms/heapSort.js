@@ -70,10 +70,6 @@ function maxHeapify(array, i, heapSize, addToHistory) {
         largest = rightChild;
     }
 
-    arrayCopy = array.slice();
-    arrayCopy.shift();
-    addToHistory({array: arrayCopy, highlights: [i-1, largest-1]});
-
     // Swap elements if a child is bigger than the parent
     if (largest !== i) {
         [array[i], array[largest]] = [array[largest], array[i]];
