@@ -109,7 +109,7 @@ export const Selector = (props) => {
                         {/* <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item> */}
                         <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Optimized Quick Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Quick Sort (Optimized)</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Tim Sort")}>Tim Sort</Dropdown.Item>
