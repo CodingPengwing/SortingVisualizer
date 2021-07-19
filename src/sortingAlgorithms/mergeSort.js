@@ -4,6 +4,7 @@ export function sort(props) {
     const start = 0;
     const end = props.array.length-1;
     let sortedArray = mergeSort(props.array, start, end, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
@@ -20,31 +21,32 @@ function mergeSort(array, start, end, addToHistory) {
 
     // Show the current section that's being sorted
     addToHistory({array: array.slice(), highlights: range(start, end+1)});
+    merge(array, start, splitIdx, end, addToHistory);
+    return array;
+}
 
-    let merge = [];
+function merge(array, start, splitIdx, end, addToHistory) {
+    let mergeArray = [];
     let i = start, j = splitIdx;
     while (i < splitIdx && j < end + 1) {
         addToHistory({array: array.slice(), highlights: [i, j]});
         if (array[i] <= array[j]) {
-            merge.push(array[i++]);
+            mergeArray.push(array[i++]);
         } else {
-            merge.push(array[j++]);
+            mergeArray.push(array[j++]);
         }
     }
     while (i < splitIdx) {
         addToHistory({array: array.slice(), highlights: [i, j-1]});
-        merge.push(array[i++]);
+        mergeArray.push(array[i++]);
     }
     while (j < end + 1) {
         addToHistory({array: array.slice(), highlights: [i-1, j]});
-        merge.push(array[j++]);
+        mergeArray.push(array[j++]);
     }
 
-    for (let i = 0; i < merge.length; i++) {
+    for (let i = 0; i < mergeArray.length; i++) {
         addToHistory({array: array.slice(), highlights: [start+i]});
-        array[start+i] = merge[i];
+        array[start+i] = mergeArray[i];
     }
-
-    addToHistory({array: array.slice(), highlights: []});
-    return array;
 }

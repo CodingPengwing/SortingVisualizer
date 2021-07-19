@@ -142,6 +142,8 @@ export default class SortingVisualizer extends React.Component {
             case "Partial Uniform":
                 this.generatePartialUniformArray();
                 break;
+            default:
+                break;
         }
     }
 
@@ -195,6 +197,8 @@ export default class SortingVisualizer extends React.Component {
                 break;
             case "Shell Sort":
                 this.setState({sortType: shellSort});
+                break;
+            default:
                 break;
         }
     }
