@@ -128,6 +128,7 @@ export default class SortingVisualizer extends React.Component {
         } 
         else {
             if (this.state.disableSlider) {
+                this.pause();
                 this.setState({disableSlider: false});
                 ARRAY_SIZE = 100;
                 this.generateSteadyArray();
