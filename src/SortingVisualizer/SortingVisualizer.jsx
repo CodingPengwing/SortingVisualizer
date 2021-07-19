@@ -23,7 +23,7 @@ import styles from './SortingVisualizer.module.scss';
 var ARRAY_SIZE = 100;
 var ANIMATION_SPEED = 10;
 const MIN_VALUE = 5;
-const MAX_VALUE = 500;
+const MAX_VALUE = 450;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -308,7 +308,7 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray.slice();
     }
 
-    onChangeArraySize(size){
+    onChangeArraySize(size, arrayType){
         if (ARRAY_SIZE !== size) {
             ARRAY_SIZE = size;
             switch (arrayType) {

@@ -1,5 +1,14 @@
 #dropdown-basic-button{
+    background-image: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 100%) !important;
     min-width: 180px !important;
     width: 200px !important;
     text-align: center;
+}
+
+#dropdown-basic-button:active{
+    box-shadow: none;
+}
+
+#dropdown-basic-button:focus{
+    box-shadow: none;
 }

@@ -22,31 +22,31 @@ const StyledButton = styled(Button)({
     width: "200px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(to left, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)",
+    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
 
     '&:hover':{
-        backgroundPosition: "right center",
+        backgroundPosition: "right bottom",
     }
 })
 
 const StyledButton2 = styled(StyledButton)({
-    backgroundImage: "linear-gradient(to left, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)",
+    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
-        backgroundPosition: "right center",
+        backgroundPosition: "right bottom",
     }
 })
 
 const PauseButton = styled(StyledButton)({
-    backgroundImage: "linear-gradient(to left, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)",
+    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
-        backgroundPosition: "right center",
+        backgroundPosition: "right bottom",
     }
 })
 
 const ResumeButton = styled(StyledButton)({
-    backgroundImage: "linear-gradient(to left, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)",
+    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
-        backgroundPosition: "right center",
+        backgroundPosition: "right bottom",
     }
 })
 
