@@ -4,7 +4,7 @@ import { sort as cocktailShakerSort } from './cocktailShakerSort';
 import { sort as gnomeSort } from './gnomeSort';
 import { sort as heapSort } from './heapSort';
 import { sort as insertionSort } from './insertionSort';
-import { sort as introSort } from './introSort';
+// import { sort as introSort } from './introSort';
 import { sort as mergeSort } from './mergeSort';
 import { sort as quickSort } from './quickSort';
 import { sort as quickSortOptimized } from './quickSortOptimized';
