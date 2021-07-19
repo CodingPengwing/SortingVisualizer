@@ -315,6 +315,9 @@ export default class SortingVisualizer extends React.Component {
                 case "Random":
                     this.generateRandomArray();
                     break;
+                case "Steady":
+                    this.generateSteadyArray();
+                    break;
                 case "Sorted":
                     this.generateSortedArray();
                     break;

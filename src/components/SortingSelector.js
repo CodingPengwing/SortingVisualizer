@@ -76,6 +76,7 @@ export const Selector = (props) => {
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={inputType} style = {{width: "53%"}}>
                         <Dropdown.Item onClick = {()=>changeInput("Random")}>Random Array</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput("Steady")}>Steady Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Sorted")}>Sorted Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeInput("Uniform")}>Uniform Array</Dropdown.Item>
@@ -99,18 +100,18 @@ export const Selector = (props) => {
                         Sort
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={sortType} style = {{width: "61%"}}>
-                        <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Bogo Sort")}>Bogo Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Bubble Sort")}>Bubble Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Cocktail Shaker Sort")}>Cocktail Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Bogo Sort")}>Bogo Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Gnome Sort")}>Gnome Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Optimized Quick Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
+                        {/* <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item> */}
+                        <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Optimized Quick Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
                         <Dropdown.Item onClick = {()=>changeSort("Tim Sort")}>Tim Sort</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginRight: "2%"}}>
