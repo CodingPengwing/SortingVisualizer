@@ -196,8 +196,6 @@ export default class SortingVisualizer extends React.Component {
             case "Shell Sort":
                 this.setState({sortType: shellSort});
                 break;
-            default:
-                this.setState({sortType: quickSortOptimized});
         }
     }
 

@@ -1,5 +1,6 @@
 // Optimizing using 3-way principle
 // https://www.techiedelight.com/quicksort-using-dutch-national-flag-algorithm/
+// https://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/
 
 // Optimizing using tail call
 // https://www.geeksforgeeks.org/quicksort-tail-call-optimization-reducing-worst-case-space-log-n/
@@ -28,8 +29,6 @@ function quickSort(array, start, end, addToHistory) {
     addToHistory({array: array.slice(), highlights: []});
     return array;
 }
-
-
 
 function partition(array, start, end, addToHistory) {
     if (end <= start) return [start, end];

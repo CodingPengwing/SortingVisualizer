@@ -6,13 +6,13 @@ export function sort(props) {
 function insertionSort(array, addToHistory) {
     if (array.length <= 1) return array;
     
-    for (let i=0; i<array.length; i++) {
+    for (let i = 1; i<array.length; i++) {
         let j = i - 1;
         addToHistory({array: array.slice(), highlights: [j, i]});
-        while (j >= 0 && array[j+1] < array[j]) {
-            addToHistory({array: array.slice(), highlights: [j+1, j]});
-            [array[j+1], array[j]] = [array[j], array[j+1]];
-            addToHistory({array: array.slice(), highlights: [j+1, j]});
+        while (j >= 0 && array[j] > array[j+1]) {
+            addToHistory({array: array.slice(), highlights: [j, j+1]});
+            [array[j], array[j+1]] = [array[j+1], array[j]];
+            addToHistory({array: array.slice(), highlights: [j, j+1]});
             j -= 1;
         }
         addToHistory({array: array.slice(), highlights: []});
