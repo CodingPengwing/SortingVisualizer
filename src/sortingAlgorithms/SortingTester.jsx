@@ -48,7 +48,7 @@ export function testSortingAlgorithms() {
     
 function testSort(sortingAlgorithm) {
     var success = true;
-    // for (let i = 0; i < TEST_RUNS; i++) {
+    for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
         const mySortedArray = sortingAlgorithm({
@@ -60,7 +60,7 @@ function testSort(sortingAlgorithm) {
             success = false;
         }
         console.log(success);
-    // }
+    }
     return success;
 }
 
