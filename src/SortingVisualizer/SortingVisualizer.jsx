@@ -199,6 +199,9 @@ export default class SortingVisualizer extends React.Component {
             case "Shell Sort":
                 this.setState({sortType: shellSort});
                 break;
+            case "Tim Sort":
+                this.setState({sortType: timSort});
+                break;
             default:
                 break;
         }
@@ -207,7 +210,6 @@ export default class SortingVisualizer extends React.Component {
     generateRandomArray() {
         const array = this.randomArray();
         this.updateState(array.slice(), []);
-        // console.log(this.state.array);
     }
 
     generateSortedArray() {
