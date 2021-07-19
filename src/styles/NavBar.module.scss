@@ -2,7 +2,7 @@
 
 .navbar{
     background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, black 70%);
+    background-image: linear-gradient(90deg, #0093E9 0%, white 99%);
     display: flex;
     justify-content: left;
     padding: 0.5%;
@@ -24,10 +24,16 @@
 
 .author{
     position: relative;
-    left: 72%;
-    color: white;
-    font-family: $genFont;
-    font-size: 1.3em;
+    font-family: $authorFont;
+    font-size: 1.1em;
     margin-top: 0.2em;
-    
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    padding: 0.8% 0.8%;
+}
+
+.icons{
+    text-align: right;
+    width: 10%;
+    position: relative;
 }

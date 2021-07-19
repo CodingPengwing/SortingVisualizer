@@ -20,7 +20,7 @@ import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
 var ARRAY_SIZE = 100;
-var ANIMATION_SPEED = 5;
+var ANIMATION_SPEED = 10;
 const MIN_VALUE = 5;
 const MAX_VALUE = 500;
 const PRIMARY_COLOR = '#00a1c9';
@@ -284,17 +284,33 @@ export default class SortingVisualizer extends React.Component {
         tester.testSortingAlgorithms();
     }
 
-    onChangeArraySize(size){
+    onChangeArraySize(size, arrayType){
         if (ARRAY_SIZE !== size) {
             ARRAY_SIZE = size;
-            this.generateRandomArray();
+            switch (arrayType) {
+                case "Random":
+                    this.generateRandomArray();
+                    break;
+                case "Sorted":
+                    this.generateSortedArray();
+                    break;
+                case "Reverse Sorted":
+                    this.generateReverseSortedArray();
+                    break;
+                case "Uniform":
+                    this.generateUniformArray();
+                    break;
+                case "Partial Uniform":
+                    this.generatePartialUniformArray();
+                    break;
+            }
         }
     }
 
     onChangeSortSpeed(speed) {
         if (ANIMATION_SPEED !== speed) {
             let percentageSpeed = speed / 100;
-            ANIMATION_SPEED = 505 - (500 * percentageSpeed);
+            ANIMATION_SPEED = 510 - (500 * percentageSpeed);
             this.pause();
             let count = 1;
             for (let i=this.state.resumePoint; i<this.history.length; i++){
@@ -317,9 +333,9 @@ export default class SortingVisualizer extends React.Component {
                         highlights={this.state.highlights}
                     />
                 </div>
-                <div className={styles.buttons}>
+                {/*<div className={styles.buttons}>
                     <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
-                </div>
+                </div>*/}
             </div>
         );
     }
