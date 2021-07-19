@@ -13,6 +13,7 @@ import { sort as quickSort } from '../sortingAlgorithms/quickSort';
 import { sort as quickSortOptimized } from '../sortingAlgorithms/quickSortOptimized';
 import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
 import { sort as shellSort } from '../sortingAlgorithms/shellSort';
+import { sort as timSort } from '../sortingAlgorithms/timSort';
 
 import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
