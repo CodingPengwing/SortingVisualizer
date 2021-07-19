@@ -1,5 +1,6 @@
 export function sort(props) {
     const sortedArray = gnomeSort(props.array, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
@@ -12,9 +13,10 @@ function gnomeSort(array, addToHistory) {
         else {
             [array[i-1], array[i]] = [array[i], array[i-1]];
             addToHistory({array: array.slice(), highlights: [i-1, i]});
-            if (i > 1) { i--; }
+            if (i > 1) { 
+                i--; 
+            }
         }
     }
-    addToHistory({array: array.slice(), highlights: []});
     return array;
 }

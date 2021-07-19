@@ -1,5 +1,6 @@
 export function sort(props){
     const sortedArray = selectionSort(props.array, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
@@ -18,12 +19,9 @@ function selectionSort(array, addToHistory){
             }
         }
 
-        let temp = array[startIndex];
-        array[startIndex] = array[minIndex];
-        array[minIndex] = temp;
-        addToHistory({array: array.slice(), highlights: [startIndex, minIndex]})
+        addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
+        [array[startIndex], array[minIndex]] = [array[minIndex], array[startIndex]];
+        addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
     }
-
-    addToHistory({array: array.slice(), highlights: []});
     return array;
 }

@@ -1,5 +1,6 @@
 export function sort(props) {
     const sortedArray = heapSort(props.array, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
@@ -13,8 +14,8 @@ function heapSort(array, addToHistory) {
     let heapSize = array.length;
     let arrayCopy;
     for (let i=array.length-1; i>0; i--) {
-        
-        // We have to remove the sentinel every time we add to history
+        // We have to remove the sentinel every time we add to history.
+        // All the highlight indices have -1 because of the sentinel.
         arrayCopy = array.slice();
         arrayCopy.shift();
         addToHistory({array: arrayCopy, highlights: [1-1, i-1]});
@@ -29,16 +30,12 @@ function heapSort(array, addToHistory) {
         maxHeapify(array, 1, heapSize, addToHistory);
     }
 
-    arrayCopy = array.slice();
-    arrayCopy.shift();
-    addToHistory({array: arrayCopy, highlights: []});
-
-    // Remove the sentinel and return a copy
+    // Remove the sentinel
     array.shift();
-    return array.slice();
+    return array;
 }
 
-
+// Turns the entire array into a heap
 function bottomUpHeapify(array, addToHistory) {
     const n = array.length;
     const heapSize = n;
@@ -47,6 +44,7 @@ function bottomUpHeapify(array, addToHistory) {
     }
 }
 
+// Ensures that all elements related to index i satisfy the conditions of a heap.
 function maxHeapify(array, i, heapSize, addToHistory) {
     // If this element has no children
     if (i*2 >= heapSize) return;

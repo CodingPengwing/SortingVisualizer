@@ -1,21 +1,21 @@
-// import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
-import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
-import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
-import { sort as gnomeSort } from '../sortingAlgorithms/gnomeSort';
-import { sort as heapSort } from '../sortingAlgorithms/heapSort';
-import { sort as insertionSort } from '../sortingAlgorithms/insertionSort';
-import { sort as introSort } from '../sortingAlgorithms/introSort';
-import { sort as mergeSort } from '../sortingAlgorithms/mergeSort';
-import { sort as quickSort } from '../sortingAlgorithms/quickSort';
-import { sort as quickSortOptimized } from '../sortingAlgorithms/quickSortOptimized';
-import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
-import { sort as shellSort } from '../sortingAlgorithms/shellSort';
-import { sort as timSort } from '../sortingAlgorithms/timSort';
+// import { sort as bogoSort } from './bogoSort';
+import { sort as bubbleSort } from './bubbleSort';
+import { sort as cocktailShakerSort } from './cocktailShakerSort';
+import { sort as gnomeSort } from './gnomeSort';
+import { sort as heapSort } from './heapSort';
+import { sort as insertionSort } from './insertionSort';
+import { sort as introSort } from './introSort';
+import { sort as mergeSort } from './mergeSort';
+import { sort as quickSort } from './quickSort';
+import { sort as quickSortOptimized } from './quickSortOptimized';
+import { sort as selectionSort } from './selectionSort';
+import { sort as shellSort } from './shellSort';
+import { sort as timSort } from './timSort';
 
-const ARRAY_SIZE = 50;
+const ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
-const MIN_VALUE = 0;
-const MAX_VALUE = 500;
+const MIN_VALUE = -2000;
+const MAX_VALUE = 2000;
 
 export function testSortingAlgorithms() {
     var success = true;

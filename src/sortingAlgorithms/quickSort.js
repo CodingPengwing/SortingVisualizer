@@ -2,12 +2,12 @@ export function sort(props) {
     const start = 0;
     const end = props.array.length-1;
     const sortedArray = quickSort(props.array, start, end, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
 function quickSort(array, start, end, addToHistory) {
     if (end <= start) return array;
-
     const p = partition(array, start, end, addToHistory);
     quickSort(array, start, p-1, addToHistory);
     quickSort(array, p+1, end, addToHistory);
@@ -22,17 +22,17 @@ function partition(array, start, end, addToHistory) {
     let j = end;
     while (true) {
         while (array[i] <= pivot && i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i]});
+            addToHistory({array: array.slice(), highlights: [start, i, j]});
             i += 1;
         }
         while (array[j] > pivot && i <= j) {
-            addToHistory({array: array.slice(), highlights: [start, j]});
+            addToHistory({array: array.slice(), highlights: [start, i, j]});
             j -= 1;
         }
         if (i < j) {
-            addToHistory({array: array.slice(), highlights: [i, j]});
+            addToHistory({array: array.slice(), highlights: [start, i, j]});
             [array[i], array[j]] = [array[j], array[i]];
-            addToHistory({array: array.slice(), highlights: [i, j]});
+            addToHistory({array: array.slice(), highlights: [start, i, j]});
         } else {
             break;
         }
@@ -43,7 +43,6 @@ function partition(array, start, end, addToHistory) {
     [array[start], array[j]] = [array[j], array[start]];
     addToHistory({array: array.slice(), highlights: [start, j]});
     
-    addToHistory({array: array.slice(), highlights: []});
     let pivotIndex = j;
     return pivotIndex;
 }

@@ -1,5 +1,6 @@
 export function sort(props) {
     const sortedArray = cocktailShakerSort(props.array, props.addToHistory);
+    props.addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
@@ -25,7 +26,7 @@ function cocktailShakerSort(array, addToHistory) {
         }
         upperLimit--;
         if (sorted) { break; }
-
+        
         sorted = true;
         i = upperLimit;
         while (i > lowerLimit) {
@@ -41,6 +42,5 @@ function cocktailShakerSort(array, addToHistory) {
         if (sorted) { break; }
     }
 
-    addToHistory({array: array.slice(), highlights: []});
     return array;
 }
