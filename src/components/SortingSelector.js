@@ -92,6 +92,7 @@ export const Selector = (props) => {
             <div className = {styles.selector}>
                 <DropdownButton id="dropdown-basic-button" title={inputType} style = {{marginRight: "3%"}}>
                     <Dropdown.Item onClick = {()=>changeInput("Random")}>Random Array</Dropdown.Item>
+                    <Dropdown.Item onClick = {()=>changeInput("Steady")}>Steady Array</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeInput("Sorted")}>Sorted Array</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeInput("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
                     <Dropdown.Item onClick = {()=>changeInput("Uniform")}>Uniform Array</Dropdown.Item>

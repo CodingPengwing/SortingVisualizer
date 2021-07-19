@@ -1,6 +1,7 @@
 import React from 'react';
 
-import * as tester from '../sortingAlgorithms/SortingTester';
+import { randomIntFromInterval, range, shuffle } from '../sortingAlgorithms/util';
+import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
 import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
 import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
 import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
@@ -19,10 +20,10 @@ import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
-var ARRAY_SIZE = 100;
+var ARRAY_SIZE = 98;
 var ANIMATION_SPEED = 5;
-const MIN_VALUE = 5;
-const MAX_VALUE = 500;
+var MIN_VALUE = 5;
+var MAX_VALUE = 505;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -62,7 +63,7 @@ class Array extends React.Component {
         // Done to maintain the height of the array container
         bars.push(<div 
             className={styles.arrayBar}
-            style={{height: 530, backgroundColor: "black"}}
+            style={{height: MAX_VALUE + 30, backgroundColor: "black"}}
             key={i}
             >
         </div>)
@@ -118,18 +119,13 @@ export default class SortingVisualizer extends React.Component {
         this.generateRandomArray();
     }
 
-    randomArray() {
-        const array = [];
-        for (let i=0; i<ARRAY_SIZE; i++) {
-            array.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
-        }
-        return array.slice();
-    }
-
     changeInput(inputType){
         switch (inputType) {
             case "Random":
                 this.generateRandomArray();
+                break;
+            case "Steady":
+                this.generateSteadyArray();
                 break;
             case "Sorted":
                 this.generateSortedArray();
@@ -208,24 +204,47 @@ export default class SortingVisualizer extends React.Component {
     }
 
     generateRandomArray() {
-        const array = this.randomArray();
+        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
+
+        const array = [];
+        for (let i=0; i < ARRAY_SIZE; i++) {
+            array.push(MIN_VALUE + gap * randomIntFromInterval(0, Math.floor(MAX_VALUE/gap)));
+        }
+
+        this.updateState(array.slice(), []);
+    }
+
+    generateSteadyArray() {
+        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
+        const multipliers = range(0, ARRAY_SIZE);
+        shuffle(multipliers);
+        const array = [];
+        for (let i = 0; i < multipliers.length; i++) {
+            array.push(MIN_VALUE + gap * multipliers[i]);
+        }
         this.updateState(array.slice(), []);
     }
 
     generateSortedArray() {
-        const array = this.randomArray();
-        const sortedArray = array.sort((a, b) => a - b);
-        this.updateState(sortedArray.slice(), []);
+        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
+        const array = [];
+        for (let i = 0; i < ARRAY_SIZE; i++) {
+            array.push(MIN_VALUE + gap * i);
+        }
+        this.updateState(array.slice(), []);
     }
 
     generateReverseSortedArray() {
-        const array = this.randomArray();
-        const reverseSortedArray = array.sort((a, b) => b - a);
-        this.updateState(reverseSortedArray.slice(), []);
+        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
+        const array = [];
+        for (let i = ARRAY_SIZE - 1; i >= 0; i--) {
+            array.push(MIN_VALUE + gap * i);
+        }
+        this.updateState(array.slice(), []);
     }
 
     generateUniformArray() {
-        const value = randomIntFromInterval(MIN_VALUE, MAX_VALUE);
+        const value = randomIntFromInterval(Math.floor(MAX_VALUE/2), MAX_VALUE);
         const array = [];
         for (let i = 0; i < ARRAY_SIZE; i++) { 
             array[i] = value; 
@@ -234,15 +253,24 @@ export default class SortingVisualizer extends React.Component {
     }
 
     generatePartialUniformArray() {
+        const diffValues = 5;
+        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / diffValues);
         const values = [];
-        for (let i = 0; i < 5; i++) {
-            values.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
+        for (let i = 1; i <= diffValues; i++) {
+            values.push(MIN_VALUE + i * gap);
         }
 
         const array = [];
-        for (let i = 0; i < ARRAY_SIZE; i++) { 
-            array[i] = values[randomIntFromInterval(0, 4)]; 
+        for (let i = 0; i < diffValues; i++) {
+            for (let j = 0; j < Math.floor(ARRAY_SIZE/diffValues); j++) {
+                array.push(MIN_VALUE + values[i]);
+            }
         }
+
+        while (array.length < ARRAY_SIZE) {
+            array.push(values[randomIntFromInterval(0, 4)]);
+        }
+        shuffle(array);
         this.updateState(array.slice(), []);
     }
 
@@ -280,10 +308,6 @@ export default class SortingVisualizer extends React.Component {
         return sortedArray.slice();
     }
 
-    test() {
-        tester.testSortingAlgorithms();
-    }
-
     onChangeArraySize(size){
         if (ARRAY_SIZE !== size) {
             ARRAY_SIZE = size;
@@ -318,13 +342,9 @@ export default class SortingVisualizer extends React.Component {
                     />
                 </div>
                 <div className={styles.buttons}>
-                    <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
+                    <StyledButton onClick={() => testSortingAlgorithms()}>Run Tests</StyledButton>
                 </div>
             </div>
         );
     }
-}
-
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max-min+1) + min);
 }
