@@ -268,7 +268,7 @@ export default class SortingVisualizer extends React.Component {
         }
 
         while (array.length < ARRAY_SIZE) {
-            array.push(values[randomIntFromInterval(0, 4)]);
+            array.push(MIN_VALUE + values[randomIntFromInterval(0, 4)]);
         }
         shuffle(array);
         this.updateState(array.slice(), []);
