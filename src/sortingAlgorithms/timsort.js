@@ -1,23 +1,26 @@
 // About half of the code in this file was borrowed from
 // https://www.geeksforgeeks.org/timsort/
 
-import { range } from "./util";
+import { range, swap } from "./util";
+
+var addToHistory;
 
 export function sort(props) {
-    const sortedArray = timSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = timSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
 const MIN_MERGE = 16;
 
-function timSort(array, addToHistory) {
+function timSort(array) {
     let n = array.length;
     const minRun = calculateMinRun(n);
 
     for (let start = 0; start < n; start += minRun) {
         const end = Math.min(start + minRun - 1, n - 1);
-        insertionSort(array, start, end, addToHistory);
+        insertionSort(array, start, end);
     }
 
     let size = minRun;
@@ -26,7 +29,7 @@ function timSort(array, addToHistory) {
             const split = Math.min(n - 1, start + size - 1);
             const end = Math.min((start + 2 * size - 1), (n - 1));
             if (split < end) {
-                merge(array, start, split, end, addToHistory);
+                merge(array, start, split, end);
             }
         }
         size *= 2;
@@ -44,7 +47,7 @@ function calculateMinRun(n) {
     return n + r;
 }
 
-function insertionSort(array, start, end, addToHistory) {
+function insertionSort(array, start, end) {
     if (end <= start) return array;
     // Show the current section that's being sorted
     addToHistory({array: array.slice(), highlights: range(start, end+1)});
@@ -53,7 +56,7 @@ function insertionSort(array, start, end, addToHistory) {
         let j = i;
         addToHistory({array: array.slice(), highlights: [j-1, j]});
         while (j > start && array[j] < array[j-1]) {
-            [array[j-1], array[j]] = [array[j], array[j-1]];
+            swap(array, j-1, j);
             addToHistory({array: array.slice(), highlights: [j-1, j]});
             j--;
         }
@@ -61,7 +64,7 @@ function insertionSort(array, start, end, addToHistory) {
     return array;
 }
 
-function merge(array, start, split, end, addToHistory) {
+function merge(array, start, split, end) {
     if (end <= start) return array;
 
     // Show the current section that's being sorted

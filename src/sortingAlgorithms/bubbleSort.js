@@ -1,10 +1,15 @@
+import { swap } from './util';
+
+var addToHistory;
+
 export function sort(props) {
-    const sortedArray = bubbleSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = bubbleSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function bubbleSort(array, addToHistory) {
+function bubbleSort(array) {
     if (array.length <= 1) return array;
     let sorted = false;
     while (!sorted) {
@@ -12,7 +17,7 @@ function bubbleSort(array, addToHistory) {
         for (let i=1; i<array.length; i++) {
             addToHistory({array: array.slice(), highlights: [i-1, i]});
             if (array[i-1] > array[i]) {
-                [array[i-1], array[i]] = [array[i], array[i-1]]
+                swap(array, i-1, i);
                 addToHistory({array: array.slice(), highlights: [i-1, i]});
                 sorted = false;
             }

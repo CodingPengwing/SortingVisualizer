@@ -1,10 +1,15 @@
+import { swap } from './util';
+
+var addToHistory;
+
 export function sort(props) {
-    const sortedArray = cocktailShakerSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = cocktailShakerSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function cocktailShakerSort(array, addToHistory) {
+function cocktailShakerSort(array) {
     if (array.length <= 1) return array;
 
     let sorted = false;
@@ -18,7 +23,7 @@ function cocktailShakerSort(array, addToHistory) {
         while (i <= upperLimit) {
             addToHistory({array: array.slice(), highlights: [i-1, i]});
             if (array[i-1] > array[i]) {
-                [array[i-1], array[i]] = [array[i], array[i-1]]
+                swap(array, i-1, i);
                 sorted = false;
                 addToHistory({array: array.slice(), highlights: [i-1, i]});
             }
@@ -32,7 +37,7 @@ function cocktailShakerSort(array, addToHistory) {
         while (i > lowerLimit) {
             addToHistory({array: array.slice(), highlights: [i-1, i]});
             if (array[i-1] > array[i]) {
-                [array[i-1], array[i]] = [array[i], array[i-1]]
+                swap(array, i-1, i);
                 sorted = false;
                 addToHistory({array: array.slice(), highlights: [i-1, i]});
             }

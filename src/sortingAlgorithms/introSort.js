@@ -1,9 +1,14 @@
+// import { swap } from "./util";
+
+var addToHistory;
+
 export function sort(props) {
-    const sortedArray = introSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = introSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function introSort(array, addToHistory) {
+function introSort(array) {
 
 }

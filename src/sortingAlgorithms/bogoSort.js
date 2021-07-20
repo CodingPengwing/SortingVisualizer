@@ -1,14 +1,17 @@
 import { range, isSorted } from './util';
 
+var addToHistory;
+
 export function sort(props) {
+    addToHistory = props.addToHistory;
     // The size of input for bogoSort is limited to 7 due to the factorial growth.
     if (props.array.length > 7) return props.array.slice();
-    const sortedArray = bogoSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    const sortedArray = bogoSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function bogoSort(array, addToHistory) {
+function bogoSort(array) {
     let permutations = perm(array);
     for (let i = 0; i < permutations.length; i++) {
         addToHistory({array: permutations[i], highlights: range(0, array.length)});

@@ -1,10 +1,13 @@
+var addToHistory;
+
 export function sort(props) {
-    const sortedArray = shellSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = shellSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function shellSort(array, addToHistory) {
+function shellSort(array) {
     // Generate gaps sequence
     let h = 1;
     while (h < array.length) {

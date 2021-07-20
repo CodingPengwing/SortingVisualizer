@@ -1,28 +1,31 @@
 import { range } from './util';
 
+var addToHistory;
+
 export function sort(props) {
+    addToHistory = props.addToHistory;
     const start = 0;
     const end = props.array.length-1;
-    let sortedArray = mergeSort(props.array, start, end, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    let sortedArray = mergeSort(props.array, start, end);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
 // start is the starting index of the array
 // end is the last index of the array (inclusive)
-function mergeSort(array, start, end, addToHistory) {
+function mergeSort(array, start, end) {
     if (end <= start) return array;
 
     // Split down the middle and recurse left, right
     const len = end-start+1;
     const splitIdx = Math.ceil(start + len/2);
-    mergeSort(array, start, splitIdx-1, addToHistory);
-    mergeSort(array, splitIdx, end, addToHistory);
-    merge(array, start, splitIdx, end, addToHistory);
+    mergeSort(array, start, splitIdx-1);
+    mergeSort(array, splitIdx, end);
+    merge(array, start, splitIdx, end);
     return array;
 }
 
-function merge(array, start, splitIdx, end, addToHistory) {
+function merge(array, start, splitIdx, end) {
     if (end <= start) return array;
 
     // Show the current section that's being sorted

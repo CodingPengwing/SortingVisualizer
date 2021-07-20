@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { randomIntFromInterval, range, shuffle } from '../sortingAlgorithms/util';
-// import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
+import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
 import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
 import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
 import { sort as cocktailShakerSort } from '../sortingAlgorithms/cocktailShakerSort';
@@ -117,6 +117,7 @@ export default class SortingVisualizer extends React.Component {
 
     componentDidMount() {
         this.generateSteadyArray();
+        testSortingAlgorithms();
     }
 
     changeSort(sortType){
@@ -344,9 +345,6 @@ export default class SortingVisualizer extends React.Component {
                         highlights={this.state.highlights}
                     />
                 </div>
-                {/*<div className={styles.buttons}>
-                    <StyledButton onClick={() => this.test()}>Run Tests</StyledButton>
-                </div>*/}
             </div>
         );
     }

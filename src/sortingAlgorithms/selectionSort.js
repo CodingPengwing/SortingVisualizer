@@ -1,10 +1,15 @@
-export function sort(props){
-    const sortedArray = selectionSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+import { swap } from "./util";
+
+var addToHistory;
+
+export function sort(props) {
+    addToHistory = props.addToHistory;
+    const sortedArray = selectionSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function selectionSort(array, addToHistory){
+function selectionSort(array){
     if (array.length <= 1) {return array};
     let length = array.length;
 
@@ -20,7 +25,7 @@ function selectionSort(array, addToHistory){
         }
 
         addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
-        [array[startIndex], array[minIndex]] = [array[minIndex], array[startIndex]];
+        swap(array, startIndex, minIndex);
         addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
     }
     return array;

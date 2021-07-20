@@ -5,34 +5,37 @@
 // Optimizing using tail call
 // https://www.geeksforgeeks.org/quicksort-tail-call-optimization-reducing-worst-case-space-log-n/
 
-import { range, randomIntFromInterval } from '../sortingAlgorithms/util';
+import { range, randomIntFromInterval, swap } from './util';
+
+var addToHistory;
 
 export function sort(props) {
+    addToHistory = props.addToHistory;
     const array = props.array;
     const start = 0;
     const end = array.length-1;
-    const sortedArray = quickSort(array, start, end, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    const sortedArray = quickSort(array, start, end);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function quickSort(array, start, end, addToHistory) {
+function quickSort(array, start, end) {
     // Loop for tail call optimization.
     while (start < end) {
-        const [pivotLeft, pivotRight] = partition(array, start, end, addToHistory);
+        const [pivotLeft, pivotRight] = partition(array, start, end);
         if (pivotLeft - start < end - pivotRight) {
-            quickSort(array, start, pivotLeft-1, addToHistory);
+            quickSort(array, start, pivotLeft-1);
             start = pivotRight + 1;
         }
         else {
-            quickSort(array, pivotRight+1, end, addToHistory);
+            quickSort(array, pivotRight+1, end);
             end = pivotLeft - 1;
         }
     }
     return array;
 }
 
-function partition(array, start, end, addToHistory) {
+function partition(array, start, end) {
     if (end <= start) return [start, end];
 
     //  If this section has more than 5 elements
@@ -40,7 +43,7 @@ function partition(array, start, end, addToHistory) {
         // Choose pivot at random to reduce chance of O(n^2) worst case.
         let pivotIndex = randomIntFromInterval(start, end);
         addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
-        [array[start], array[pivotIndex]] = [array[pivotIndex], array[start]];
+        swap(array, start, pivotIndex);
         addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
     }
 
@@ -50,13 +53,13 @@ function partition(array, start, end, addToHistory) {
     while (mid <= end) {
         addToHistory({array: array.slice(), highlights: [start, mid, end]});
         if (array[mid] < pivot) {
-            [array[start], array[mid]] = [array[mid], array[start]];
+            swap(array, start, mid);
             addToHistory({array: array.slice(), highlights: [start, mid]});
             start++;
             mid++;
         } 
         else if (array[mid] > pivot) {
-            [array[mid], array[end]] = [array[end], array[mid]];
+            swap(array, mid, end);
             addToHistory({array: array.slice(), highlights: [start, mid, end]});
             end--;
         } 

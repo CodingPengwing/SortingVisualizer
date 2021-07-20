@@ -1,16 +1,21 @@
+import { swap } from "./util";
+
+var addToHistory;
+
 export function sort(props) {
-    const sortedArray = insertionSort(props.array, props.addToHistory);
-    props.addToHistory({array: sortedArray.slice(), highlights: []});
+    addToHistory = props.addToHistory;
+    const sortedArray = insertionSort(props.array);
+    addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-function insertionSort(array, addToHistory) {
+function insertionSort(array) {
     if (array.length <= 1) return array;
     for (let i = 1; i < array.length; i++) {
         let j = i - 1;
         addToHistory({array: array.slice(), highlights: [j, i]});
         while (j >= 0 && array[j] > array[j+1]) {
-            [array[j], array[j+1]] = [array[j+1], array[j]];
+            swap(array, j, j+1);
             addToHistory({array: array.slice(), highlights: [j, j+1]});
             j -= 1;
         }
