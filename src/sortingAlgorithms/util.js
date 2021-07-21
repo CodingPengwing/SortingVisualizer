@@ -64,7 +64,7 @@ export function generateSteadyArray(arraySize, minValue, maxValue) {
 export function generateSortedArray(arraySize, minValue, maxValue) {
     const gap = Math.floor((maxValue - minValue) / arraySize);
     let array = [];
-    for (let i = 0; i < arraySize; i++) {
+    for (let i = 1; i <= arraySize; i++) {
         array.push(minValue + gap * i);
     }
     return array;
@@ -73,17 +73,17 @@ export function generateSortedArray(arraySize, minValue, maxValue) {
 export function generateReverseSortedArray(arraySize, minValue, maxValue) {
     const gap = Math.floor((maxValue - minValue) / arraySize);
     let array = [];
-    for (let i = arraySize - 1; i >= 0; i--) {
+    for (let i = arraySize; i > 0; i--) {
         array.push(minValue + gap * i);
     }
     return array;
 }
 
 export function generateUniformArray(arraySize, minValue, maxValue) {
-    const value = randomIntFromInterval(Math.floor(maxValue/2), maxValue);
+    const value = randomIntFromInterval(Math.floor(maxValue/2), Math.floor(maxValue/4)*3);
     let array = [];
     for (let i = 0; i < arraySize; i++) { 
-        array[i] = value; 
+        array[i] = value;
     }
     return array;
 }
