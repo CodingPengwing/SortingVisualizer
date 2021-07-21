@@ -21,6 +21,8 @@ function timSort(array) {
     for (let start = 0; start < n; start += minRun) {
         const end = Math.min(start + minRun - 1, n - 1);
         insertionSort(array, start, end);
+        // Show the section that has just been sorted
+        addToHistory({array: array.slice(), highlights: range(start, end+1)});
     }
 
     let size = minRun;
@@ -29,7 +31,12 @@ function timSort(array) {
             const split = Math.min(n - 1, start + size - 1);
             const end = Math.min((start + 2 * size - 1), (n - 1));
             if (split < end) {
-                merge(array, start, split, end);
+                // Only merge the left and right arrays if elements are out of order.
+                if (array[split] >= array[split+1]) {
+                    merge(array, start, split, end);
+                }
+                // Show the section that has just been sorted
+                addToHistory({array: array.slice(), highlights: range(start, end+1)});
             }
         }
         size *= 2;
@@ -49,8 +56,6 @@ function calculateMinRun(n) {
 
 function insertionSort(array, start, end) {
     if (end <= start) return array;
-    // Show the current section that's being sorted
-    addToHistory({array: array.slice(), highlights: range(start, end+1)});
     // Sort the section using insertion method
     for (let i = start+1; i < end+1; i++) {
         let j = i;
@@ -67,8 +72,6 @@ function insertionSort(array, start, end) {
 function merge(array, start, split, end) {
     if (end <= start) return array;
 
-    // Show the current section that's being sorted
-    addToHistory({array: array.slice(), highlights: range(start, end+1)});
     let mergeArray = [];
     let i = start, j = split+1;
     while (i <= split && j <= end) {

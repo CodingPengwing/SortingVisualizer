@@ -57,7 +57,7 @@ const HIGHLIGHT_COLOR = '#832380';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
-var TESTING = false;
+var TESTING = true;
 
 function Bar(props) {
     var color = PRIMARY_COLOR;
