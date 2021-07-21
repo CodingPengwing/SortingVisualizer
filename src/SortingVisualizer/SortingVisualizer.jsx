@@ -43,9 +43,11 @@ export const REVERSE_SORTED_ARRAY = "Reverse Sorted Array";
 export const UNIFORM_ARRAY = "Uniform Array";
 export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
-var MAX_ARRAY_SIZE = 100;
-var MIN_VALUE = 5;
-var MAX_VALUE = 505;
+const MAX_ARRAY_SIZE = 100;
+const MIN_VALUE = 5;
+const MAX_VALUE = 505;
+const MAX_ANIMATION_SPEED = 510;
+const ANIMATION_SPEED_RANGE = 500;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -241,18 +243,19 @@ export default class SortingVisualizer extends React.Component {
             const originalArray = this.history[0].array.slice();
             this.pause();
             this.clearHistory();
-            this.setState({array: originalArray, highlights: []});
+            this.setState({array: originalArray, highlights: [], resumePoint: 0});
         }
     }
 
     pause() {
         let arrLen = this.state.timeoutIDArray.length;
-        for (let i=this.state.resumePoint; i < arrLen; i++){
+        for (let i=0; i < arrLen; i++){
             clearTimeout(this.state.timeoutIDArray[i]);
         }
     }
 
     resume() {
+        this.pause();
         this.animateHistory(this.state.resumePoint);
     }
 
@@ -269,10 +272,10 @@ export default class SortingVisualizer extends React.Component {
 
     doSort() {
         this.pause();
-        // this.clearForwardHistory();
-        this.clearHistory();
+        this.clearForwardHistory();
+        // this.clearHistory();
         this.state.sort({array: this.state.array, addToHistory: this.addToHistory});
-        this.animateHistory();
+        this.animateHistory(this.state.resumePoint);
     }
 
     onChangeArraySize(size, arrayType){
@@ -286,7 +289,7 @@ export default class SortingVisualizer extends React.Component {
         var animationSpeed = this.state.animationSpeed;
         if (animationSpeed !== speed) {
             let percentageSpeed = speed/100;
-            animationSpeed = 510 - (500 * percentageSpeed);
+            animationSpeed = MAX_ANIMATION_SPEED - (ANIMATION_SPEED_RANGE * percentageSpeed);
             this.setState({animationSpeed: animationSpeed});
             this.pause();
             let count = 1;
