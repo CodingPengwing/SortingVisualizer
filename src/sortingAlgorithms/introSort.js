@@ -7,7 +7,7 @@ export function sort(props) {
     const start = 0;
     const end = props.array.length;
     // initialise the depthLimit as 2 * log(length(data))
-    const depthLimit = 2 * Math.floor(Math.log2(end - start))
+    const depthLimit = Math.floor(Math.log2(end - start))
     const sortedArray = introSort(props.array, start, end, depthLimit);
     addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
@@ -23,13 +23,12 @@ function introSort(array, start, end, depthLimit) {
         return heapSort(array, start, end);
     }
     const p = partition(array, start, end);
-    introSort(array, start, p, end, depthLimit-1);
+    // console.log(depthLimit);
+    introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);
 
     return array;
 }
-
-
 
 
 
@@ -125,7 +124,7 @@ function insertionSort(array, start, end) {
 // ------------------------------------- Partition ------------------------------------- //
 
 function partition(array, start, end) {
-    if (end <= start) return start;
+    if (end - start <= 1) return start;
 
     const pivot = array[start];
     let i = start + 1;
