@@ -81,12 +81,12 @@ export const Selector = (props) => {
                         Array
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={inputType} style = {{width: "53%"}}>
-                        <Dropdown.Item onClick = {()=>changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput(REVERSE_SORTED_ARRAY)}>{REVERSE_SORTED_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(REVERSE_SORTED_ARRAY)}>{REVERSE_SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginLeft: "4%", marginRight: "3%"} }>
                         Array Size
@@ -106,19 +106,24 @@ export const Selector = (props) => {
                         Sort
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={sortType} style = {{width: "61%"}}>
-                        <Dropdown.Item onClick = {()=>changeSort(BOGO_SORT)}>{BOGO_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(BUBBLE_SORT)}>{BUBBLE_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(COCKTAIL_SORT)}>{COCKTAIL_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(GNOME_SORT)}>{GNOME_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(HEAP_SORT)}>{HEAP_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(INSERTION_SORT)}>{INSERTION_SORT}</Dropdown.Item>
+                        <Dropdown.Header>Simple Sorting Algorithms</Dropdown.Header>
+                        <Dropdown.Item onClick = {() => changeSort(BOGO_SORT)}>{BOGO_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(BUBBLE_SORT)}>{BUBBLE_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(COCKTAIL_SORT)}>{COCKTAIL_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(GNOME_SORT)}>{GNOME_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(INSERTION_SORT)}>{INSERTION_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(SELECTION_SORT)}>{SELECTION_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(SHELL_SORT)}>{SHELL_SORT}</Dropdown.Item>
+
+                        <Dropdown.Header>Better Sorting Algorithms</Dropdown.Header>
+                        <Dropdown.Item onClick = {() => changeSort(HEAP_SORT)}>{HEAP_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(MERGE_SORT)}>{MERGE_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(QUICK_SORT)}>{QUICK_SORT}</Dropdown.Item>
+
+                        <Dropdown.Header>Hybrid/Optimized Sorting Algorithms</Dropdown.Header>
+                        <Dropdown.Item onClick = {() => changeSort(QUICK_SORT_OPTIMIZED)}>Quick Sort (Optimized)</Dropdown.Item>
                         {/* <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item> */}
-                        <Dropdown.Item onClick = {()=>changeSort(MERGE_SORT)}>{MERGE_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(QUICK_SORT)}>{QUICK_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(QUICK_SORT_OPTIMIZED)}>Quick Sort (Optimized)</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(SELECTION_SORT)}>{SELECTION_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(SHELL_SORT)}>{SHELL_SORT}</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginRight: "2%"}}>
                         Sorting Speed
