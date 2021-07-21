@@ -43,6 +43,7 @@ export const REVERSE_SORTED_ARRAY = "Reverse Sorted Array";
 export const UNIFORM_ARRAY = "Uniform Array";
 export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
+const INITIAL_ANIMATION_SPEED = 10;
 const MAX_ARRAY_SIZE = 100;
 const MIN_VALUE = 5;
 const MAX_VALUE = 505;
@@ -50,6 +51,8 @@ const MAX_ANIMATION_SPEED = 510;
 const ANIMATION_SPEED_RANGE = 500;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
+
+const BOGO_SORT_ARRAY_SIZE = 7;
 
 function Bar(props) {
     var color = PRIMARY_COLOR;
@@ -107,13 +110,14 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             array: [],
             arraySize: MAX_ARRAY_SIZE,
+            arrayType: STEADY_ARRAY,
             highlights: [],
+
             sort: quickSort,
             timeoutIDArray: [],
             resumePoint: 0,
             disableSlider: false,
-            arrayState: STEADY_ARRAY,
-            animationSpeed: 10
+            animationSpeed: INITIAL_ANIMATION_SPEED
         };
 
         this.history = [];
@@ -144,23 +148,21 @@ export default class SortingVisualizer extends React.Component {
     }
 
     componentDidMount() {
-        this.generateArray(STEADY_ARRAY);
+        this.generateArray(this.state.arrayType);
         testSortingAlgorithms();
     }
 
     changeSort(sortType){
         if (sortType === BOGO_SORT){
             this.pause();
+            this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
             this.setState({disableSlider: true});
-            this.setState({arraySize: 7});
-            this.generateArray(STEADY_ARRAY);
         } 
         else {
             if (this.state.disableSlider) {
                 this.pause();
+                this.generateArray(this.state.arrayType, MAX_ARRAY_SIZE);
                 this.setState({disableSlider: false});
-                this.setState({arraySize: MAX_ARRAY_SIZE});
-                this.generateArray(STEADY_ARRAY);
             }
         }
 
@@ -209,33 +211,33 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
-    generateArray(arrayType) {
+    generateArray(arrayType, arraySize) {
+        if (!arraySize) arraySize = this.state.arraySize;
         this.pause();
         let array = [];
-        const size = this.state.arraySize;
         switch (arrayType) {
             case RANDOM_ARRAY:
-                array = generateRandomArray(size, MIN_VALUE, MAX_VALUE);
+                array = generateRandomArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             case STEADY_ARRAY:
-                array = generateSteadyArray(size, MIN_VALUE, MAX_VALUE);
+                array = generateSteadyArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             case SORTED_ARRAY:
-                array = generateSortedArray(size, MIN_VALUE, MAX_VALUE);
+                array = generateSortedArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             case REVERSE_SORTED_ARRAY:
-                array = generateReverseSortedArray(size, MIN_VALUE, MAX_VALUE);
+                array = generateReverseSortedArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             case UNIFORM_ARRAY:
-                array = generateUniformArray(size, MIN_VALUE, MAX_VALUE);
+                array = generateUniformArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             case PARTIAL_UNIFORM_ARRAY:
-                array = generatePartialUniformArray(size, MIN_VALUE, MAX_VALUE);
+                array = generatePartialUniformArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             default:
                 break;
         }
-        this.setState({array: array, highlights: []});
+        this.setState({array: array, highlights: [], arraySize: arraySize, arrayType: arrayType});
     }
 
     reset() {
@@ -278,10 +280,9 @@ export default class SortingVisualizer extends React.Component {
         this.animateHistory(this.state.resumePoint);
     }
 
-    onChangeArraySize(size, arrayType){
-        if (this.state.arraySize !== size) {
-            this.setState({arraySize: size});
-            this.generateArray(arrayType);
+    onChangeArraySize(arraySize){
+        if (this.state.arraySize !== arraySize) {
+            this.generateArray(this.state.arrayType, arraySize);
         }
     }
 
