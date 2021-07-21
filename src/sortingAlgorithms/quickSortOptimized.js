@@ -70,7 +70,9 @@ function partition(array, start, end) {
     // start is now our left pivot position (inclusive)
     // end is now our right pivot position (inclusive)
     // this means that everything within the pivotRange is equal to our pivot
-    let pivotRange = range(start, end+1);
-    addToHistory({array: array.slice(), highlights: pivotRange.slice()});
+    if (end - start >= 1) {
+        let pivotRange = range(start, end+1);
+        addToHistory({array: array.slice(), highlights: pivotRange.slice()});
+    }
     return [start, end];
 }

@@ -19,17 +19,22 @@ function mergeSort(array, start, end) {
     // Split down the middle and recurse left, right
     const len = end-start+1;
     const splitIdx = Math.ceil(start + len/2);
+
     mergeSort(array, start, splitIdx-1);
     mergeSort(array, splitIdx, end);
-    merge(array, start, splitIdx, end);
+
+    // Only merge the left and right arrays if elements are out of order.
+    if (array[splitIdx-1] >= array[splitIdx]) {
+        merge(array, start, splitIdx, end);
+    }
+
+    addToHistory({array: array.slice(), highlights: range(start, end+1)});
     return array;
 }
 
 function merge(array, start, splitIdx, end) {
     if (end <= start) return array;
-
-    // Show the current section that's being sorted
-    addToHistory({array: array.slice(), highlights: range(start, end+1)});
+    
     let mergeArray = [];
     let i = start, j = splitIdx;
     while (i < splitIdx && j <= end) {
