@@ -47,9 +47,10 @@ const MAX_ARRAY_SIZE = 100;
 const MIN_VALUE = 5;
 const MAX_VALUE = 505;
 
-const INITIAL_ANIMATION_SPEED = 10;
+const INITIAL_ANIMATION_PAUSE_TIME = 10;
+const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
-const ANIMATION_SPEED_RANGE = 500;
+const ANIMATION_PAUSE_RANGE = 500;
 
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
@@ -119,7 +120,8 @@ export default class SortingVisualizer extends React.Component {
             timeoutIDArray: [],
             resumePoint: 0,
             disableSlider: false,
-            animationSpeed: INITIAL_ANIMATION_SPEED
+            animationSpeed: INITIAL_ANIMATION_SPEED,
+            animationPauseTime: INITIAL_ANIMATION_PAUSE_TIME
         };
 
         this.history = [];
@@ -259,9 +261,11 @@ export default class SortingVisualizer extends React.Component {
 
     pause() {
         let arrLen = this.state.timeoutIDArray.length;
-        for (let i=0; i < arrLen; i++){
-            clearTimeout(this.state.timeoutIDArray[i]);
+        let i = 0;
+        while (i < arrLen) {
+            clearTimeout(this.state.timeoutIDArray[i++]);
         }
+        // this.setState({timeoutIDArray: []});
     }
 
     resume() {
@@ -271,10 +275,11 @@ export default class SortingVisualizer extends React.Component {
 
     animateHistory(startPoint) {
         if (!startPoint) startPoint = 0;
-        var animationSpeed = this.state.animationSpeed;
+        var animationPauseTime;
         var count = 1;
         for (let i = startPoint; i < this.history.length; i++) {
-            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i+1})}, animationSpeed*count);
+            animationPauseTime = this.state.animationPauseTime * count;
+            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i+1})}, animationPauseTime);
             this.state.timeoutIDArray.push(timeoutID);
             count++;
         }
@@ -288,18 +293,17 @@ export default class SortingVisualizer extends React.Component {
         this.animateHistory(this.state.resumePoint);
     }
 
-    onChangeArraySize(arraySize){
+    onChangeArraySize(arraySize) {
         if (this.state.arraySize !== arraySize) {
             this.generateArray(this.state.arrayType, arraySize);
         }
     }
 
     onChangeSortSpeed(speed) {
-        var animationSpeed = this.state.animationSpeed;
-        if (animationSpeed !== speed) {
-            let percentageSpeed = speed/100;
-            animationSpeed = MAX_ANIMATION_PAUSE - (ANIMATION_SPEED_RANGE * percentageSpeed);
-            this.setState({animationSpeed: animationSpeed});
+        if (this.state.animationSpeed !== speed) {
+            const percentageSpeed = speed/100;
+            var animationPauseTime = MAX_ANIMATION_PAUSE - (ANIMATION_PAUSE_RANGE * percentageSpeed);
+            this.setState({animationSpeed: speed, animationPauseTime: animationPauseTime});
             this.pause();
             this.animateHistory(this.state.resumePoint);
         }
