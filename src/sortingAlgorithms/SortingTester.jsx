@@ -4,7 +4,7 @@ import { sort as cocktailShakerSort } from './cocktailShakerSort';
 import { sort as gnomeSort } from './gnomeSort';
 import { sort as heapSort } from './heapSort';
 import { sort as insertionSort } from './insertionSort';
-// import { sort as introSort } from './introSort';
+import { sort as introSort } from './introSort';
 import { sort as mergeSort } from './mergeSort';
 import { sort as quickSort } from './quickSort';
 import { sort as quickSortOptimized } from './quickSortOptimized';
@@ -12,7 +12,8 @@ import { sort as selectionSort } from './selectionSort';
 import { sort as shellSort } from './shellSort';
 import { sort as timSort } from './timSort';
 
-const ARRAY_SIZE = 100;
+const MIN_ARRAY_SIZE = 50;
+const MAX_ARRAY_SIZE = 100;
 const TEST_RUNS = 100;
 const MIN_VALUE = -2000;
 const MAX_VALUE = 2000;
@@ -29,6 +30,8 @@ export function testSortingAlgorithms() {
     if (!testSort(heapSort)) success = false;
     console.log("Testing Insertion Sort:");
     if (!testSort(insertionSort)) success = false;
+    console.log("Testing Intro Sort:");
+    if (!testSort(introSort)) success = false;
     console.log("Testing Merge Sort:");
     if (!testSort(mergeSort)) success = false;
     console.log("Testing Quick Sort:");
@@ -66,7 +69,8 @@ function testSort(sortingAlgorithm) {
 
 function randomArray() {
     const array = [];
-    for (let i=0; i<ARRAY_SIZE; i++) {
+    const length = randomIntFromInterval(MIN_ARRAY_SIZE, MAX_ARRAY_SIZE);
+    for (let i = 0; i < length; i++) {
         array.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
     }
     return array.slice();

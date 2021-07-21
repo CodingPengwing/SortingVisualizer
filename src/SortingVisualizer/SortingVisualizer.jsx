@@ -57,6 +57,8 @@ const HIGHLIGHT_COLOR = '#832380';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
+var TESTING = false;
+
 function Bar(props) {
     var color = PRIMARY_COLOR;
     if (props.highlighted) {
@@ -153,7 +155,7 @@ export default class SortingVisualizer extends React.Component {
 
     componentDidMount() {
         this.generateArray(this.state.arrayType);
-        testSortingAlgorithms();
+        if (TESTING) { testSortingAlgorithms(); }
     }
 
     componentWillUnmount() {

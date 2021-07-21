@@ -122,7 +122,7 @@ export const Selector = (props) => {
 
                         <Dropdown.Header>Hybrid/Optimized Sorting Algorithms</Dropdown.Header>
                         <Dropdown.Item onClick = {() => changeSort(QUICK_SORT_OPTIMIZED)}>Quick Sort (Optimized)</Dropdown.Item>
-                        {/* <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item> */}
+                        <Dropdown.Item onClick = {() => changeSort(INTRO_SORT)}>{INTRO_SORT}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginRight: "2%"}}>

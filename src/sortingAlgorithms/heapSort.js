@@ -32,7 +32,7 @@ function heapSort(array) {
     bottomUpHeapify(array);
 
     let heapSize = array.length;
-    for (let i=array.length-1; i>0; i--) {
+    for (let i = array.length-1; i > 0; i--) {
         shiftThenAddToHistory({array: array.slice(), highlights: [1, i]});
         swap(array, 1, i);
         shiftThenAddToHistory({array: array.slice(), highlights: [1, i]});
@@ -51,7 +51,7 @@ function heapSort(array) {
 function bottomUpHeapify(array) {
     const n = array.length;
     const heapSize = n;
-    for (let i=Math.floor(n/2); i>0; i--) {
+    for (let i = Math.floor(n/2); i > 0; i--) {
         maxHeapify(array, i, heapSize);
     }
 }
@@ -59,12 +59,12 @@ function bottomUpHeapify(array) {
 // Ensures that all elements related to index i satisfy the conditions of a heap.
 function maxHeapify(array, i, heapSize) {
     // If this element has no children
-    if (i*2 >= heapSize) return;
+    if (i * 2 >= heapSize) return;
 
     // Find the children of this element
-    let leftChild = 2*i;
+    let leftChild = 2 * i;
     // rightChild = leftChild if this element only has one child
-    let rightChild = (2*i+1 < heapSize) ? 2*i+1 : leftChild;
+    let rightChild = (2 * i + 1 < heapSize) ? 2 * i + 1 : leftChild;
 
     // Find the largest element between the parent, left and right children.
     shiftThenAddToHistory({array: array.slice(), highlights: [i, leftChild, rightChild]});
