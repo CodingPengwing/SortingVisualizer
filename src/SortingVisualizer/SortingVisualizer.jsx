@@ -221,6 +221,7 @@ export default class SortingVisualizer extends React.Component {
     generateArray(arrayType, arraySize) {
         if (!arraySize) arraySize = this.state.arraySize;
         this.pause();
+        this.clearHistory();
         let array = [];
         switch (arrayType) {
             case RANDOM_ARRAY:
