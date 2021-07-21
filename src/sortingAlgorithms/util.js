@@ -38,6 +38,7 @@ export function shuffle(array) {
         array[i] = array[j];
         array[j] = temp;
     }
+    return array;
 }
 
 export function generateRandomArray(arraySize, minValue, maxValue) {

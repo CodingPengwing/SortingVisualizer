@@ -161,13 +161,13 @@ export default class SortingVisualizer extends React.Component {
 
     changeSort(sortType){
         if (sortType === BOGO_SORT){
-            this.pause();
+            this.reset();
             this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
             this.setState({disableSlider: true});
         } 
         else {
             if (this.state.disableSlider) {
-                this.pause();
+                this.reset();
                 this.generateArray(this.state.arrayType, MAX_ARRAY_SIZE);
                 this.setState({disableSlider: false});
             }
