@@ -43,12 +43,14 @@ export const REVERSE_SORTED_ARRAY = "Reverse Sorted Array";
 export const UNIFORM_ARRAY = "Uniform Array";
 export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
-const INITIAL_ANIMATION_SPEED = 10;
 const MAX_ARRAY_SIZE = 100;
 const MIN_VALUE = 5;
 const MAX_VALUE = 505;
-const MAX_ANIMATION_SPEED = 510;
+
+const INITIAL_ANIMATION_SPEED = 10;
+const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_SPEED_RANGE = 500;
+
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -290,7 +292,7 @@ export default class SortingVisualizer extends React.Component {
         var animationSpeed = this.state.animationSpeed;
         if (animationSpeed !== speed) {
             let percentageSpeed = speed/100;
-            animationSpeed = MAX_ANIMATION_SPEED - (ANIMATION_SPEED_RANGE * percentageSpeed);
+            animationSpeed = MAX_ANIMATION_PAUSE - (ANIMATION_SPEED_RANGE * percentageSpeed);
             this.setState({animationSpeed: animationSpeed});
             this.pause();
             let count = 1;
