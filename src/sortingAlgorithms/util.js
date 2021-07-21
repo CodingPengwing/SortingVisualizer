@@ -39,3 +39,72 @@ export function shuffle(array) {
         array[j] = temp;
     }
 }
+
+export function generateRandomArray(arraySize, minValue, maxValue) {
+    const gap = Math.floor((maxValue - minValue) / arraySize);
+    let array = [];
+    for (let i=0; i < arraySize; i++) {
+        array.push(minValue + gap * randomIntFromInterval(0, Math.floor(maxValue/gap)));
+    }
+    return array;
+}
+
+export function generateSteadyArray(arraySize, minValue, maxValue) {
+    const gap = Math.floor((maxValue - minValue) / arraySize);
+    const multipliers = range(0, arraySize);
+    shuffle(multipliers);
+    let array = [];
+    for (let i = 0; i < multipliers.length; i++) {
+        array.push(minValue + gap * multipliers[i]);
+    }
+    return array;
+}
+
+export function generateSortedArray(arraySize, minValue, maxValue) {
+    const gap = Math.floor((maxValue - minValue) / arraySize);
+    let array = [];
+    for (let i = 0; i < arraySize; i++) {
+        array.push(minValue + gap * i);
+    }
+    return array;
+}
+
+export function generateReverseSortedArray(arraySize, minValue, maxValue) {
+    const gap = Math.floor((maxValue - minValue) / arraySize);
+    let array = [];
+    for (let i = arraySize - 1; i >= 0; i--) {
+        array.push(minValue + gap * i);
+    }
+    return array;
+}
+
+export function generateUniformArray(arraySize, minValue, maxValue) {
+    const value = randomIntFromInterval(Math.floor(maxValue/2), maxValue);
+    let array = [];
+    for (let i = 0; i < arraySize; i++) { 
+        array[i] = value; 
+    }
+    return array;
+}
+
+export function generatePartialUniformArray(arraySize, minValue, maxValue) {
+    const diffValues = 5;
+    const gap = Math.floor((maxValue - minValue) / diffValues);
+    const values = [];
+    for (let i = 1; i <= diffValues; i++) {
+        values.push(minValue + i * gap);
+    }
+
+    let array = [];
+    for (let i = 0; i < diffValues; i++) {
+        for (let j = 0; j < Math.floor(arraySize/diffValues); j++) {
+            array.push(minValue + values[i]);
+        }
+    }
+
+    while (array.length < arraySize) {
+        array.push(minValue + values[randomIntFromInterval(0, 4)]);
+    }
+    shuffle(array);
+    return array;
+}

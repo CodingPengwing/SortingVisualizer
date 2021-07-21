@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { randomIntFromInterval, range, shuffle } from '../sortingAlgorithms/util';
+import { generateRandomArray, generateSteadyArray, generateSortedArray, 
+    generateReverseSortedArray, generateUniformArray, generatePartialUniformArray
+} from '../sortingAlgorithms/util';
 import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
 import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
 import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
@@ -20,10 +22,31 @@ import { sort as timSort } from '../sortingAlgorithms/timSort';
 import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
-var ARRAY_SIZE = 100;
+export const BOGO_SORT = "Bogo Sort";
+export const BUBBLE_SORT = "Bubble Sort";
+export const COCKTAIL_SORT = "Cocktail Shaker Sort";
+export const GNOME_SORT = "Gnome Sort";
+export const HEAP_SORT = "Heap Sort";
+export const INSERTION_SORT = "Insertion Sort";
+export const INTRO_SORT = "Intro Sort";
+export const MERGE_SORT = "Merge Sort";
+export const QUICK_SORT = "Quick Sort";
+export const QUICK_SORT_OPTIMIZED = "Quick Sort Optimized";
+export const SELECTION_SORT = "Selection Sort";
+export const SHELL_SORT = "Shell Sort";
+export const TIM_SORT = "Tim Sort";
+
+export const RANDOM_ARRAY = "Random Array";
+export const STEADY_ARRAY = "Steady Random Array";
+export const SORTED_ARRAY = "Sorted Array";
+export const REVERSE_SORTED_ARRAY = "Reverse Sorted Array";
+export const UNIFORM_ARRAY = "Uniform Array";
+export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
+
+var MAX_ARRAY_SIZE = 100;
 var ANIMATION_SPEED = 10;
-const MIN_VALUE = 5;
-const MAX_VALUE = 450;
+var MIN_VALUE = 5;
+var MAX_VALUE = 505;
 const PRIMARY_COLOR = '#00a1c9';
 const HIGHLIGHT_COLOR = '#832380';
 
@@ -60,7 +83,8 @@ class Array extends React.Component {
         for (i=0; i < this.props.array.length; i++) {
             bars.push(this.renderBar(i));
         }
-        // Done to maintain the height of the array container
+        // Redundant invisible bar at the end of the array container
+        // to maintain the height of the array container during animations
         bars.push(<div 
             className={styles.arrayBar}
             style={{height: MAX_VALUE + 30, backgroundColor: "black"}}
@@ -81,19 +105,16 @@ export default class SortingVisualizer extends React.Component {
         super(props);
         this.state = {
             array: [],
+            arraySize: MAX_ARRAY_SIZE,
             highlights: [],
-            sortType: quickSort,
+            sort: quickSort,
             timeoutIDArray: [],
             resumePoint: 0,
             disableSlider: false,
-            arrayState: "Steady",
+            arrayState: STEADY_ARRAY,
         };
 
         this.history = [];
-
-        this.updateState = (array, highlights, resumePoint) => {
-            this.setState({array: array, highlights: highlights, resumePoint: resumePoint});
-        };
 
         this.addToHistory = (props) => {
             this.history.push({
@@ -106,6 +127,10 @@ export default class SortingVisualizer extends React.Component {
             this.history = [];
         }
 
+        this.clearForwardHistory = () => {
+            this.history = this.history.slice(0, this.state.resumePoint+1);
+        }
+
         this.generateArray = this.generateArray.bind(this);
         this.changeSort = this.changeSort.bind(this);
         this.doSort = this.doSort.bind(this);
@@ -116,65 +141,65 @@ export default class SortingVisualizer extends React.Component {
     }
 
     componentDidMount() {
-        this.generateSteadyArray();
+        this.generateArray(STEADY_ARRAY);
         testSortingAlgorithms();
     }
 
     changeSort(sortType){
-        if (sortType === "Bogo Sort"){
+        if (sortType === BOGO_SORT){
             this.pause();
             this.setState({disableSlider: true});
-            ARRAY_SIZE = 7;
-            this.generateSteadyArray();
+            this.setState({arraySize: 7});
+            this.generateArray(STEADY_ARRAY);
         } 
         else {
             if (this.state.disableSlider) {
                 this.pause();
                 this.setState({disableSlider: false});
-                ARRAY_SIZE = 100;
-                this.generateSteadyArray();
+                this.setState({arraySize: MAX_ARRAY_SIZE});
+                this.generateArray(STEADY_ARRAY);
             }
         }
 
         switch (sortType) {
-            case "Bogo Sort":
-                this.setState({sortType: bogoSort});
+            case BOGO_SORT:
+                this.setState({sort: bogoSort});
                 break;
-            case "Bubble Sort":
-                this.setState({sortType: bubbleSort});
+            case BUBBLE_SORT:
+                this.setState({sort: bubbleSort});
                 break;
-            case "Cocktail Shaker Sort":
-                this.setState({sortType: cocktailShakerSort});
+            case COCKTAIL_SORT:
+                this.setState({sort: cocktailShakerSort});
                 break;
-            case "Gnome Sort":
-                this.setState({sortType: gnomeSort});
+            case GNOME_SORT:
+                this.setState({sort: gnomeSort});
                 break;
-            case "Heap Sort":
-                this.setState({sortType: heapSort});
+            case HEAP_SORT:
+                this.setState({sort: heapSort});
                 break;
-            case "Insertion Sort":
-                this.setState({sortType: insertionSort});
+            case INSERTION_SORT:
+                this.setState({sort: insertionSort});
                 break;
-            case "Intro Sort":
-                this.setState({sortType: introSort});
+            case INTRO_SORT:
+                this.setState({sort: introSort});
                 break;
-            case "Merge Sort":
-                this.setState({sortType: mergeSort});
+            case MERGE_SORT:
+                this.setState({sort: mergeSort});
                 break;
-            case "Quick Sort":
-                this.setState({sortType: quickSort});
+            case QUICK_SORT:
+                this.setState({sort: quickSort});
                 break;
-            case "Quick Sort Optimized":
-                this.setState({sortType: quickSortOptimized});
+            case QUICK_SORT_OPTIMIZED:
+                this.setState({sort: quickSortOptimized});
                 break;
-            case "Selection Sort":
-                this.setState({sortType: selectionSort});
+            case SELECTION_SORT:
+                this.setState({sort: selectionSort});
                 break;
-            case "Shell Sort":
-                this.setState({sortType: shellSort});
+            case SHELL_SORT:
+                this.setState({sort: shellSort});
                 break;
-            case "Tim Sort":
-                this.setState({sortType: timSort});
+            case TIM_SORT:
+                this.setState({sort: timSort});
                 break;
             default:
                 break;
@@ -183,108 +208,40 @@ export default class SortingVisualizer extends React.Component {
 
     generateArray(arrayType) {
         this.pause();
+        let array = [];
+        const size = this.state.arraySize;
         switch (arrayType) {
-            case "Random":
-                this.generateRandomArray();
+            case RANDOM_ARRAY:
+                array = generateRandomArray(size, MIN_VALUE, MAX_VALUE);
                 break;
-            case "Steady Random":
-                this.generateSteadyArray();
+            case STEADY_ARRAY:
+                array = generateSteadyArray(size, MIN_VALUE, MAX_VALUE);
                 break;
-            case "Sorted":
-                this.generateSortedArray();
+            case SORTED_ARRAY:
+                array = generateSortedArray(size, MIN_VALUE, MAX_VALUE);
                 break;
-            case "Reverse Sorted":
-                this.generateReverseSortedArray();
+            case REVERSE_SORTED_ARRAY:
+                array = generateReverseSortedArray(size, MIN_VALUE, MAX_VALUE);
                 break;
-            case "Uniform":
-                this.generateUniformArray();
+            case UNIFORM_ARRAY:
+                array = generateUniformArray(size, MIN_VALUE, MAX_VALUE);
                 break;
-            case "Partial Uniform":
-                this.generatePartialUniformArray();
+            case PARTIAL_UNIFORM_ARRAY:
+                array = generatePartialUniformArray(size, MIN_VALUE, MAX_VALUE);
                 break;
             default:
                 break;
         }
-    }
-
-    generateRandomArray() {
-        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
-
-        const array = [];
-        for (let i=0; i < ARRAY_SIZE; i++) {
-            array.push(MIN_VALUE + gap * randomIntFromInterval(0, Math.floor(MAX_VALUE/gap)));
-        }
-
-        this.updateState(array.slice(), []);
-    }
-
-    generateSteadyArray() {
-        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
-        const multipliers = range(0, ARRAY_SIZE);
-        shuffle(multipliers);
-        const array = [];
-        for (let i = 0; i < multipliers.length; i++) {
-            array.push(MIN_VALUE + gap * multipliers[i]);
-        }
-        this.updateState(array.slice(), []);
-    }
-
-    generateSortedArray() {
-        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
-        const array = [];
-        for (let i = 0; i < ARRAY_SIZE; i++) {
-            array.push(MIN_VALUE + gap * i);
-        }
-        this.updateState(array.slice(), []);
-    }
-
-    generateReverseSortedArray() {
-        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / ARRAY_SIZE);
-        const array = [];
-        for (let i = ARRAY_SIZE - 1; i >= 0; i--) {
-            array.push(MIN_VALUE + gap * i);
-        }
-        this.updateState(array.slice(), []);
-    }
-
-    generateUniformArray() {
-        const value = randomIntFromInterval(Math.floor(MAX_VALUE/2), MAX_VALUE);
-        const array = [];
-        for (let i = 0; i < ARRAY_SIZE; i++) { 
-            array[i] = value; 
-        }
-        this.updateState(array.slice(), []);
-    }
-
-    generatePartialUniformArray() {
-        const diffValues = 5;
-        const gap = Math.floor((MAX_VALUE - MIN_VALUE) / diffValues);
-        const values = [];
-        for (let i = 1; i <= diffValues; i++) {
-            values.push(MIN_VALUE + i * gap);
-        }
-
-        const array = [];
-        for (let i = 0; i < diffValues; i++) {
-            for (let j = 0; j < Math.floor(ARRAY_SIZE/diffValues); j++) {
-                array.push(MIN_VALUE + values[i]);
-            }
-        }
-
-        while (array.length < ARRAY_SIZE) {
-            array.push(MIN_VALUE + values[randomIntFromInterval(0, 4)]);
-        }
-        shuffle(array);
-        this.updateState(array.slice(), []);
+        this.setState({array: array, highlights: []});
     }
 
     reset() {
         if (this.history.length > 0) {
-            const firstState = this.history[0];
-            this.updateState(firstState.array.slice(), []);
+            const originalArray = this.history[0].array.slice();
+            this.pause();
+            this.clearHistory();
+            this.setState({array: originalArray, highlights: []});
         }
-        this.pause();
-        this.clearHistory();
     }
 
     pause(){
@@ -296,25 +253,22 @@ export default class SortingVisualizer extends React.Component {
 
     animateHistory() {
         for (let i=0; i<this.history.length; i++) {
-            let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*i);
+            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i})}, ANIMATION_SPEED*i);
             this.state.timeoutIDArray.push(timeoutID);
         }
     }
 
     doSort() {
+        this.pause();
+        // this.clearForwardHistory();
         this.clearHistory();
-        const sortedArray = this.state.sortType({
-            array: this.state.array, 
-            addToHistory: this.addToHistory
-        });
-
+        this.state.sort({array: this.state.array, addToHistory: this.addToHistory});
         this.animateHistory();
-        return sortedArray.slice();
     }
 
     onChangeArraySize(size, arrayType){
-        if (ARRAY_SIZE !== size) {
-            ARRAY_SIZE = size;
+        if (this.state.arraySize !== size) {
+            this.setState({arraySize: size});
             this.generateArray(arrayType);
         }
     }
@@ -326,7 +280,7 @@ export default class SortingVisualizer extends React.Component {
             this.pause();
             let count = 1;
             for (let i=this.state.resumePoint; i<this.history.length; i++){
-                let timeoutID = setTimeout(() => {this.updateState(this.history[i].array, this.history[i].highlights, i)}, ANIMATION_SPEED*count);
+                let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights})}, ANIMATION_SPEED*count);
                 this.state.timeoutIDArray.push(timeoutID);
                 count++;
             }

@@ -10,6 +10,12 @@ import "../styles/custom-dropdown.css"
 import { useState } from 'react';
 import { styled, Button } from '@material-ui/core';
 
+import { BOGO_SORT, BUBBLE_SORT, COCKTAIL_SORT, GNOME_SORT, HEAP_SORT, INSERTION_SORT, INTRO_SORT, 
+    MERGE_SORT, QUICK_SORT, QUICK_SORT_OPTIMIZED, SELECTION_SORT, SHELL_SORT, TIM_SORT } 
+    from '../SortingVisualizer/SortingVisualizer';
+
+import { RANDOM_ARRAY, STEADY_ARRAY, SORTED_ARRAY, REVERSE_SORTED_ARRAY, UNIFORM_ARRAY, PARTIAL_UNIFORM_ARRAY } from '../SortingVisualizer/SortingVisualizer';
+
 const StyledButton = styled(Button)({
     marginRight: "5%",
     fontFamily: "monospace",
@@ -54,8 +60,8 @@ const ResumeButton = styled(StyledButton)({
 
 export const Selector = (props) => {
 
-    const [inputType, setInputType] = useState("Steady Random");
-    const [sortType, setSortType] = useState("Quick Sort");
+    const [inputType, setInputType] = useState(STEADY_ARRAY);
+    const [sortType, setSortType] = useState(QUICK_SORT);
 
     function changeInput(type){
         setInputType(type);
@@ -75,12 +81,12 @@ export const Selector = (props) => {
                         Array
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={inputType} style = {{width: "53%"}}>
-                        <Dropdown.Item onClick = {()=>changeInput("Steady Random")}>Steady Random Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Random")}>Random Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Sorted")}>Sorted Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Reverse Sorted")}>Reverse Sorted Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Uniform")}>Uniform Array</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeInput("Partial Uniform")}>Partial Uniform Array</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(REVERSE_SORTED_ARRAY)}>{REVERSE_SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginLeft: "4%", marginRight: "3%"} }>
                         Array Size
@@ -100,19 +106,19 @@ export const Selector = (props) => {
                         Sort
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={sortType} style = {{width: "61%"}}>
-                        <Dropdown.Item onClick = {()=>changeSort("Bogo Sort")}>Bogo Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Bubble Sort")}>Bubble Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Cocktail Shaker Sort")}>Cocktail Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Gnome Sort")}>Gnome Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Heap Sort")}>Heap Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Insertion Sort")}>Insertion Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(BOGO_SORT)}>{BOGO_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(BUBBLE_SORT)}>{BUBBLE_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(COCKTAIL_SORT)}>{COCKTAIL_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(GNOME_SORT)}>{GNOME_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(HEAP_SORT)}>{HEAP_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(INSERTION_SORT)}>{INSERTION_SORT}</Dropdown.Item>
                         {/* <Dropdown.Item onClick = {()=>changeSort("Intro Sort")}>Intro Sort</Dropdown.Item> */}
-                        <Dropdown.Item onClick = {()=>changeSort("Merge Sort")}>Merge Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort")}>Quick Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Quick Sort Optimized")}>Quick Sort (Optimized)</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Selection Sort")}>Selection Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Shell Sort")}>Shell Sort</Dropdown.Item>
-                        <Dropdown.Item onClick = {()=>changeSort("Tim Sort")}>Tim Sort</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(MERGE_SORT)}>{MERGE_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(QUICK_SORT)}>{QUICK_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(QUICK_SORT_OPTIMIZED)}>Quick Sort (Optimized)</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(SELECTION_SORT)}>{SELECTION_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(SHELL_SORT)}>{SHELL_SORT}</Dropdown.Item>
+                        <Dropdown.Item onClick = {()=>changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
                     </DropdownButton>
                     <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginRight: "2%"}}>
                         Sorting Speed
