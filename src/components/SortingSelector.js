@@ -136,7 +136,7 @@ export const Selector = (props) => {
             <div className = {styles.buttons}>
                 <StyledButton style = {styles.buttonStyle} onClick = {() => {props.pause();props.sort()}}>Run</StyledButton>
                 <PauseButton style = {styles.buttonStyle} onClick = {() => props.pause()}>Pause</PauseButton>
-                <ResumeButton style = {styles.buttonStyle} onClick = {() => {console.log("")}}>Resume</ResumeButton>              
+                <ResumeButton style = {styles.buttonStyle} onClick = {() => {props.resume()}}>Resume</ResumeButton>              
                 <StyledButton2 style = {styles.buttonStyle} onClick = {() => props.reset()}>Reset</StyledButton2>
             </div>
             

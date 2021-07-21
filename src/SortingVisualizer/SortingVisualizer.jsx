@@ -44,7 +44,6 @@ export const UNIFORM_ARRAY = "Uniform Array";
 export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
 var MAX_ARRAY_SIZE = 100;
-var ANIMATION_SPEED = 10;
 var MIN_VALUE = 5;
 var MAX_VALUE = 505;
 const PRIMARY_COLOR = '#00a1c9';
@@ -112,6 +111,7 @@ export default class SortingVisualizer extends React.Component {
             resumePoint: 0,
             disableSlider: false,
             arrayState: STEADY_ARRAY,
+            animationSpeed: 10
         };
 
         this.history = [];
@@ -136,6 +136,7 @@ export default class SortingVisualizer extends React.Component {
         this.doSort = this.doSort.bind(this);
         this.reset = this.reset.bind(this);
         this.pause = this.pause.bind(this);
+        this.resume = this.resume.bind(this);
         this.onChangeArraySize = this.onChangeArraySize.bind(this);
         this.onChangeSortSpeed = this.onChangeSortSpeed.bind(this);
     }
@@ -244,17 +245,25 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
-    pause(){
+    pause() {
         let arrLen = this.state.timeoutIDArray.length;
         for (let i=this.state.resumePoint; i < arrLen; i++){
             clearTimeout(this.state.timeoutIDArray[i]);
         }
     }
 
-    animateHistory() {
-        for (let i=0; i<this.history.length; i++) {
-            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i})}, ANIMATION_SPEED*i);
+    resume() {
+        this.animateHistory(this.state.resumePoint);
+    }
+
+    animateHistory(startPoint) {
+        if (!startPoint) startPoint = 0;
+        var animationSpeed = this.state.animationSpeed;
+        var count = 0;
+        for (let i=startPoint; i<this.history.length; i++) {
+            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i})}, animationSpeed*count);
             this.state.timeoutIDArray.push(timeoutID);
+            count++;
         }
     }
 
@@ -274,13 +283,15 @@ export default class SortingVisualizer extends React.Component {
     }
 
     onChangeSortSpeed(speed) {
-        if (ANIMATION_SPEED !== speed) {
-            let percentageSpeed = speed / 100;
-            ANIMATION_SPEED = 510 - (500 * percentageSpeed);
+        var animationSpeed = this.state.animationSpeed;
+        if (animationSpeed !== speed) {
+            let percentageSpeed = speed/100;
+            animationSpeed = 510 - (500 * percentageSpeed);
+            this.setState({animationSpeed: animationSpeed});
             this.pause();
             let count = 1;
             for (let i=this.state.resumePoint; i<this.history.length; i++){
-                let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights})}, ANIMATION_SPEED*count);
+                let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights})}, animationSpeed*count);
                 this.state.timeoutIDArray.push(timeoutID);
                 count++;
             }
@@ -291,7 +302,7 @@ export default class SortingVisualizer extends React.Component {
         return (
             <div>
                 <Selector onChangeInput = {this.generateArray} onChangeSort = {this.changeSort} sort = {this.doSort}
-                reset = {this.reset} pause = {this.pause} onChangeSize = {this.onChangeArraySize}
+                reset = {this.reset} pause = {this.pause} resume = {this.resume} onChangeSize = {this.onChangeArraySize}
                 onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
                 <div className = {styles.arrayContainer}>
                     <Array
