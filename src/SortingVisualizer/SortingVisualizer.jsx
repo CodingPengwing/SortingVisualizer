@@ -154,6 +154,11 @@ export default class SortingVisualizer extends React.Component {
         testSortingAlgorithms();
     }
 
+    componentWillUnmount() {
+        this.setState({array: []});
+        this.clearHistory();
+    }
+
     changeSort(sortType){
         if (sortType === BOGO_SORT){
             this.pause();
