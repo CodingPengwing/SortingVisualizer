@@ -6,12 +6,12 @@ var addToHistory;
 
 export function sort(props) {
     addToHistory = props.addToHistory;
-    if (props.array.length > MAX_SORT_SIZE) return props.array.slice();
+    if (props.array.length > MAX_SORT_SIZE) return props.array;
     // Do the sorting
     const sortedArray = bogoSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function bogoSort(array) {

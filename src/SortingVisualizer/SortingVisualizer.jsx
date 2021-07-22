@@ -134,7 +134,7 @@ export default class SortingVisualizer extends React.Component {
         this.addToHistory = (props) => {
             this.history.push({
                 array: props.array.slice(), 
-                highlights: props.highlights.slice()
+                highlights: props.highlights
             });
         };
 

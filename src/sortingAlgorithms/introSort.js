@@ -11,8 +11,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = introSort(props.array, start, end, depthLimit);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 // Intro sort from start (inclusive) to end (exclusive)
@@ -49,10 +49,10 @@ function heapSort(array, start, end) {
 
     let heapSize = arrayLength;
     for (let i = arrayLength - 1; i > 0; i--) {
-        addToHistory({array: array.slice(), highlights: [1 + offset, i + offset]});
+        addToHistory({array: array, highlights: [1 + offset, i + offset]});
         // Eject an element to the end of the heap.
         swap(array, 1 + offset, i + offset);
-        addToHistory({array: array.slice(), highlights: [1 + offset, i + offset]});
+        addToHistory({array: array, highlights: [1 + offset, i + offset]});
 
         // Decrease the heapSize every time we eject an element to the bottom of the heap.
         heapSize -= 1;
@@ -84,7 +84,7 @@ function maxHeapify(array, start, end, i, heapSize) {
     let rightChild = (2 * i + 1 < heapSize) ? 2 * i + 1 : leftChild;
 
     // Find the largest element between the parent, left and right children.
-    addToHistory({array: array.slice(), highlights: [i + offset, leftChild + offset, rightChild + offset]});
+    addToHistory({array: array, highlights: [i + offset, leftChild + offset, rightChild + offset]});
     let largest = i;
     if (array[leftChild + offset] > array[i + offset]) {
         largest = leftChild;
@@ -96,7 +96,7 @@ function maxHeapify(array, start, end, i, heapSize) {
     // Swap elements if a child is bigger than the parent
     if (largest !== i) {
         swap(array, i + offset, largest + offset);
-        addToHistory({array: array.slice(), highlights: [i + offset, largest + offset]});
+        addToHistory({array: array, highlights: [i + offset, largest + offset]});
         // Heapify again for the child's children
         maxHeapify(array, start, end, largest, heapSize);
     }
@@ -114,10 +114,10 @@ function insertionSort(array, start, end) {
     // Sort the section using insertion method
     for (let i = start+1; i < end; i++) {
         let j = i;
-        addToHistory({array: array.slice(), highlights: [j-1, j]});
+        addToHistory({array: array, highlights: [j-1, j]});
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
-            addToHistory({array: array.slice(), highlights: [j-1, j]});
+            addToHistory({array: array, highlights: [j-1, j]});
             j--;
         }
     }
@@ -140,28 +140,28 @@ function partition(array, start, end) {
     while (true) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             swap(array, i, j);
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
         } else {
             break;
         }
     }
     
     // Swap pivot into position
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addToHistory({array: array, highlights: [start, j]});
     swap(array, start, j)
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addToHistory({array: array, highlights: [start, j]});
     
     let pivotIndex = j;
     return pivotIndex;

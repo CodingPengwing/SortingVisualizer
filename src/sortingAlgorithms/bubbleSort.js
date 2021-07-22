@@ -7,8 +7,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = bubbleSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function bubbleSort(array) {
@@ -20,10 +20,10 @@ function bubbleSort(array) {
     while (!sorted) {
         sorted = true;
         for (let i = 1; i < upperLimit; i++) {
-            addToHistory({array: array.slice(), highlights: [i-1, i]});
+            addToHistory({array: array, highlights: [i-1, i]});
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
-                addToHistory({array: array.slice(), highlights: [i-1, i]});
+                addToHistory({array: array, highlights: [i-1, i]});
                 sorted = false;
             }
         }

@@ -5,8 +5,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = shellSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function shellSort(array) {
@@ -26,11 +26,11 @@ function shellSort(array) {
         for (let i = h; i < array.length; i++) {
             let key = array[i];
             let j = i;
-            addToHistory({array: array.slice(), highlights: [i, j-h]});
+            addToHistory({array: array, highlights: [i, j-h]});
             // If elements are out of order, propagate them backwards
             while (key < array[j-h]) {
                 array[j] = array[j-h];
-                addToHistory({array: array.slice(), highlights: [j, j-h]});
+                addToHistory({array: array, highlights: [j, j-h]});
                 j = j-h;
                 if (j < h) break;
             }

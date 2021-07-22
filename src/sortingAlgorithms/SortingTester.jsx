@@ -76,7 +76,7 @@ function randomArray() {
     for (let i = 0; i < length; i++) {
         array.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
     }
-    return array.slice();
+    return array;
 }
 
 function randomIntFromInterval(min, max) {

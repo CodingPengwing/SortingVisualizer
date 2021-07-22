@@ -9,8 +9,8 @@ export function sort(props) {
     // Do the sorting
     let sortedArray = mergeSort(props.array, start, end);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 // start is the starting index of the array
@@ -29,7 +29,7 @@ function mergeSort(array, start, end) {
         merge(array, start, split, end);
     }
  
-    addToHistory({array: array.slice(), highlights: range(start, end+1)});
+    addToHistory({array: array, highlights: range(start, end+1)});
     return array;
 }
 
@@ -40,7 +40,7 @@ function merge(array, start, split, end) {
     // Compare i and j and add the smaller element to the mergeArray. Increment
     // the index for whichever element was added to mergeArray.
     while (i < split && j <= end) {
-        addToHistory({array: array.slice(), highlights: [i, j]});
+        addToHistory({array: array, highlights: [i, j]});
         if (array[i] <= array[j]) {
             mergeArray.push(array[i++]);
         } else {
@@ -49,18 +49,18 @@ function merge(array, start, split, end) {
     }
     // If there are remaining elements on the left side, add the rest
     while (i < split) {
-        addToHistory({array: array.slice(), highlights: [i, j-1]});
+        addToHistory({array: array, highlights: [i, j-1]});
         mergeArray.push(array[i++]);
     }
     // If there are remaining elements on the right side, add the rest
     while (j <= end) {
-        addToHistory({array: array.slice(), highlights: [i-1, j]});
+        addToHistory({array: array, highlights: [i-1, j]});
         mergeArray.push(array[j++]);
     }
 
     // Write the sorted elements back into the original array
     for (let k = 0; k < mergeArray.length; k++) {
-        addToHistory({array: array.slice(), highlights: [start+k]});
+        addToHistory({array: array, highlights: [start+k]});
         array[start+k] = mergeArray[k];
     }
 

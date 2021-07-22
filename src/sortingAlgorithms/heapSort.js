@@ -7,8 +7,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = heapSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 // This implementation of heap sort adds a sentinel to the start of the array.

@@ -9,8 +9,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = quickSort(props.array, start, end);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function quickSort(array, start, end) {
@@ -36,28 +36,28 @@ function partition(array, start, end) {
     while (true) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
             swap(array, i, j);
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addToHistory({array: array, highlights: [start, i, j]});
         } else {
             break;
         }
     }
     
     // Swap pivot into position
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addToHistory({array: array, highlights: [start, j]});
     swap(array, start, j)
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addToHistory({array: array, highlights: [start, j]});
     
     let pivotIndex = j;
     return pivotIndex;

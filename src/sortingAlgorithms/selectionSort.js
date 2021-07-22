@@ -7,8 +7,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = selectionSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function selectionSort(array){
@@ -22,16 +22,16 @@ function selectionSort(array){
         let minIndex = startIndex;
         // Find the smallest element in the unsorted range.
         for (let i = startIndex; i < length; i++){
-            addToHistory({array: array.slice(), highlights: [startIndex, i, minIndex]})
+            addToHistory({array: array, highlights: [startIndex, i, minIndex]})
             if (minVal > array[i]){
                 minVal = array[i];
                 minIndex = i;
             }
         }
         // Swap into current index
-        addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
+        addToHistory({array: array, highlights: [startIndex, minIndex]});
         swap(array, startIndex, minIndex);
-        addToHistory({array: array.slice(), highlights: [startIndex, minIndex]});
+        addToHistory({array: array, highlights: [startIndex, minIndex]});
     }
     return array;
 }

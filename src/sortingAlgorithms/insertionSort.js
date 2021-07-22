@@ -7,8 +7,8 @@ export function sort(props) {
     // Do the sorting
     const sortedArray = insertionSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function insertionSort(array) {
@@ -18,11 +18,11 @@ function insertionSort(array) {
     // this element.
     for (let i = 1; i < array.length; i++) {
         let j = i;
-        addToHistory({array: array.slice(), highlights: [j, i]});
+        addToHistory({array: array, highlights: [j, i]});
         // This while loop moves backwards if the element is out of order.
         while (j > 0 && array[j-1] > array[j]) {
             swap(array, j-1, j);
-            addToHistory({array: array.slice(), highlights: [j-1, j]});
+            addToHistory({array: array, highlights: [j-1, j]});
             j--;
         }
     }
