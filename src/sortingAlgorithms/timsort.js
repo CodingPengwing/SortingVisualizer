@@ -7,7 +7,9 @@ var addToHistory;
 
 export function sort(props) {
     addToHistory = props.addToHistory;
+    // Do the sorting
     const sortedArray = timSort(props.array);
+    // Finish the history by adding the final sorted array.
     addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
@@ -16,8 +18,10 @@ const MIN_MERGE = 16;
 
 function timSort(array) {
     let n = array.length;
+    // Find the minimum run optimal for merging
     const minRun = calculateMinRun(n);
 
+    // Use insertion sort to sort each sequential run in the array.
     for (let start = 0; start < n; start += minRun) {
         const end = Math.min(start + minRun - 1, n - 1);
         insertionSort(array, start, end);
@@ -28,10 +32,12 @@ function timSort(array) {
     let size = minRun;
     while (size < n) {
         for (let start = 0; start < n; start += 2 * size) {
+            // Split the current sort range
             const split = Math.min(n - 1, start + size - 1);
             const end = Math.min((start + 2 * size - 1), (n - 1));
             if (split < end) {
-                // Only merge the left and right arrays if elements are out of order.
+                // Merge the left and right arrays if elements are out of order. Otherwise,
+                // they're already sorted.
                 if (array[split] >= array[split+1]) {
                     merge(array, start, split, end);
                 }
@@ -54,6 +60,7 @@ function calculateMinRun(n) {
     return n + r;
 }
 
+// Standard insertion sort
 function insertionSort(array, start, end) {
     if (end <= start) return array;
     // Sort the section using insertion method
@@ -69,6 +76,7 @@ function insertionSort(array, start, end) {
     return array;
 }
 
+// Standard merge function
 function merge(array, start, split, end) {
     if (end <= start) return array;
 

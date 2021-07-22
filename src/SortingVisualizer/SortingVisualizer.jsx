@@ -57,8 +57,9 @@ const HIGHLIGHT_COLOR = '#832380';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
-var TESTING = true;
+var TESTING = false;
 
+// This component is used to produce individual bars in an array
 function Bar(props) {
     var color = PRIMARY_COLOR;
     if (props.highlighted) {
@@ -73,6 +74,7 @@ function Bar(props) {
     );
 }
 
+// This component is used to produce an entire array of bars representing an array of numbers
 class Array extends React.Component {
     renderBar(i) {
         let highlighted = this.props.highlights.includes(i);
@@ -109,6 +111,7 @@ class Array extends React.Component {
     }
 }
 
+// This component controls the animations that are displayed to the user
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -249,7 +252,7 @@ export default class SortingVisualizer extends React.Component {
             default:
                 break;
         }
-        this.setState({array: array, highlights: [], arraySize: arraySize, arrayType: arrayType});
+        this.setState({array: array, highlights: [], resumePoint: 0, arraySize: arraySize, arrayType: arrayType});
     }
 
     reset() {
@@ -290,8 +293,10 @@ export default class SortingVisualizer extends React.Component {
     doSort() {
         this.pause();
         this.clearForwardHistory();
-        // this.clearHistory();
-        this.state.sort({array: this.state.array, addToHistory: this.addToHistory});
+        const sortingAlgorithm = this.state.sort;
+        // Call on the sorting algorithm to sort the array, while adding each important step to history array so we can display them after.
+        sortingAlgorithm({array: this.state.array, addToHistory: this.addToHistory});
+        // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.state.resumePoint);
     }
 

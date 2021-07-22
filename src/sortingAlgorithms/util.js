@@ -50,6 +50,7 @@ export function generateRandomArray(arraySize, minValue, maxValue) {
     return array;
 }
 
+// Generate an array that when sorted has equal differences between adjacent elements.
 export function generateSteadyArray(arraySize, minValue, maxValue) {
     const gap = Math.floor((maxValue - minValue) / arraySize);
     const multipliers = range(0, arraySize);
@@ -80,7 +81,9 @@ export function generateReverseSortedArray(arraySize, minValue, maxValue) {
 }
 
 export function generateUniformArray(arraySize, minValue, maxValue) {
-    const value = randomIntFromInterval(Math.floor(maxValue/2), Math.floor(maxValue/4)*3);
+    const lowerLimit = Math.max(minValue, Math.floor(maxValue/2));
+    const upperLimit = Math.floor(maxValue/4)*3;
+    const value = randomIntFromInterval(lowerLimit, upperLimit);
     let array = [];
     for (let i = 0; i < arraySize; i++) { 
         array[i] = value;

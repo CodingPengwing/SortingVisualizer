@@ -6,9 +6,11 @@ export function sort(props) {
     addToHistory = props.addToHistory;
     const start = 0;
     const end = props.array.length;
-    // initialise the depthLimit as 2 * log(length(data))
-    const depthLimit = Math.floor(Math.log2(end - start))
+    // Initialize the depthLimit as log(length(data))
+    const depthLimit = Math.floor(Math.log2(end - start));
+    // Do the sorting
     const sortedArray = introSort(props.array, start, end, depthLimit);
+    // Finish the history by adding the final sorted array.
     addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
@@ -16,14 +18,16 @@ export function sort(props) {
 // Intro sort from start (inclusive) to end (exclusive)
 function introSort(array, start, end, depthLimit) {
     var size = end - start;
+    // If the array is smaller than 16, sort with insertion sort
     if (size < 16) {
         return insertionSort(array, start, end);
     }
-    if (depthLimit == 0) {
+    // If we have reached max recursion depth, use heap sort
+    if (depthLimit === 0) {
         return heapSort(array, start, end);
     }
+    // Otherwise partition the array and go ahead
     const p = partition(array, start, end);
-    // console.log(depthLimit);
     introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);
 
@@ -46,10 +50,11 @@ function heapSort(array, start, end) {
     let heapSize = arrayLength;
     for (let i = arrayLength - 1; i > 0; i--) {
         addToHistory({array: array.slice(), highlights: [1 + offset, i + offset]});
+        // Eject an element to the end of the heap.
         swap(array, 1 + offset, i + offset);
         addToHistory({array: array.slice(), highlights: [1 + offset, i + offset]});
 
-        // Decrease the heapSize every time we eject an element to the bottom of the array.
+        // Decrease the heapSize every time we eject an element to the bottom of the heap.
         heapSize -= 1;
         maxHeapify(array, start, end, 1, heapSize);
     }
@@ -123,21 +128,27 @@ function insertionSort(array, start, end) {
 
 // ------------------------------------- Partition ------------------------------------- //
 
+// Partition the range so that the left side is smaller than the pivot and the right side is 
+// larger than the pivot.
 function partition(array, start, end) {
     if (end - start <= 1) return start;
 
+    // Pick the pivot
     const pivot = array[start];
     let i = start + 1;
     let j = end - 1;
     while (true) {
+        // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
             addToHistory({array: array.slice(), highlights: [start, i, j]});
             i += 1;
         }
+        // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
             addToHistory({array: array.slice(), highlights: [start, i, j]});
             j -= 1;
         }
+        // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
             addToHistory({array: array.slice(), highlights: [start, i, j]});
             swap(array, i, j);

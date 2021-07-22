@@ -14,19 +14,25 @@ export function sort(props) {
     const array = props.array;
     const start = 0;
     const end = array.length-1;
+    // Do the sorting
     const sortedArray = quickSort(array, start, end);
+    // Finish the history by adding the final sorted array.
     addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
 function quickSort(array, start, end) {
     // Loop for tail call optimization.
+    // While the end is bigger than start, array is still not sorted
     while (start < end) {
         const [pivotLeft, pivotRight] = partition(array, start, end);
+        // Pick the smaller partition to recurse into.
+        // If the left partition is smaller than the right partition recurse there
         if (pivotLeft - start < end - pivotRight) {
             quickSort(array, start, pivotLeft-1);
             start = pivotRight + 1;
         }
+        // If the right partition is smaller, recurse there
         else {
             quickSort(array, pivotRight+1, end);
             end = pivotLeft - 1;
@@ -50,6 +56,8 @@ function partition(array, start, end) {
     let mid = start + 1;
     let pivot = array[start];
 
+    // mid holds the left of the pivot range, the pivot range is the range of elements
+    // that are equal to the pivot
     while (mid <= end) {
         addToHistory({array: array.slice(), highlights: [start, mid, end]});
         if (array[mid] < pivot) {

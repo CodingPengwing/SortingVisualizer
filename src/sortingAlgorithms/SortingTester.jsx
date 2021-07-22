@@ -51,6 +51,7 @@ export function testSortingAlgorithms() {
     
 function testSort(sortingAlgorithm) {
     var success = true;
+    var successCount = 0;
     for (let i = 0; i < TEST_RUNS; i++) {
         const array = randomArray();
         const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
@@ -61,9 +62,11 @@ function testSort(sortingAlgorithm) {
         });
         if (!arraysAreEqual(javaScriptSortedArray, mySortedArray)) {
             success = false;
+        } else {
+            successCount++;
         }
-        console.log(success);
     }
+    console.log("Success/Failure: " + successCount.toString() + "/" + (TEST_RUNS - successCount).toString());
     return success;
 }
 

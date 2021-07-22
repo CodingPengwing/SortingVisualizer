@@ -4,25 +4,14 @@ var addToHistory;
 
 export function sort(props) {
     addToHistory = props.addToHistory;
+    // Do the sorting
     const sortedArray = heapSort(props.array);
+    // Finish the history by adding the final sorted array.
     addToHistory({array: sortedArray.slice(), highlights: []});
     return sortedArray.slice();
 }
 
-// We have to remove the sentinel every time we add to history.
-// All the highlight indices have been shifted -1 because of the removal of the sentinel.
-function shiftThenAddToHistory(props) {
-    props.array.shift();
-    for (let i = 0; i < props.highlights.length; i++) {
-        props.highlights[i] -= 1;
-    }
-    addToHistory({array: props.array, highlights: props.highlights});
-}
-
-
-
-
-// ---------------------------- HEAP SORT ---------------------------- //
+// This implementation of heap sort adds a sentinel to the start of the array.
 
 function heapSort(array) {
     if (array.length <= 1) return array;
@@ -84,3 +73,16 @@ function maxHeapify(array, i, heapSize) {
         maxHeapify(array, largest, heapSize);
     }
 }
+
+
+
+// We have to remove the sentinel every time we add to history.
+// All the highlight indices have been shifted -1 because of the removal of the sentinel.
+function shiftThenAddToHistory(props) {
+    props.array.shift();
+    for (let i = 0; i < props.highlights.length; i++) {
+        props.highlights[i] -= 1;
+    }
+    addToHistory({array: props.array, highlights: props.highlights});
+}
+
