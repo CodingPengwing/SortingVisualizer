@@ -22,6 +22,8 @@ import { sort as timSort } from '../sortingAlgorithms/timSort';
 import { Selector } from '../components/SortingSelector';
 import styles from './SortingVisualizer.module.scss';
 
+import Description from '../components/SortingDescriptor';
+
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
 export const COCKTAIL_SORT = "Cocktail Shaker Sort";
@@ -322,6 +324,11 @@ export default class SortingVisualizer extends React.Component {
                         array={this.state.array}
                         highlights={this.state.highlights}
                     />
+                </div>
+                <div>
+                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
             </div>
         );
