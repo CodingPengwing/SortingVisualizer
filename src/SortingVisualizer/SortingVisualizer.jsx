@@ -55,7 +55,9 @@ const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
 const PRIMARY_COLOR = '#00a1c9';
-const HIGHLIGHT_COLOR = '#883388';
+const COMPARE_COLOR = 'red';
+const LOCALLY_SORTED_COLOR = 'yellow';
+const GLOBALLY_SORTED_COLOR = 'green';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
@@ -76,10 +78,16 @@ class Bar extends React.PureComponent {
 // This component is used to produce an entire array of bars representing an array of numbers
 class Array extends React.PureComponent {
     renderBar(i) {
-        let highlighted = this.props.highlights.includes(i);
-        var color = PRIMARY_COLOR;
-        if (highlighted) {
-            color = HIGHLIGHT_COLOR;
+        const globallySorted = this.props.highlights.globallySorted;
+        const locallySorted = this.props.highlights.locallySorted;
+        const comparing = this.props.highlights.comparing;
+        let color = PRIMARY_COLOR;
+        if (comparing && comparing.includes(i)) {
+            color = COMPARE_COLOR;
+        } else if (globallySorted && globallySorted.includes(i)) {
+            color = GLOBALLY_SORTED_COLOR;
+        } else if (locallySorted && locallySorted.includes(i)) {
+            color = LOCALLY_SORTED_COLOR;
         }
 
         return (
@@ -121,7 +129,9 @@ export default class SortingVisualizer extends React.PureComponent {
             array: [],
             arraySize: MAX_ARRAY_SIZE,
             arrayType: STEADY_ARRAY,
-            highlights: [],
+            highlights: {
+                globallySorted: [], locallySorted: [], comparing: []
+            },
 
             disableSlider: false,
         };
@@ -135,10 +145,10 @@ export default class SortingVisualizer extends React.PureComponent {
         this.history = [];
 
         // Add a state to history array
-        this.addToHistory = (props) => {
-            // We have to use props.array.slice() to save a copy of the array in that state, otherwise,
-            // a sorted array will be displayed (as the animations happen after sorting finishes).
-            this.history.push({array: props.array.slice(), highlights: props.highlights});
+        this.addStateToHistory = (array, comparing, locallySorted, globallySorted) => {
+            // We have to use .slice() to save a copy of the arrays in their current state, otherwise,
+            // those arrays may change and affect the animations later on.
+            this.history.push({array: array.slice(), highlights: {comparing: comparing.slice(), locallySorted: locallySorted.slice(), globallySorted: globallySorted.slice()}});
         };
 
         this.clearHistory = () => {
@@ -174,7 +184,7 @@ export default class SortingVisualizer extends React.PureComponent {
         this.clearForwardHistory();
         const sortingAlgorithm = this.sort;
         // Call on the sorting algorithm to sort the array, while adding each important step to history array so we can display them after.
-        sortingAlgorithm({array: this.state.array, addToHistory: this.addToHistory});
+        sortingAlgorithm({array: this.state.array, addStateToHistory: this.addStateToHistory});
         // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.resumePoint);
     }
@@ -206,7 +216,7 @@ export default class SortingVisualizer extends React.PureComponent {
         this.pause();
         if (this.history.length > 0) {
             const originalArray = this.history[0].array.slice();
-            this.setState({array: originalArray, highlights: []});
+            this.setState({array: originalArray, highlights: {}});
             this.clearHistory();
             this.resumePoint = 0;
         }
@@ -263,7 +273,7 @@ export default class SortingVisualizer extends React.PureComponent {
                 array = [];
                 break;
         }
-        this.setState({array: array, highlights: [], arraySize: arraySize, arrayType: arrayType});
+        this.setState({array: array, highlights: {}, arraySize: arraySize, arrayType: arrayType});
         this.resumePoint = 0;
     }
 

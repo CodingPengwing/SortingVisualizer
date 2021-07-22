@@ -1,11 +1,11 @@
-var addToHistory;
+var addStateToHistory;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = shellSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray, highlights: []});
+    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
@@ -26,11 +26,11 @@ function shellSort(array) {
         for (let i = h; i < array.length; i++) {
             let key = array[i];
             let j = i;
-            addToHistory({array: array, highlights: [i, j-h]});
+            addStateToHistory({array: array, highlights: [i, j-h]});
             // If elements are out of order, propagate them backwards
             while (key < array[j-h]) {
                 array[j] = array[j-h];
-                addToHistory({array: array, highlights: [j, j-h]});
+                addStateToHistory({array: array, highlights: [j, j-h]});
                 j = j-h;
                 if (j < h) break;
             }

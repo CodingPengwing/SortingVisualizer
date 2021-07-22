@@ -2,15 +2,19 @@ import { range, isSorted } from './util';
 
 // The size of input for bogoSort is limited to 7 due to the factorial growth.
 var MAX_SORT_SIZE = 7;
-var addToHistory;
+var addStateToHistory;
+var globallySorted;
+var comparing;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    globallySorted = [];
+    comparing = [];
+    addStateToHistory = props.addStateToHistory;
     if (props.array.length > MAX_SORT_SIZE) return props.array;
     // Do the sorting
     const sortedArray = bogoSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray, highlights: []});
+    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -19,8 +23,11 @@ function bogoSort(array) {
     let permutations = perm(array);
     // Find the permutation that is in sorted order and return it.
     for (let i = 0; i < permutations.length; i++) {
-        addToHistory({array: permutations[i], highlights: range(0, array.length)});
+        comparing = range(0, array.length);
+        addStateToHistory(permutations[i], comparing, [], []);
         if (isSorted(permutations[i])) {
+            globallySorted = range(0, array.length);
+            addStateToHistory(permutations[i], [], [], globallySorted);
             return permutations[i];
         }
     }

@@ -1,13 +1,17 @@
 import { swap } from './util';
 
-var addToHistory;
+var addStateToHistory;
+var globallySorted;
+var comparing;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    globallySorted = [];
+    comparing = [];
+    addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = cocktailShakerSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray, highlights: []});
+    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -22,32 +26,36 @@ function cocktailShakerSort(array) {
     // adjacent elements that are out of order.
     while (!sorted) {
         sorted = true;
-        i = lowerLimit+1;
+        i = lowerLimit + 1;
         while (i <= upperLimit) {
-            addToHistory({array: array, highlights: [i-1, i]});
+            comparing = [i-1, i];
+            addStateToHistory(array, comparing, [], globallySorted);
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
                 sorted = false;
-                addToHistory({array: array, highlights: [i-1, i]});
+                addStateToHistory(array, comparing, [], globallySorted);
             }
             i++;
         }
         // We've moved the largest element to the end of the range, we can shrink the range
+        globallySorted.push(upperLimit);
         upperLimit--;
         if (sorted) { break; }
         
         sorted = true;
         i = upperLimit;
         while (i > lowerLimit) {
-            addToHistory({array: array, highlights: [i-1, i]});
+            comparing = [i-1, i];
+            addStateToHistory(array, comparing, [], globallySorted);
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
                 sorted = false;
-                addToHistory({array: array, highlights: [i-1, i]});
+                addStateToHistory(array, comparing, [], globallySorted);
             }
             i--;
         }
         // We've moved the smallest element to the start of the range, we can shrink the range
+        globallySorted.push(lowerLimit);
         lowerLimit++;
         if (sorted) { break; }
     }

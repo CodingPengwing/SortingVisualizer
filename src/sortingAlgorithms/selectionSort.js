@@ -1,13 +1,13 @@
 import { swap } from "./util";
 
-var addToHistory;
+var addStateToHistory;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = selectionSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray, highlights: []});
+    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
@@ -22,16 +22,16 @@ function selectionSort(array){
         let minIndex = startIndex;
         // Find the smallest element in the unsorted range.
         for (let i = startIndex; i < length; i++){
-            addToHistory({array: array, highlights: [startIndex, i, minIndex]})
+            addStateToHistory({array: array, highlights: [startIndex, i, minIndex]})
             if (minVal > array[i]){
                 minVal = array[i];
                 minIndex = i;
             }
         }
         // Swap into current index
-        addToHistory({array: array, highlights: [startIndex, minIndex]});
+        addStateToHistory({array: array, highlights: [startIndex, minIndex]});
         swap(array, startIndex, minIndex);
-        addToHistory({array: array, highlights: [startIndex, minIndex]});
+        addStateToHistory({array: array, highlights: [startIndex, minIndex]});
     }
     return array;
 }
