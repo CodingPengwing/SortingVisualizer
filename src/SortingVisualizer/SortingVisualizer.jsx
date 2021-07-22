@@ -62,17 +62,19 @@ const BOGO_SORT_ARRAY_SIZE = 7;
 const TESTING = true;
 
 // This component is used to produce individual bars in an array
-function Bar(props) {
-    return (
-        <div 
-            className={styles.arrayBar} 
-            style={{height: `${props.value}px`, backgroundColor: props.color}}>
-        </div>    
-    );
+class Bar extends React.PureComponent {
+    render() {
+        return (
+            <div 
+                className={styles.arrayBar} 
+                style={{height: `${this.props.value}px`, backgroundColor: this.props.color}}>
+            </div>    
+        );
+    }
 }
 
 // This component is used to produce an entire array of bars representing an array of numbers
-class Array extends React.Component {
+class Array extends React.PureComponent {
     renderBar(i) {
         let highlighted = this.props.highlights.includes(i);
         var color = PRIMARY_COLOR;
@@ -112,7 +114,7 @@ class Array extends React.Component {
 }
 
 // This component controls the animations that are displayed to the user
-export default class SortingVisualizer extends React.Component {
+export default class SortingVisualizer extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -121,21 +123,22 @@ export default class SortingVisualizer extends React.Component {
             arrayType: STEADY_ARRAY,
             highlights: [],
 
-            sort: quickSort,
-            timeoutIDArray: [],
-            resumePoint: 0,
             disableSlider: false,
-            animationSpeed: INITIAL_ANIMATION_SPEED,
-            animationPauseTime: INITIAL_ANIMATION_PAUSE_TIME
         };
+
+        this.timeoutIDArray = [];
+        this.sort = quickSort;
+        this.resumePoint = 0;
+        this.animationSpeed = INITIAL_ANIMATION_SPEED;
+        this.animationPauseTime = INITIAL_ANIMATION_PAUSE_TIME;
 
         this.history = [];
 
+        // Add a state to history array
         this.addToHistory = (props) => {
-            this.history.push({
-                array: props.array.slice(), 
-                highlights: props.highlights
-            });
+            // We have to use props.array.slice() to save a copy of the array in that state, otherwise,
+            // a sorted array will be displayed (as the animations happen after sorting finishes).
+            this.history.push({array: props.array.slice(), highlights: props.highlights});
         };
 
         this.clearHistory = () => {
@@ -143,7 +146,7 @@ export default class SortingVisualizer extends React.Component {
         }
 
         this.clearForwardHistory = () => {
-            this.history = this.history.slice(0, this.state.resumePoint+1);
+            this.history = this.history.slice(0, this.resumePoint + 1);
         }
 
         this.generateArray = this.generateArray.bind(this);
@@ -166,70 +169,77 @@ export default class SortingVisualizer extends React.Component {
         this.clearHistory();
     }
 
-    changeSort(sortType){
-        if (sortType === BOGO_SORT){
-            this.reset();
-            this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
-            this.setState({disableSlider: true});
-        } 
-        else {
-            if (this.state.disableSlider) {
-                this.reset();
-                this.generateArray(this.state.arrayType, MAX_ARRAY_SIZE);
-                this.setState({disableSlider: false});
-            }
-        }
+    doSort() {
+        this.pause();
+        this.clearForwardHistory();
+        const sortingAlgorithm = this.sort;
+        // Call on the sorting algorithm to sort the array, while adding each important step to history array so we can display them after.
+        sortingAlgorithm({array: this.state.array, addToHistory: this.addToHistory});
+        // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
+        this.animateHistory(this.resumePoint);
+    }
 
-        switch (sortType) {
-            case BOGO_SORT:
-                this.setState({sort: bogoSort});
-                break;
-            case BUBBLE_SORT:
-                this.setState({sort: bubbleSort});
-                break;
-            case COCKTAIL_SORT:
-                this.setState({sort: cocktailShakerSort});
-                break;
-            case GNOME_SORT:
-                this.setState({sort: gnomeSort});
-                break;
-            case HEAP_SORT:
-                this.setState({sort: heapSort});
-                break;
-            case INSERTION_SORT:
-                this.setState({sort: insertionSort});
-                break;
-            case INTRO_SORT:
-                this.setState({sort: introSort});
-                break;
-            case MERGE_SORT:
-                this.setState({sort: mergeSort});
-                break;
-            case QUICK_SORT:
-                this.setState({sort: quickSort});
-                break;
-            case QUICK_SORT_OPTIMIZED:
-                this.setState({sort: quickSortOptimized});
-                break;
-            case SELECTION_SORT:
-                this.setState({sort: selectionSort});
-                break;
-            case SHELL_SORT:
-                this.setState({sort: shellSort});
-                break;
-            case TIM_SORT:
-                this.setState({sort: timSort});
-                break;
-            default:
-                break;
+    animateHistory(startPoint) {
+        if (!startPoint) startPoint = 0;
+        var pauseTime;
+        var count = 1;
+        for (let i = startPoint; i < this.history.length; i++) {
+            pauseTime = this.animationPauseTime * count;
+            let timeoutID = setTimeout(() => {
+                this.setState({array: this.history[i].array, highlights: this.history[i].highlights});
+                this.resumePoint = i + 1;
+            }, pauseTime);
+            this.timeoutIDArray.push(timeoutID);
+            count++;
         }
     }
+
+    pause() {
+        let i = 0;
+        while (i < this.timeoutIDArray.length) {
+            clearTimeout(this.timeoutIDArray[i++]);
+        }
+        this.timeoutIDArray = [];
+    }
+
+    reset() {
+        this.pause();
+        if (this.history.length > 0) {
+            const originalArray = this.history[0].array.slice();
+            this.setState({array: originalArray, highlights: []});
+            this.clearHistory();
+            this.resumePoint = 0;
+        }
+    }
+
+    resume() {
+        this.pause();
+        this.animateHistory(this.resumePoint);
+    }
+
+    onChangeArraySize(arraySize) {
+        if (this.state.arraySize !== arraySize) {
+            this.generateArray(this.state.arrayType, arraySize);
+        }
+    }
+
+    onChangeSortSpeed(speed) {
+        if (this.animationSpeed !== speed) {
+            const percentageSpeed = speed/100;
+            var pauseTime = MAX_ANIMATION_PAUSE - (ANIMATION_PAUSE_RANGE * percentageSpeed);
+            this.animationSpeed = speed;
+            this.animationPauseTime = pauseTime;
+            this.pause();
+            this.animateHistory(this.resumePoint);
+        }
+    }
+
 
     generateArray(arrayType, arraySize) {
         if (!arraySize) arraySize = this.state.arraySize;
         this.pause();
         this.clearHistory();
-        let array = [];
+        let array;
         switch (arrayType) {
             case RANDOM_ARRAY:
                 array = generateRandomArray(arraySize, MIN_VALUE, MAX_VALUE);
@@ -250,69 +260,67 @@ export default class SortingVisualizer extends React.Component {
                 array = generatePartialUniformArray(arraySize, MIN_VALUE, MAX_VALUE);
                 break;
             default:
+                array = [];
                 break;
         }
-        this.setState({array: array, highlights: [], resumePoint: 0, arraySize: arraySize, arrayType: arrayType});
+        this.setState({array: array, highlights: [], arraySize: arraySize, arrayType: arrayType});
+        this.resumePoint = 0;
     }
 
-    reset() {
-        if (this.history.length > 0) {
-            const originalArray = this.history[0].array.slice();
-            this.pause();
-            this.clearHistory();
-            this.setState({array: originalArray, highlights: [], resumePoint: 0});
+    changeSort(sortType){
+        if (sortType === BOGO_SORT){
+            this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
+            this.setState({disableSlider: true});
+        } 
+        else {
+            if (this.state.disableSlider) {
+                this.generateArray(this.state.arrayType, MAX_ARRAY_SIZE);
+                this.setState({disableSlider: false});
+            }
         }
-    }
 
-    pause() {
-        let arrLen = this.state.timeoutIDArray.length;
-        let i = 0;
-        while (i < arrLen) {
-            clearTimeout(this.state.timeoutIDArray[i++]);
-        }
-        // this.setState({timeoutIDArray: []});
-    }
-
-    resume() {
-        this.pause();
-        this.animateHistory(this.state.resumePoint);
-    }
-
-    animateHistory(startPoint) {
-        if (!startPoint) startPoint = 0;
-        var animationPauseTime;
-        var count = 1;
-        for (let i = startPoint; i < this.history.length; i++) {
-            animationPauseTime = this.state.animationPauseTime * count;
-            let timeoutID = setTimeout(() => {this.setState({array: this.history[i].array, highlights: this.history[i].highlights, resumePoint: i+1})}, animationPauseTime);
-            this.state.timeoutIDArray.push(timeoutID);
-            count++;
-        }
-    }
-
-    doSort() {
-        this.pause();
-        this.clearForwardHistory();
-        const sortingAlgorithm = this.state.sort;
-        // Call on the sorting algorithm to sort the array, while adding each important step to history array so we can display them after.
-        sortingAlgorithm({array: this.state.array, addToHistory: this.addToHistory});
-        // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
-        this.animateHistory(this.state.resumePoint);
-    }
-
-    onChangeArraySize(arraySize) {
-        if (this.state.arraySize !== arraySize) {
-            this.generateArray(this.state.arrayType, arraySize);
-        }
-    }
-
-    onChangeSortSpeed(speed) {
-        if (this.state.animationSpeed !== speed) {
-            const percentageSpeed = speed/100;
-            var animationPauseTime = MAX_ANIMATION_PAUSE - (ANIMATION_PAUSE_RANGE * percentageSpeed);
-            this.setState({animationSpeed: speed, animationPauseTime: animationPauseTime});
-            this.pause();
-            this.animateHistory(this.state.resumePoint);
+        switch (sortType) {
+            case BOGO_SORT:
+                this.sort = bogoSort;
+                break;
+            case BUBBLE_SORT:
+                this.sort = bubbleSort;
+                break;
+            case COCKTAIL_SORT:
+                this.sort = cocktailShakerSort;
+                break;
+            case GNOME_SORT:
+                this.sort = gnomeSort;
+                break;
+            case HEAP_SORT:
+                this.sort = heapSort;
+                break;
+            case INSERTION_SORT:
+                this.sort = insertionSort;
+                break;
+            case INTRO_SORT:
+                this.sort = introSort;
+                break;
+            case MERGE_SORT:
+                this.sort = mergeSort;
+                break;
+            case QUICK_SORT:
+                this.sort = quickSort;
+                break;
+            case QUICK_SORT_OPTIMIZED:
+                this.sort = quickSortOptimized;
+                break;
+            case SELECTION_SORT:
+                this.sort = selectionSort;
+                break;
+            case SHELL_SORT:
+                this.sort = shellSort;
+                break;
+            case TIM_SORT:
+                this.sort = timSort;
+                break;
+            default:
+                break;
         }
     }
 
@@ -322,15 +330,13 @@ export default class SortingVisualizer extends React.Component {
                 <Selector onChangeInput = {this.generateArray} onChangeSort = {this.changeSort} sort = {this.doSort}
                 reset = {this.reset} pause = {this.pause} resume = {this.resume} onChangeSize = {this.onChangeArraySize}
                 onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
+
                 <div className = {styles.arrayContainer}>
-                    <Array
-                        array={this.state.array}
-                        highlights={this.state.highlights}
-                    />
+                    <Array array={this.state.array} highlights={this.state.highlights}/>
                 </div>
                 <div>
-                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
                     <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Complexity" description = "Lorem Ipsum bla bla..."/>
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
             </div>
