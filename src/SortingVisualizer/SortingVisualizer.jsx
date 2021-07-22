@@ -55,23 +55,18 @@ const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
 const PRIMARY_COLOR = '#00a1c9';
-const HIGHLIGHT_COLOR = '#ffffff';
+const HIGHLIGHT_COLOR = '#883388';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
-var TESTING = false;
+const TESTING = true;
 
 // This component is used to produce individual bars in an array
 function Bar(props) {
-    var color = PRIMARY_COLOR;
-    if (props.highlighted) {
-        color = HIGHLIGHT_COLOR;
-    }
     return (
         <div 
             className={styles.arrayBar} 
-            key={props.idx}
-            style={{height: `${props.value}px`, backgroundColor: color}}>
+            style={{height: `${props.value}px`, backgroundColor: props.color}}>
         </div>    
     );
 }
@@ -80,11 +75,15 @@ function Bar(props) {
 class Array extends React.Component {
     renderBar(i) {
         let highlighted = this.props.highlights.includes(i);
+        var color = PRIMARY_COLOR;
+        if (highlighted) {
+            color = HIGHLIGHT_COLOR;
+        }
+
         return (
             <Bar
                 value={this.props.array[i]}
-                idx={i}
-                highlighted={highlighted}
+                color={color}
                 key={i}
             />
         )
@@ -93,7 +92,7 @@ class Array extends React.Component {
     render() {
         var bars = [];
         let i;
-        for (i=0; i < this.props.array.length; i++) {
+        for (i = 0; i < this.props.array.length; i++) {
             bars.push(this.renderBar(i));
         }
         // Redundant invisible bar at the end of the array container
@@ -102,8 +101,7 @@ class Array extends React.Component {
             className={styles.arrayBar}
             style={{height: MAX_VALUE + 30, backgroundColor: "black"}}
             key={i}
-            >
-        </div>)
+        />)
 
         return (
             <div className={styles.array}>
