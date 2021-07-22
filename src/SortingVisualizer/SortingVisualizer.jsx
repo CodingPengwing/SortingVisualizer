@@ -55,7 +55,7 @@ const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
 const PRIMARY_COLOR = '#00a1c9';
-const HIGHLIGHT_COLOR = '#832380';
+const HIGHLIGHT_COLOR = '#ffffff';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
