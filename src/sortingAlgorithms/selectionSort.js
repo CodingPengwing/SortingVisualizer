@@ -1,13 +1,15 @@
-import { swap } from "./util";
+import { range, swap } from "./util";
 
 var addStateToHistory;
+var globallySorted;
+var comparing;
 
 export function sort(props) {
+    globallySorted = [];
+    comparing = [];
     addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = selectionSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
@@ -17,21 +19,29 @@ function selectionSort(array){
 
     // For each index in the array, find the smallest element in the unsorted range, and move
     // it to the current index.
-    for (let startIndex = 0; startIndex < length; startIndex++){
-        let minVal = array[startIndex];
-        let minIndex = startIndex;
+    for (let start = 0; start < length; start++){
+        let minVal = array[start];
+        let min = start;
         // Find the smallest element in the unsorted range.
-        for (let i = startIndex; i < length; i++){
-            addStateToHistory({array: array, highlights: [startIndex, i, minIndex]})
-            if (minVal > array[i]){
+        for (let i = start; i < length; i++){
+            comparing = [start, i, min]
+            addStateToHistory(array, comparing, [], globallySorted);
+            if (minVal > array[i]) {
                 minVal = array[i];
-                minIndex = i;
+                min = i;
             }
         }
+        comparing = [start, min];
         // Swap into current index
-        addStateToHistory({array: array, highlights: [startIndex, minIndex]});
-        swap(array, startIndex, minIndex);
-        addStateToHistory({array: array, highlights: [startIndex, minIndex]});
+        addStateToHistory(array, comparing, [], globallySorted);
+        swap(array, start, min);
+        addStateToHistory(array, comparing, [], globallySorted);
+        globallySorted.push(start);
     }
+    // comparing = [];
+    // addStateToHistory(array, comparing, , []);
+
+    // Here the entire array is sorted.
+    addStateToHistory(array, [], [], range(0, array.length));
     return array;
 }

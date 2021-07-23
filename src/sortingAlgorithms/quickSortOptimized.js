@@ -8,79 +8,98 @@
 import { range, randomIntFromInterval, swap } from './util';
 
 var addStateToHistory;
+var globallySorted;
+var locallySorted;
+var comparing;
 
 export function sort(props) {
+    globallySorted = [];
+    locallySorted = [];
+    comparing = [];
     addStateToHistory = props.addStateToHistory;
     const array = props.array;
     const start = 0;
-    const end = array.length-1;
+    const end = array.length;
     // Do the sorting
     const sortedArray = quickSort(array, start, end);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
+// Sort array from start (inclusive) to end (exclusive)
 function quickSort(array, start, end) {
-    // Loop for tail call optimization.
+    // While loop used for tail call optimization.
     // While the end is bigger than start, array is still not sorted
     while (start < end) {
         const [pivotLeft, pivotRight] = partition(array, start, end);
+        globallySorted.push(...range(pivotLeft, pivotRight));
         // Pick the smaller partition to recurse into.
         // If the left partition is smaller than the right partition recurse there
         if (pivotLeft - start < end - pivotRight) {
-            quickSort(array, start, pivotLeft-1);
-            start = pivotRight + 1;
+            quickSort(array, start, pivotLeft);
+            globallySorted.push(...range(start, pivotLeft));
+            addStateToHistory(array, [], [], globallySorted);
+            // start -> pivotRight is now sorted
+            // move start to pivotRight
+            start = pivotRight;
         }
         // If the right partition is smaller, recurse there
         else {
-            quickSort(array, pivotRight+1, end);
-            end = pivotLeft - 1;
+            quickSort(array, pivotRight, end);
+            globallySorted.push(...range(pivotRight, end));
+            addStateToHistory(array, [], [], globallySorted);
+            // pivotLeft -> end is now sorted
+            // move end to pivotLeft
+            end = pivotLeft;
         }
     }
+
+    globallySorted.push(...range(start, end));
+    addStateToHistory(array, [], [], globallySorted);
     return array;
 }
 
 function partition(array, start, end) {
-    if (end <= start) return [start, end];
+    if (end - start <= 1) {
+        globallySorted.push(start);
+        return [start, end];
+    }
 
     //  If this section has more than 5 elements
-    if (end - start + 1 > 5) {
+    if (end - start > 5) {
         // Choose pivot at random to reduce chance of O(n^2) worst case.
-        let pivotIndex = randomIntFromInterval(start, end);
-        addStateToHistory({array: array, highlights: [start, pivotIndex]});
-        swap(array, start, pivotIndex);
-        addStateToHistory({array: array, highlights: [start, pivotIndex]});
+        let p = randomIntFromInterval(start, end-1);
+        comparing = [start, p];
+        addStateToHistory(array, comparing, [], globallySorted);
+        swap(array, start, p);
+        addStateToHistory(array, comparing, [], globallySorted);
     }
 
-    let mid = start + 1;
     let pivot = array[start];
+    let mid = start + 1;
 
-    // mid holds the left of the pivot range, the pivot range is the range of elements
-    // that are equal to the pivot
-    while (mid <= end) {
-        addStateToHistory({array: array, highlights: [start, mid, end]});
-        if (array[mid] < pivot) {
+    // start is the left of our pivot range
+    // mid is the right of our pivot range
+    while (mid < end) {
+        if (mid - start > 1) {
+            locallySorted = range(start, mid);
+        }
+        comparing = [start, mid, end-1];
+        addStateToHistory(array, comparing, locallySorted, globallySorted);
+        if (array[mid] === pivot) {
+            mid++;
+        } else if (array[mid] < pivot) {
             swap(array, start, mid);
-            addStateToHistory({array: array, highlights: [start, mid]});
+            addStateToHistory(array, comparing, locallySorted, globallySorted);
             start++;
             mid++;
-        } 
-        else if (array[mid] > pivot) {
-            swap(array, mid, end);
-            addStateToHistory({array: array, highlights: [start, mid, end]});
+        } else if (array[mid] > pivot) {
+            swap(array, mid, end-1);
+            addStateToHistory(array, comparing, locallySorted, globallySorted);
             end--;
         } 
-        else {
-            mid++;
-        }
     }
     // start is now our left pivot position (inclusive)
-    // end is now our right pivot position (inclusive)
-    // this means that everything within the pivotRange is equal to our pivot
-    if (end - start >= 1) {
-        let pivotRange = range(start, end+1);
-        addStateToHistory({array: array, highlights: pivotRange});
-    }
+    // end is now our right pivot position (exclusive)
+    // this means that everything within this range is equal to our pivot
     return [start, end];
 }

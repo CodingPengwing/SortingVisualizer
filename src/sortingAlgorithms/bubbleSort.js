@@ -1,4 +1,4 @@
-import { swap } from './util';
+import { range, swap } from './util';
 
 var addStateToHistory;
 var globallySorted;
@@ -10,8 +10,6 @@ export function sort(props) {
     addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = bubbleSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -35,5 +33,8 @@ function bubbleSort(array) {
         upperLimit--;
         globallySorted.push(upperLimit);
     }
+
+    // Here the entire array is sorted.
+    addStateToHistory(array, [], [], range(0, array.length));
     return array;
 }

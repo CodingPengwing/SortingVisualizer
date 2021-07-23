@@ -1,3 +1,6 @@
+// About half of this code was borrowed from
+// https://www.geeksforgeeks.org/introsort-or-introspective-sort/
+
 import { range, swap } from "./util";
 
 var addStateToHistory;
@@ -16,8 +19,6 @@ export function sort(props) {
     const depthLimit = Math.floor(Math.log2(end - start));
     // Do the sorting
     const sortedArray = introSort(props.array, start, end, depthLimit);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -26,11 +27,15 @@ function introSort(array, start, end, depthLimit) {
     const n = end - start;
     // If the array is smaller than 16, sort with insertion sort
     if (n < 16) {
-        return insertionSort(array, start, end);
+        insertionSort(array, start, end);
+        globallySorted.push(...range(start, end));
+        return array;
     }
     // If we have reached max recursion depth, use heap sort
     if (depthLimit === 0) {
-        return heapSort(array, start, end);
+        heapSort(array, start, end);
+        globallySorted.push(...range(start, end));
+        return array;
     }
     // Otherwise partition the array and go ahead
     const p = partition(array, start, end);
@@ -38,6 +43,9 @@ function introSort(array, start, end, depthLimit) {
     introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);
 
+    globallySorted.push(...range(start, end));
+    // Here the partition is sorted.
+    addStateToHistory(array, [], [], globallySorted);
     return array;
 }
 
@@ -49,14 +57,15 @@ function heapSort(array, start, end) {
     if (end - start <= 1) return array;
 
     bottomUpHeapify(array, start, end);
-    let n = end - start;
-    for (let i = start + n - 1; i > start; i--) {
+    let heapSize;
+    for (let i = end - 1; i > start; i--) {
         comparing = [start, i];
         addStateToHistory(array, comparing, [], globallySorted);
         swap(array, start, i);
-        globallySorted.push(i);
         addStateToHistory(array, comparing, [], globallySorted);
-        maxHeapify(array, start, end, start, i - start);
+        globallySorted.push(i);
+        heapSize = i - start;
+        maxHeapify(array, start, end, start, heapSize);
     }
     globallySorted.push(...range(start, end));
     return array;
@@ -72,21 +81,25 @@ function bottomUpHeapify(array, start, end) {
 
 // Ensures that all elements related to index i satisfy the conditions of a heap.
 function maxHeapify(array, start, end, i, heapSize) {
-
     var offset = start;
-
     // Find the children of this element
     let lChild = 2 * (i - offset) + offset + 1;
     let rChild = 2 * (i - offset) + offset + 2;
+    if (lChild >= start + heapSize) {
+        return array;
+    }
+    if (rChild >= start + heapSize) {
+        rChild = lChild;
+    }
 
     // Find the largest element between the parent, left and right children.
     comparing = [i, lChild, rChild];
     addStateToHistory(array, comparing, [], globallySorted);
     let largest = i;
-    if (lChild < start + heapSize && array[lChild] > array[largest]) {
+    if (array[lChild] > array[largest]) {
         largest = lChild;
     }
-    if (rChild < start + heapSize && array[rChild] > array[largest]) {
+    if (array[rChild] > array[largest]) {
         largest = rChild;
     }
 
@@ -112,7 +125,7 @@ function insertionSort(array, start, end) {
     // Sort the section using insertion method
     for (let i = start; i < end; i++) {
         let j = i;
-        comparing = [i, j];
+        comparing = [j-1, j];
         addStateToHistory(array, comparing, locallySorted, globallySorted);
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
@@ -122,6 +135,8 @@ function insertionSort(array, start, end) {
         }
         locallySorted.push(i);
     }
+    comparing = [];
+    addStateToHistory(array, comparing, locallySorted, globallySorted);
     locallySorted = [];
     globallySorted.push(...range(start, end));
     return array;
@@ -143,19 +158,19 @@ function partition(array, start, end) {
     while (true) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
-            comparing = [i, j];
+            comparing = [start, i, j];
             addStateToHistory(array, comparing, [], globallySorted);
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
-            comparing = [i, j];
+            comparing = [start, i, j];
             addStateToHistory(array, comparing, [], globallySorted);
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
-            comparing = [i, j];
+            comparing = [start, i, j];
             addStateToHistory(array, comparing, [], globallySorted);
             swap(array, i, j);
             addStateToHistory(array, comparing, [], globallySorted);

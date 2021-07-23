@@ -3,18 +3,14 @@ import { range, isSorted } from './util';
 // The size of input for bogoSort is limited to 7 due to the factorial growth.
 var MAX_SORT_SIZE = 7;
 var addStateToHistory;
-var globallySorted;
 var comparing;
 
 export function sort(props) {
-    globallySorted = [];
     comparing = [];
     addStateToHistory = props.addStateToHistory;
     if (props.array.length > MAX_SORT_SIZE) return props.array;
     // Do the sorting
     const sortedArray = bogoSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -26,8 +22,8 @@ function bogoSort(array) {
         comparing = range(0, array.length);
         addStateToHistory(permutations[i], comparing, [], []);
         if (isSorted(permutations[i])) {
-            globallySorted = range(0, array.length);
-            addStateToHistory(permutations[i], [], [], globallySorted);
+            // Here the entire array is sorted
+            addStateToHistory(permutations[i], [], [], range(0, array.length));
             return permutations[i];
         }
     }

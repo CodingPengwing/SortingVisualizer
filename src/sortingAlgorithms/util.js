@@ -7,7 +7,7 @@ export function range(start, end) {
     return array;
 }
 
-// Generates a random integer within the given interval
+// Generates a random integer within the given interval, exclusive of max.r
 export function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max-min+1) + min);
 }
