@@ -1,17 +1,15 @@
-import { swap } from "./util";
+import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var locallySorted;
 var comparing;
 
 export function sort(props) {
     locallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = insertionSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -20,18 +18,24 @@ function insertionSort(array) {
     // Iterate from start to end of the array, for each element, check whether they are larger than 
     // all previous elements. If yes, continue. Otherwise, go backwards and find the correct place for 
     // this element.
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 1; i < array.length; i++) {
         let j = i;
-        comparing = [i, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        comparing = [j-1, j];
+        takeSnapshot(array, comparing, locallySorted, []);
         // This while loop moves backwards if the element is out of order.
         while (j > 0 && array[j-1] > array[j]) {
             swap(array, j-1, j);
             comparing = [j-1, j]
-            addStateToHistory(array, comparing, locallySorted, []);
+            takeSnapshot(array, comparing, locallySorted, []);
             j--;
         }
+        if (i === 1) { locallySorted.push(0); }
         locallySorted.push(i);
     }
+    comparing = [];
+    takeSnapshot(array, comparing, locallySorted, []);
+
+    // Here the entire array is sorted
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }

@@ -1,17 +1,15 @@
-import { swap } from "./util";
+import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = heapSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory(sortedArray, [], [], []);
     return sortedArray;
 }
 
@@ -21,13 +19,15 @@ function heapSort(array) {
     bottomUpHeapify(array);
     for (let i = array.length - 1; i > 0; i--) {
         comparing = [0, i];
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         swap(array, 0, i);
+        takeSnapshot(array, comparing, [], globallySorted);
         globallySorted.push(i);
-        addStateToHistory(array, comparing, [], globallySorted);
         maxHeapify(array, 0, i);
     }
 
+    // Here the entire array is sorted.
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }
 
@@ -44,15 +44,21 @@ function maxHeapify(array, i, heapSize) {
     // Find the children of this element
     let lChild = 2 * i + 1;
     let rChild = 2 * i + 2;
+    if (lChild >= heapSize) {
+        return array;
+    }
+    if (rChild >= heapSize) {
+        rChild = lChild;
+    }
 
     // Find the largest element between the parent, left and right children.
     comparing = [i, lChild, rChild];
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     let largest = i;
-    if (lChild < heapSize && array[lChild] > array[largest]) {
+    if (array[lChild] > array[largest]) {
         largest = lChild;
     }
-    if (rChild < heapSize && array[rChild] > array[largest]) {
+    if (array[rChild] > array[largest]) {
         largest = rChild;
     }
 
@@ -60,8 +66,9 @@ function maxHeapify(array, i, heapSize) {
     if (largest !== i) {
         swap(array, i, largest);
         comparing = [i, largest];
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         // Heapify again for the child's children
         maxHeapify(array, largest, heapSize);
     }
+    return array;
 }

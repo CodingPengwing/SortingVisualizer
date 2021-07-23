@@ -1,11 +1,15 @@
-var addStateToHistory;
+import { range, swap } from './util';
+
+var takeSnapshot;
+var globallySorted;
+var comparing;
 
 export function sort(props) {
-    addStateToHistory = props.addStateToHistory;
+    globallySorted = [];
+    comparing = [];
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = shellSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
@@ -24,18 +28,25 @@ function shellSort(array) {
         // Decrement the gap
         h = Math.floor(h/3);
         for (let i = h; i < array.length; i++) {
-            let key = array[i];
             let j = i;
-            addStateToHistory({array: array, highlights: [i, j-h]});
+            comparing = [j-h, j];
+            takeSnapshot(array, comparing, [], globallySorted);
             // If elements are out of order, propagate them backwards
-            while (key < array[j-h]) {
-                array[j] = array[j-h];
-                addStateToHistory({array: array, highlights: [j, j-h]});
-                j = j-h;
+            while (array[j] < array[j-h]) {
+                swap(array, j, j-h);
+                comparing = [j-h, j];
+                takeSnapshot(array, comparing, [], globallySorted);
+                j = j - h;
                 if (j < h) break;
             }
-            array[j] = key;
+            if (h === 1) { 
+                if (i === 1) { globallySorted.push(0); }
+                globallySorted.push(i);
+            }
         }
     }
+
+    // Here the entire array is sorted.
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }

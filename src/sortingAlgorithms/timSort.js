@@ -3,14 +3,18 @@
 
 import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
+var globallySorted;
+var locallySorted;
+var comparing;
 
 export function sort(props) {
-    addStateToHistory = props.addStateToHistory;
+    globallySorted = [];
+    locallySorted = [];
+    comparing = [];
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = timSort(props.array);
-    // Finish the history by adding the final sorted array.
-    addStateToHistory({array: sortedArray, highlights: []});
     return sortedArray;
 }
 
@@ -23,30 +27,32 @@ function timSort(array) {
 
     // Use insertion sort to sort each sequential run in the array.
     for (let start = 0; start < n; start += minRun) {
-        const end = Math.min(start + minRun - 1, n - 1);
+        const end = Math.min(start + minRun, n);
         insertionSort(array, start, end);
         // Show the section that has just been sorted
-        addStateToHistory({array: array, highlights: range(start, end+1)});
+        locallySorted.push(...range(start, end));
+        takeSnapshot(array, [], locallySorted, []);
     }
 
     let size = minRun;
-    while (size < n) {
+    while (size <= n) {
         for (let start = 0; start < n; start += 2 * size) {
             // Split the current sort range
-            const split = Math.min(n - 1, start + size - 1);
-            const end = Math.min((start + 2 * size - 1), (n - 1));
+            const split = start + size;
+            const end = Math.min(start + 2 * size, n);
             if (split < end) {
-                // Merge the left and right arrays if elements are out of order. Otherwise,
-                // they're already sorted.
-                if (array[split] >= array[split+1]) {
+                // Merge the left and right arrays if adjacent elements are 
+                // out of order, otherwise, they're already sorted.
+                if (array[split-1] >= array[split]) {
                     merge(array, start, split, end);
                 }
-                // Show the section that has just been sorted
-                addStateToHistory({array: array, highlights: range(start, end+1)});
             }
         }
         size *= 2;
     }
+
+    // Here the entire array is sorted.
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }
 
@@ -62,28 +68,35 @@ function calculateMinRun(n) {
 
 // Standard insertion sort
 function insertionSort(array, start, end) {
-    if (end <= start) return array;
+    if (end - start <= 1) return array;
     // Sort the section using insertion method
-    for (let i = start+1; i < end+1; i++) {
+    for (let i = start + 1; i < end; i++) {
         let j = i;
-        addStateToHistory({array: array, highlights: [j-1, j]});
+        comparing = [j-1, j];
+        takeSnapshot(array, comparing, locallySorted, []);
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
-            addStateToHistory({array: array, highlights: [j-1, j]});
+            comparing = [j-1, j]
+            takeSnapshot(array, comparing, locallySorted, []);
             j--;
         }
+        if (i === start + 1) { locallySorted.push(start); }
+        locallySorted.push(i);
     }
+    comparing = [];
+    takeSnapshot(array, comparing, locallySorted, []);
     return array;
 }
 
 // Standard merge function
 function merge(array, start, split, end) {
-    if (end <= start) return array;
+    if (end - start <= 1) return array;
 
     let mergeArray = [];
-    let i = start, j = split+1;
-    while (i <= split && j <= end) {
-        addStateToHistory({array: array, highlights: [i, j]});
+    let i = start, j = split;
+    while (i < split && j < end) {
+        comparing = [i, j];
+        takeSnapshot(array, comparing, locallySorted, []);
         if (array[i] <= array[j]) {
             mergeArray.push(array[i++]);
         } else {
@@ -91,18 +104,29 @@ function merge(array, start, split, end) {
         }
     }
 
-    while (i <= split) {
-        addStateToHistory({array: array, highlights: [i, j-1]});
+    while (i < split) {
+        comparing = [i, j-1];
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[i++]);
     }
-    while (j <= end) {
-        addStateToHistory({array: array, highlights: [i-1, j]});
+    while (j < end) {
+        comparing = [i-1, j];
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[j++]);
     }
 
+    // Determine if this is the very last merge operation to sort the array
+    let lastMerge = false;
+    if (end - start === array.length) {
+        lastMerge = true;
+    }
+
+    // Write the sorted elements back into the original array
     for (let k = 0; k < mergeArray.length; k++) {
-        addStateToHistory({array: array, highlights: [start+k]});
         array[start+k] = mergeArray[k];
+        if (lastMerge) { globallySorted.push(start+k); }
+        comparing = [start+k];
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
     }
 
     return array;
