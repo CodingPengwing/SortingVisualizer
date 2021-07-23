@@ -55,9 +55,9 @@ const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
 const PRIMARY_COLOR = '#00a1c9';
-const COMPARE_COLOR = 'red';
-const LOCALLY_SORTED_COLOR = 'yellow';
-const GLOBALLY_SORTED_COLOR = 'green';
+const COMPARE_COLOR = 'purple';
+const LOCALLY_SORTED_COLOR = '#FFFF66';
+const GLOBALLY_SORTED_COLOR = '#ADFF2F';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
