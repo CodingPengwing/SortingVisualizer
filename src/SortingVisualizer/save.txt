@@ -1,0 +1,5 @@
+const barTransparency = 'DD';
+const PRIMARY_COLOR = '#982636' + barTransparency;
+const COMPARE_COLOR = '#FFFF00' + barTransparency;
+const LOCALLY_SORTED_COLOR = '#ADEFD1' + barTransparency;
+const GLOBALLY_SORTED_COLOR = '#3EB6E2' + barTransparency;

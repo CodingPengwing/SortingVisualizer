@@ -55,11 +55,11 @@ export const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
-const barTransparency = 'C5';
-const PRIMARY_COLOR = '#5FEEEE' + barTransparency;
-const COMPARE_COLOR = '#5B1092' + barTransparency;
-const LOCALLY_SORTED_COLOR = '#F0E68C' + barTransparency;
-const GLOBALLY_SORTED_COLOR = '#20EF5F' + barTransparency;
+const barTransparency = 'DD';
+const PRIMARY_COLOR = '#982636' + barTransparency;
+const COMPARE_COLOR = '#FFFF00' + barTransparency;
+const LOCALLY_SORTED_COLOR = '#ADEFD1' + barTransparency;
+const GLOBALLY_SORTED_COLOR = '#3EB6E2' + barTransparency;
 
 export const BOGO_SORT_ARRAY_SIZE = 7;
 
