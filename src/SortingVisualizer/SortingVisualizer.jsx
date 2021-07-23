@@ -403,7 +403,7 @@ export default class SortingVisualizer extends React.PureComponent {
                 </div>
                 <div style = {{marginBottom: "5%"}}>
                     <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
-                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Complexity" description = "Lorem Ipsum bla bla..."/>
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
                 <Footer/>
