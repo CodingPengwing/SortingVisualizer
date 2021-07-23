@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+.footer{
+    display: flex;
+    width: 100%;
+    padding: 1% 1.5%;
+    background:#202020;
+}
+
+.author{
+    text-align: left;
+    margin-top: 0.9%;
+    margin-bottom: 0%;
+    width: 10%;
+    color: 	#707070;
+    font-size: 100%;
+    height: 0%;
+}
+
+.brand{
+    margin: auto;
+    margin-left: 25%;
+    text-align: center;
+    color: white;
+    width: 30%;
+}
+
+.icons{
+    position: relative;
+    text-align: right;
+    width: 7%;
+}
