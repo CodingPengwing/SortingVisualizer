@@ -1,11 +1,12 @@
 import React from 'react';
 import { DropdownButton, Dropdown} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from "../styles/Selector.module.scss"
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import reset from '../images/icons8-reset-96.png';
 
 import "../styles/custom-dropdown.css"
+import styles from "../styles/Selector.module.scss"
 
 import { useState } from 'react';
 import { styled, Button } from '@material-ui/core';
@@ -77,10 +78,10 @@ export const Selector = (props) => {
         <div className = {styles.container}>
             <div className = {styles.sliders}>
                 <div className = {styles.sliderDropdown}>
-                    <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginTop: "1%", marginRight: "4%"}}>
+                    <Typography gutterBottom className = {styles.dropdownTitle}>
                         Array
                     </Typography>
-                    <DropdownButton id="dropdown-basic-button" title={inputType} style = {{width: "53%"}}>
+                    <DropdownButton id="dropdown-basic-button" title={inputType}>
                         <Dropdown.Item onClick = {() => changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
@@ -88,7 +89,8 @@ export const Selector = (props) => {
                         <Dropdown.Item onClick = {() => changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
-                    <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginLeft: "4%", marginRight: "3%"} }>
+                    <div onClick = {() => changeInput(inputType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
+                    <Typography gutterBottom className = {styles.sliderTitleArray}>
                         Array Size
                     </Typography>
                     <Slider
@@ -102,10 +104,10 @@ export const Selector = (props) => {
                     />
                 </div>
                 <div className = {styles.sliderDropdown}>
-                    <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginTop: "1%", marginRight: "5%"}}>
+                    <Typography gutterBottom className = {styles.dropdownTitle}>
                         Sort
                     </Typography>
-                    <DropdownButton id="dropdown-basic-button" title={sortType} style = {{width: "61%"}}>
+                    <DropdownButton id="dropdown-basic-button" title={sortType}>
                         <Dropdown.Header>Simple Sorting Algorithms</Dropdown.Header>
                         <Dropdown.Item onClick = {() => changeSort(BOGO_SORT)}>{BOGO_SORT}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeSort(BUBBLE_SORT)}>{BUBBLE_SORT}</Dropdown.Item>
@@ -125,7 +127,7 @@ export const Selector = (props) => {
                         <Dropdown.Item onClick = {() => changeSort(INTRO_SORT)}>{INTRO_SORT}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
                     </DropdownButton>
-                    <Typography gutterBottom style = {{fontFamily: "monospace", color: "white", marginRight: "2%"}}>
+                    <Typography gutterBottom className = {styles.sliderTitleSorting}>
                         Sorting Speed
                     </Typography>
                     <Slider

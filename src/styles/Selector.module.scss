@@ -3,6 +3,7 @@
 .container{
     width: 88%;
     margin: auto;
+    margin-top: 1.8%;
     margin-bottom: 0;
     display: inline-flex;
 }
@@ -13,6 +14,31 @@
     margin-top: 0.5%;
     display: inline-flex;
     font-family: $genFont;
+}
+
+.dropdownTitle{
+    width: 11%;
+    text-align: center;
+    font-family: monospace !important;
+    color: white;
+    margin-top: 0.5% !important;
+    margin-right: 3.5% !important;
+}
+
+.sliderTitleArray{
+    font-family: monospace !important;
+    color: white !important;
+    margin-left: 7.3% !important;
+    margin-right: 1% !important;
+    width: 15%;
+}
+
+.sliderTitleSorting{
+    font-family: monospace !important;
+    color: white !important;
+    margin-left: 12% !important;
+    margin-right: 1% !important;
+    width: 15%;
 }
 
 .sliders{
@@ -38,4 +64,16 @@
     height: 200%;
     margin-top: 4%;
     width: 30%;
+}
+
+.resetButton{
+    margin-top: 0.6%;
+    margin-left: 2%;
+    height: 2%;
+
+    :hover{
+        cursor: pointer;
+        transform: scale(1.15);
+        transition: 0.5 ease-in;
+    }
 }

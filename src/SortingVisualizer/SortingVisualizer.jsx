@@ -20,6 +20,7 @@ import { sort as timSort } from '../sortingAlgorithms/timSort';
 
 // import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
+import { Footer } from '../components/Footer';
 import styles from './SortingVisualizer.module.scss';
 
 import Description from '../components/SortingDescriptor';
@@ -347,11 +348,13 @@ export default class SortingVisualizer extends React.PureComponent {
                 <div className = {styles.arrayContainer}>
                     <Array array={this.state.array} highlights={this.state.highlights}/>
                 </div>
-                <div>
+                <div style = {{marginBottom: "5%"}}>
                     <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
-                    <Description header = "Complexity" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
+                <Footer/>
+                {/* Insert  a footer element */}
             </div>
         );
     }
