@@ -24,3 +24,15 @@
 .buttons{
     margin-bottom: 2%;
 }
+
+// body {
+//     background-image: url(../images/dark-sky.jpeg);
+// }
+
+body { 
+    background: url(../images/dark-starry-sky.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

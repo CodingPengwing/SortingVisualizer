@@ -110,7 +110,7 @@ class Array extends React.PureComponent {
         // to maintain the height of the array container during animations
         bars.push(<div 
             className={styles.arrayBar}
-            style={{height: MAX_VALUE + 30, backgroundColor: "black"}}
+            style={{height: MAX_VALUE + 30, backgroundColor: "#0000"}}
             key={i}
         />)
 
@@ -416,6 +416,8 @@ export default class SortingVisualizer extends React.PureComponent {
     render() {
         return (
             <div>
+                {/* <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/> */}
+                
                 <Selector 
                     onChangeInput = {this.generateArray} 
                     onChangeSort = {this.changeSort} 
