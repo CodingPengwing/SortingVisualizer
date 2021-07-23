@@ -7,6 +7,7 @@ import dropdown from '../images/down-chevron.png';
 import {StyledButton} from "./SortingSelector";
 import SlideToggle from "react-slide-toggle";
 
+export const MAX_SORT_CYCLE_VALUE = 1500;
 export const HistoryManager = (props) => {
     return (
 
@@ -25,10 +26,10 @@ export const HistoryManager = (props) => {
                             valueLabelDisplay="off"
                             defaultValue={1}
                             value={props.sortCycleValue}
-                            disabled = {props.disableSortCycleSlider}
+                            // disabled={props.disableSortCycleSlider}
                             step={1}
                             min={1}
-                            max={1000}
+                            max={MAX_SORT_CYCLE_VALUE}
                             className = {styles.slider}
                         />
                         <div className = {styles.buttons}>

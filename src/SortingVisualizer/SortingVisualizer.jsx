@@ -23,7 +23,7 @@ import { Footer } from '../components/Footer';
 import styles from './SortingVisualizer.module.scss';
 
 import Description from '../components/SortingDescriptor';
-import { HistoryManager } from '../components/HistoryManager';
+import { HistoryManager, MAX_SORT_CYCLE_VALUE } from '../components/HistoryManager';
 
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
@@ -56,11 +56,10 @@ export const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
-const barTransparency = 'DD';
-const PRIMARY_COLOR = '#982636' + barTransparency;
-const COMPARE_COLOR = '#FFFF00' + barTransparency;
-const LOCALLY_SORTED_COLOR = '#ADEFD1' + barTransparency;
-const GLOBALLY_SORTED_COLOR = '#3EB6E2' + barTransparency;
+const PRIMARY_COLOR = "linear-gradient(0deg, #3a7bd5 0%, #00d2ff 80%)";
+const COMPARE_COLOR = "linear-gradient(0deg, #e37bd5 0%, #00d2ff 80%)";
+const LOCALLY_SORTED_COLOR = "linear-gradient(0deg, #e3ebd5 0%, #00d2ff 80%)";
+const GLOBALLY_SORTED_COLOR = "linear-gradient(0deg, #35d742 0%, #00d2ff 80%)";
 
 export const BOGO_SORT_ARRAY_SIZE = 7;
 
@@ -72,7 +71,10 @@ class Bar extends React.PureComponent {
         return (
             <div 
                 className={styles.arrayBar} 
-                style={{height: `${this.props.value}px`, backgroundColor: this.props.color}}>
+                style={{
+                    height: `${this.props.value}px`,
+                    backgroundImage: this.props.color,
+                }}>
             </div>    
         );
     }
@@ -137,7 +139,7 @@ export default class SortingVisualizer extends React.PureComponent {
             },
 
             disableArraySizeSlider: false,
-            disableSortCycleSlider: false,
+            disableSortCycleSlider: true,
             animating: false,
             sortCycleValue: 1
         };
@@ -198,26 +200,36 @@ export default class SortingVisualizer extends React.PureComponent {
         sortingAlgorithm({array: this.state.array, takeSnapshot: this.takeSnapshot});
         // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.resumePoint);
+        this.setState({disableSortCycleSlider: false});
         console.log(this.history.length);
+    }
+
+    goToState(i) {
+        if (i < this.history.length) {
+            var displayState = this.history[i];
+            var array = displayState.array.slice();
+            var comparing = displayState.highlights.comparing.slice();
+            var locallySorted = displayState.highlights.locallySorted.slice();
+            var globallySorted = displayState.highlights.globallySorted.slice();
+            this.setState({array: array, highlights: {comparing: comparing, locallySorted: locallySorted, globallySorted: globallySorted}});
+            this.resumePoint = i;
+        }
     }
 
     animateHistory(startPoint) {
         if (this.startPoint >= this.history.length - 1) {
             return;
         }
-        if (!startPoint) startPoint = 0;
+        if (!startPoint) { startPoint = 0; }
         var pauseTime;
         var count = 1;
         for (let i = startPoint; i < this.history.length; i++) {
             pauseTime = this.animationPauseTime * count;
             let timeoutID = setTimeout(() => {
-                const sortCycleValue = Math.floor(1000 * this.resumePoint/this.history.length);
-                this.setState({
-                    array: this.history[i].array, 
-                    highlights: this.history[i].highlights, 
-                    sortCycleValue: sortCycleValue
-                });
-                this.resumePoint = i + 1;
+                const sortCycleValue = Math.floor(MAX_SORT_CYCLE_VALUE * this.resumePoint/this.history.length);
+                this.goToState(i);
+                this.setState({sortCycleValue: sortCycleValue});
+                if (i === this.history.length - 1) { this.setState({animating: false}); }
             }, pauseTime);
 
             this.timeoutIDArray.push(timeoutID);
@@ -237,12 +249,7 @@ export default class SortingVisualizer extends React.PureComponent {
 
     reset() {
         this.pause();
-        if (this.history.length) {
-            const originalArray = this.history[0].array.slice();
-            this.setState({array: originalArray, highlights: {}});
-            this.clearHistory();
-            this.resumePoint = 0;
-        }
+        this.goToState(0);
     }
 
     resume() {
@@ -254,35 +261,21 @@ export default class SortingVisualizer extends React.PureComponent {
     pauseResume() {
         if (this.state.animating) {
             this.pause();
-        } else if (this.history.length) {
+        } else {
             this.resume();
         }
     }
 
     stepBackward() {
-        if (this.state.animating) {
-            this.pause();
-        }
-        if (this.history.length) {
-            if (this.resumePoint > 0) {
-                var displayState = this.history[this.resumePoint-1];
-                this.setState({array: displayState.array, highlights: displayState.highlights});
-                this.resumePoint -= 1;
-            }
+        this.pause();
+        if (this.resumePoint > 0) { 
+            this.goToState(this.resumePoint - 1);
         }
     }
 
     stepForward() {
-        if (this.state.animating) {
-            this.pause();
-        }
-        if (this.history.length) {
-            if (this.resumePoint < this.history.length - 1) {
-                var displayState = this.history[this.resumePoint+1];
-                this.setState({array: displayState.array, highlights: displayState.highlights});
-                this.resumePoint += 1;
-            }
-        }
+        this.pause();
+        this.goToState(this.resumePoint + 1);
     }
 
     generateArray(arrayType, arraySize) {
@@ -291,30 +284,23 @@ export default class SortingVisualizer extends React.PureComponent {
         this.clearHistory();
         let array;
         switch (arrayType) {
-            case RANDOM_ARRAY:
-                array = generateRandomArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            case STEADY_ARRAY:
-                array = generateSteadyArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            case SORTED_ARRAY:
-                array = generateSortedArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            case REVERSE_SORTED_ARRAY:
-                array = generateReverseSortedArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            case UNIFORM_ARRAY:
-                array = generateUniformArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            case PARTIAL_UNIFORM_ARRAY:
-                array = generatePartialUniformArray(arraySize, MIN_VALUE, MAX_VALUE);
-                break;
-            default:
-                array = [];
-                break;
+            case RANDOM_ARRAY: array = generateRandomArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            case STEADY_ARRAY: array = generateSteadyArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            case SORTED_ARRAY: array = generateSortedArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            case REVERSE_SORTED_ARRAY: array = generateReverseSortedArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            case UNIFORM_ARRAY: array = generateUniformArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            case PARTIAL_UNIFORM_ARRAY: array = generatePartialUniformArray(arraySize, MIN_VALUE, MAX_VALUE); break;
+            default: array = []; break;
         }
-        this.setState({array: array, highlights: {}, arraySize: arraySize, arrayType: arrayType});
-        this.resumePoint = 0;
+        this.setState({
+            array: array, 
+            highlights: {}, 
+            arraySize: arraySize, 
+            arrayType: arrayType,
+            disableSortCycleSlider: true
+        });
+        this.takeSnapshot(array, [], [], []);
+        this.goToState(0);
     }
 
     changeSort(sortType){
@@ -328,49 +314,21 @@ export default class SortingVisualizer extends React.PureComponent {
                 this.setState({disableArraySizeSlider: false});
             }
         }
-
         switch (sortType) {
-            case BOGO_SORT:
-                this.sort = bogoSort;
-                break;
-            case BUBBLE_SORT:
-                this.sort = bubbleSort;
-                break;
-            case COCKTAIL_SORT:
-                this.sort = cocktailShakerSort;
-                break;
-            case GNOME_SORT:
-                this.sort = gnomeSort;
-                break;
-            case HEAP_SORT:
-                this.sort = heapSort;
-                break;
-            case INSERTION_SORT:
-                this.sort = insertionSort;
-                break;
-            case INTRO_SORT:
-                this.sort = introSort;
-                break;
-            case MERGE_SORT:
-                this.sort = mergeSort;
-                break;
-            case QUICK_SORT:
-                this.sort = quickSort;
-                break;
-            case QUICK_SORT_OPTIMIZED:
-                this.sort = quickSortOptimized;
-                break;
-            case SELECTION_SORT:
-                this.sort = selectionSort;
-                break;
-            case SHELL_SORT:
-                this.sort = shellSort;
-                break;
-            case TIM_SORT:
-                this.sort = timSort;
-                break;
-            default:
-                break;
+            case BOGO_SORT: this.sort = bogoSort; break;
+            case BUBBLE_SORT: this.sort = bubbleSort; break;
+            case COCKTAIL_SORT: this.sort = cocktailShakerSort; break;
+            case GNOME_SORT: this.sort = gnomeSort; break;
+            case HEAP_SORT: this.sort = heapSort; break;
+            case INSERTION_SORT: this.sort = insertionSort; break;
+            case INTRO_SORT: this.sort = introSort; break;
+            case MERGE_SORT: this.sort = mergeSort; break;
+            case QUICK_SORT: this.sort = quickSort; break;
+            case QUICK_SORT_OPTIMIZED: this.sort = quickSortOptimized; break;
+            case SELECTION_SORT: this.sort = selectionSort; break;
+            case SHELL_SORT: this.sort = shellSort; break;
+            case TIM_SORT: this.sort = timSort; break;
+            default: this.sort = introSort; break;
         }
     }
 
@@ -401,16 +359,18 @@ export default class SortingVisualizer extends React.PureComponent {
     onChangeSortCycle(step) {
         if (step !== this.state.sortCycleValue) {
             this.setState({sortCycleValue: step});
-            if (this.state.animating) {
-                this.pause();
+            this.pause();
+            var resumePoint;
+            if (step === 1) { 
+                resumePoint = 0; 
+            } else if (step === MAX_SORT_CYCLE_VALUE) { 
+                resumePoint = this.history.length-1; 
+            } else { 
+                resumePoint = Math.round(this.history.length * step / MAX_SORT_CYCLE_VALUE); 
             }
-            if (this.history.length) {
-                var resumePoint = Math.floor(this.history.length * step / 1000);
-                if (resumePoint < this.history.length - 1) {
-                    var displayState = this.history[resumePoint];
-                    this.setState({array: displayState.array, highlights: displayState.highlights});
-                    this.resumePoint = resumePoint;
-                }
+
+            if (resumePoint !== this.resumePoint) {
+                this.goToState(resumePoint);
             }
         }
     }
@@ -431,10 +391,12 @@ export default class SortingVisualizer extends React.PureComponent {
                     disableArraySizeSlider={this.state.disableArraySizeSlider} 
                 />
                 <HistoryManager
-                onChangeSortCycle = {this.onChangeSortCycle}
-                stepForward={this.stepForward} 
-                stepBackward={this.stepBackward}
-                sortCycleValue={this.state.sortCycleValue}  />
+                    onChangeSortCycle = {this.onChangeSortCycle}
+                    stepForward={this.stepForward} 
+                    stepBackward={this.stepBackward}
+                    sortCycleValue={this.state.sortCycleValue} 
+                    disableSortCycleSlider={this.state.disableSortCycleSlider} 
+                />
 
                 <div className = {styles.arrayContainer}>
                     <Array array={this.state.array} highlights={this.state.highlights}/>
