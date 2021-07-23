@@ -56,6 +56,7 @@ export const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
+const BAR_OPACITY = 0.92;
 const PRIMARY_COLOR = "linear-gradient(0deg, #3a7bd5 0%, #00d2ff 80%)";
 const COMPARE_COLOR = "linear-gradient(0deg, #e37bd5 0%, #00d2ff 80%)";
 const LOCALLY_SORTED_COLOR = "linear-gradient(0deg, #e3ebd5 0%, #00d2ff 80%)";
@@ -74,6 +75,7 @@ class Bar extends React.PureComponent {
                 style={{
                     height: `${this.props.value}px`,
                     backgroundImage: this.props.color,
+                    opacity: BAR_OPACITY
                 }}>
             </div>    
         );
@@ -378,8 +380,6 @@ export default class SortingVisualizer extends React.PureComponent {
     render() {
         return (
             <div>
-                {/* <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/> */}
-                
                 <Selector 
                     onChangeInput = {this.generateArray} 
                     onChangeSort = {this.changeSort} 

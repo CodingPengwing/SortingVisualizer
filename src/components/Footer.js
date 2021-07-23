@@ -7,7 +7,7 @@ export const Footer = (props) => {
         <footer className = {styles.footer}>
             <h3 className = {styles.author}>By: Tony & Ley</h3>
             <div className = {styles.brand}>  
-                2021© sortify.io. All Rights Reserved.          
+                2021 © sortify.io. All Rights Reserved.          
             </div>
             <div className = {styles.icons}>
                 <a href ="https://github.com/ilaylow"><AiOutlineGithub size = {40} style = {{marginRight: "2.5%"}}/></a>
