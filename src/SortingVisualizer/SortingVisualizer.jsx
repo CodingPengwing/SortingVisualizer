@@ -330,11 +330,13 @@ export default class SortingVisualizer extends React.Component {
                         highlights={this.state.highlights}
                     />
                 </div>
-                <div>
-                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
+                <div style = {{marginBottom: "5%"}}>
                     <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
+                    <Description header = "Time Complexity" description = "Lorem Ipsum bla bla..."/>
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
+
+                {/* Insert a footer element */}
             </div>
         );
     }
