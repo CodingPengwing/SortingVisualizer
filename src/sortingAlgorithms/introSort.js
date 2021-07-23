@@ -3,7 +3,7 @@
 
 import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var locallySorted;
 var comparing;
@@ -12,7 +12,7 @@ export function sort(props) {
     globallySorted = [];
     locallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     const start = 0;
     const end = props.array.length;
     // Initialize the depthLimit as log(length(data))
@@ -45,7 +45,7 @@ function introSort(array, start, end, depthLimit) {
 
     globallySorted.push(...range(start, end));
     // Here the partition is sorted.
-    addStateToHistory(array, [], [], globallySorted);
+    takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
@@ -60,9 +60,9 @@ function heapSort(array, start, end) {
     let heapSize;
     for (let i = end - 1; i > start; i--) {
         comparing = [start, i];
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         swap(array, start, i);
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         globallySorted.push(i);
         heapSize = i - start;
         maxHeapify(array, start, end, start, heapSize);
@@ -94,7 +94,7 @@ function maxHeapify(array, start, end, i, heapSize) {
 
     // Find the largest element between the parent, left and right children.
     comparing = [i, lChild, rChild];
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     let largest = i;
     if (array[lChild] > array[largest]) {
         largest = lChild;
@@ -107,7 +107,7 @@ function maxHeapify(array, start, end, i, heapSize) {
     if (largest !== i) {
         swap(array, i, largest);
         comparing = [i, largest];
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         // Heapify again for the child's children
         maxHeapify(array, start, end, largest, heapSize);
     }
@@ -126,17 +126,17 @@ function insertionSort(array, start, end) {
     for (let i = start; i < end; i++) {
         let j = i;
         comparing = [j-1, j];
-        addStateToHistory(array, comparing, locallySorted, globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
             comparing = [j-1, j]
-            addStateToHistory(array, comparing, locallySorted, globallySorted);
+            takeSnapshot(array, comparing, locallySorted, globallySorted);
             j--;
         }
         locallySorted.push(i);
     }
     comparing = [];
-    addStateToHistory(array, comparing, locallySorted, globallySorted);
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     locallySorted = [];
     globallySorted.push(...range(start, end));
     return array;
@@ -159,21 +159,21 @@ function partition(array, start, end) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             swap(array, i, j);
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
         } else {
             break;
         }
@@ -181,9 +181,9 @@ function partition(array, start, end) {
     
     // Swap pivot into position
     comparing = [start, j];
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     swap(array, start, j)
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     
     return j;
 }

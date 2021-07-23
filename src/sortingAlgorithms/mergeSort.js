@@ -1,6 +1,6 @@
 import { range } from './util';
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var locallySorted;
 var comparing;
@@ -9,7 +9,7 @@ export function sort(props) {
     globallySorted = [];
     locallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     const start = 0;
     const end = props.array.length;
     // Do the sorting
@@ -39,7 +39,7 @@ function mergeSort(array, start, end) {
         // Here the entire array is sorted.
         globallySorted.push(...range(start, end));
     }
-    addStateToHistory(array, [], locallySorted, globallySorted);
+    takeSnapshot(array, [], locallySorted, globallySorted);
     return array;
 }
 
@@ -52,7 +52,7 @@ function merge(array, start, split, end) {
     // the index for whichever element was added to mergeArray.
     while (i < split && j < end) {
         comparing = [i, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         if (array[i] <= array[j]) {
             mergeArray.push(array[i++]);
         } else {
@@ -62,13 +62,13 @@ function merge(array, start, split, end) {
     // If there are remaining elements on the left side, add the rest
     while (i < split) {
         comparing = [i, j-1];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[i++]);
     }
     // If there are remaining elements on the right side, add the rest
     while (j < end) {
         comparing = [i-1, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[j++]);
     }
 
@@ -83,7 +83,7 @@ function merge(array, start, split, end) {
         array[start+k] = mergeArray[k];
         if (lastMerge) { globallySorted.push(start+k); }
         comparing = [start+k];
-        addStateToHistory(array, comparing, locallySorted, globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
     }
 
     return array;

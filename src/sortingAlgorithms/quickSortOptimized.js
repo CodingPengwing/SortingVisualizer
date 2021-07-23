@@ -7,7 +7,7 @@
 
 import { range, randomIntFromInterval, swap } from './util';
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var locallySorted;
 var comparing;
@@ -16,7 +16,7 @@ export function sort(props) {
     globallySorted = [];
     locallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     const array = props.array;
     const start = 0;
     const end = array.length;
@@ -37,7 +37,7 @@ function quickSort(array, start, end) {
         if (pivotLeft - start < end - pivotRight) {
             quickSort(array, start, pivotLeft);
             globallySorted.push(...range(start, pivotLeft));
-            addStateToHistory(array, [], [], globallySorted);
+            takeSnapshot(array, [], [], globallySorted);
             // start -> pivotRight is now sorted
             // move start to pivotRight
             start = pivotRight;
@@ -46,7 +46,7 @@ function quickSort(array, start, end) {
         else {
             quickSort(array, pivotRight, end);
             globallySorted.push(...range(pivotRight, end));
-            addStateToHistory(array, [], [], globallySorted);
+            takeSnapshot(array, [], [], globallySorted);
             // pivotLeft -> end is now sorted
             // move end to pivotLeft
             end = pivotLeft;
@@ -54,7 +54,7 @@ function quickSort(array, start, end) {
     }
 
     globallySorted.push(...range(start, end));
-    addStateToHistory(array, [], [], globallySorted);
+    takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
@@ -69,9 +69,9 @@ function partition(array, start, end) {
         // Choose pivot at random to reduce chance of O(n^2) worst case.
         let p = randomIntFromInterval(start, end-1);
         comparing = [start, p];
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         swap(array, start, p);
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
     }
 
     let pivot = array[start];
@@ -84,17 +84,17 @@ function partition(array, start, end) {
             locallySorted = range(start, mid);
         }
         comparing = [start, mid, end-1];
-        addStateToHistory(array, comparing, locallySorted, globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
         if (array[mid] === pivot) {
             mid++;
         } else if (array[mid] < pivot) {
             swap(array, start, mid);
-            addStateToHistory(array, comparing, locallySorted, globallySorted);
+            takeSnapshot(array, comparing, locallySorted, globallySorted);
             start++;
             mid++;
         } else if (array[mid] > pivot) {
             swap(array, mid, end-1);
-            addStateToHistory(array, comparing, locallySorted, globallySorted);
+            takeSnapshot(array, comparing, locallySorted, globallySorted);
             end--;
         } 
     }

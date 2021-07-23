@@ -1,13 +1,13 @@
 import { range, swap } from './util';
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = bubbleSort(props.array);
     return sortedArray;
@@ -23,10 +23,10 @@ function bubbleSort(array) {
         sorted = true;
         for (let i = 1; i < upperLimit; i++) {
             comparing = [i-1, i];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
-                addStateToHistory(array, comparing, [], globallySorted);
+                takeSnapshot(array, comparing, [], globallySorted);
                 sorted = false;
             }
         }
@@ -35,6 +35,6 @@ function bubbleSort(array) {
     }
 
     // Here the entire array is sorted.
-    addStateToHistory(array, [], [], range(0, array.length));
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }

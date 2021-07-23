@@ -58,7 +58,7 @@ function testSort(sortingAlgorithm) {
         const mySortedArray = sortingAlgorithm({
             array: array.slice(), 
             range: [0, array.length-1], 
-            addStateToHistory: () => {},
+            takeSnapshot: () => {},
         });
         if (!arraysAreEqual(javaScriptSortedArray, mySortedArray)) {
             success = false;

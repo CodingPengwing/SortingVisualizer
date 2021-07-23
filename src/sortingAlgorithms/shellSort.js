@@ -1,13 +1,13 @@
 import { range, swap } from './util';
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = shellSort(props.array);
     return sortedArray;
@@ -30,12 +30,12 @@ function shellSort(array) {
         for (let i = h; i < array.length; i++) {
             let j = i;
             comparing = [j-h, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             // If elements are out of order, propagate them backwards
             while (array[j] < array[j-h]) {
                 swap(array, j, j-h);
                 comparing = [j-h, j];
-                addStateToHistory(array, comparing, [], globallySorted);
+                takeSnapshot(array, comparing, [], globallySorted);
                 j = j - h;
                 if (j < h) break;
             }
@@ -47,6 +47,6 @@ function shellSort(array) {
     }
 
     // Here the entire array is sorted.
-    addStateToHistory(array, [], [], range(0, array.length));
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }

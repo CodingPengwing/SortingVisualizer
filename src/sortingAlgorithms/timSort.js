@@ -3,7 +3,7 @@
 
 import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var locallySorted;
 var comparing;
@@ -12,7 +12,7 @@ export function sort(props) {
     globallySorted = [];
     locallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = timSort(props.array);
     return sortedArray;
@@ -31,7 +31,7 @@ function timSort(array) {
         insertionSort(array, start, end);
         // Show the section that has just been sorted
         locallySorted.push(...range(start, end));
-        addStateToHistory(array, [], locallySorted, []);
+        takeSnapshot(array, [], locallySorted, []);
     }
 
     let size = minRun;
@@ -52,7 +52,7 @@ function timSort(array) {
     }
 
     // Here the entire array is sorted.
-    addStateToHistory(array, [], [], range(0, array.length));
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }
 
@@ -73,18 +73,18 @@ function insertionSort(array, start, end) {
     for (let i = start + 1; i < end; i++) {
         let j = i;
         comparing = [j-1, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
             comparing = [j-1, j]
-            addStateToHistory(array, comparing, locallySorted, []);
+            takeSnapshot(array, comparing, locallySorted, []);
             j--;
         }
         if (i === start + 1) { locallySorted.push(start); }
         locallySorted.push(i);
     }
     comparing = [];
-    addStateToHistory(array, comparing, locallySorted, []);
+    takeSnapshot(array, comparing, locallySorted, []);
     return array;
 }
 
@@ -96,7 +96,7 @@ function merge(array, start, split, end) {
     let i = start, j = split;
     while (i < split && j < end) {
         comparing = [i, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         if (array[i] <= array[j]) {
             mergeArray.push(array[i++]);
         } else {
@@ -106,12 +106,12 @@ function merge(array, start, split, end) {
 
     while (i < split) {
         comparing = [i, j-1];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[i++]);
     }
     while (j < end) {
         comparing = [i-1, j];
-        addStateToHistory(array, comparing, locallySorted, []);
+        takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[j++]);
     }
 
@@ -126,7 +126,7 @@ function merge(array, start, split, end) {
         array[start+k] = mergeArray[k];
         if (lastMerge) { globallySorted.push(start+k); }
         comparing = [start+k];
-        addStateToHistory(array, comparing, locallySorted, globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
     }
 
     return array;

@@ -1,13 +1,13 @@
 import { range, swap } from './util';
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = cocktailShakerSort(props.array);
     return sortedArray;
@@ -27,11 +27,11 @@ function cocktailShakerSort(array) {
         i = lowerLimit + 1;
         while (i < upperLimit) {
             comparing = [i-1, i];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
                 sorted = false;
-                addStateToHistory(array, comparing, [], globallySorted);
+                takeSnapshot(array, comparing, [], globallySorted);
             }
             i++;
         }
@@ -44,11 +44,11 @@ function cocktailShakerSort(array) {
         i = upperLimit - 1;
         while (i > lowerLimit) {
             comparing = [i-1, i];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             if (array[i-1] > array[i]) {
                 swap(array, i-1, i);
                 sorted = false;
-                addStateToHistory(array, comparing, [], globallySorted);
+                takeSnapshot(array, comparing, [], globallySorted);
             }
             i--;
         }
@@ -59,6 +59,6 @@ function cocktailShakerSort(array) {
     }
 
     // Here the entire array is sorted.
-    addStateToHistory(array, [], [], range(0, array.length));
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }

@@ -54,10 +54,10 @@ const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
-const PRIMARY_COLOR = '#00a1c9';
-const COMPARE_COLOR = 'purple';
-const LOCALLY_SORTED_COLOR = '#FFFF66';
-const GLOBALLY_SORTED_COLOR = '#ADFF2F';
+const PRIMARY_COLOR = '#5FEEEE';
+const COMPARE_COLOR = '#5B1092';
+const LOCALLY_SORTED_COLOR = '#F0E68C';
+const GLOBALLY_SORTED_COLOR = '#20EF5F';
 
 const BOGO_SORT_ARRAY_SIZE = 7;
 
@@ -144,8 +144,9 @@ export default class SortingVisualizer extends React.PureComponent {
 
         this.history = [];
 
-        // Add a state to history array
-        this.addStateToHistory = (array, comparing, locallySorted, globallySorted) => {
+        // As the name suggests, this function is used to a take a snapshot of a state of the array while it's being sorted.
+        // This snapshot is then saved into the history array.
+        this.takeSnapshot = (array, comparing, locallySorted, globallySorted) => {
             // We have to use .slice() to save a copy of the arrays in their current state, otherwise,
             // those arrays may change and affect the animations later on.
             this.history.push({array: array.slice(), highlights: {comparing: comparing.slice(), locallySorted: locallySorted.slice(), globallySorted: globallySorted.slice()}});
@@ -184,7 +185,7 @@ export default class SortingVisualizer extends React.PureComponent {
         this.clearForwardHistory();
         const sortingAlgorithm = this.sort;
         // Call on the sorting algorithm to sort the array, while adding each important step to history array so we can display them after.
-        sortingAlgorithm({array: this.state.array, addStateToHistory: this.addStateToHistory});
+        sortingAlgorithm({array: this.state.array, takeSnapshot: this.takeSnapshot});
         // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.resumePoint);
     }

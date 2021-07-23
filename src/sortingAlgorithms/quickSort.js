@@ -1,13 +1,13 @@
 import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     const start = 0;
     const end = props.array.length;
     // Do the sorting
@@ -29,7 +29,7 @@ function quickSort(array, start, end) {
     quickSort(array, p+1, end);
     
     globallySorted.push(...range(start, end));
-    addStateToHistory(array, [], [], globallySorted);
+    takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
@@ -46,21 +46,21 @@ function partition(array, start, end) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
             comparing = [start, i, j];
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             swap(array, i, j);
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
         } else {
             break;
         }
@@ -68,9 +68,9 @@ function partition(array, start, end) {
     
     // Swap pivot into position
     comparing = [start, j];
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     swap(array, start, j)
-    addStateToHistory(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, [], globallySorted);
     
     let pivotIndex = j;
     return pivotIndex;

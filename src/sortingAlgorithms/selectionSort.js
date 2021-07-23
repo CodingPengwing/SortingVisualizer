@@ -1,13 +1,13 @@
 import { range, swap } from "./util";
 
-var addStateToHistory;
+var takeSnapshot;
 var globallySorted;
 var comparing;
 
 export function sort(props) {
     globallySorted = [];
     comparing = [];
-    addStateToHistory = props.addStateToHistory;
+    takeSnapshot = props.takeSnapshot;
     // Do the sorting
     const sortedArray = selectionSort(props.array);
     return sortedArray;
@@ -25,7 +25,7 @@ function selectionSort(array){
         // Find the smallest element in the unsorted range.
         for (let i = start; i < length; i++){
             comparing = [start, i, min]
-            addStateToHistory(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, [], globallySorted);
             if (minVal > array[i]) {
                 minVal = array[i];
                 min = i;
@@ -33,15 +33,15 @@ function selectionSort(array){
         }
         comparing = [start, min];
         // Swap into current index
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         swap(array, start, min);
-        addStateToHistory(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, [], globallySorted);
         globallySorted.push(start);
     }
     // comparing = [];
-    // addStateToHistory(array, comparing, , []);
+    // takeSnapshot(array, comparing, , []);
 
     // Here the entire array is sorted.
-    addStateToHistory(array, [], [], range(0, array.length));
+    takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }
