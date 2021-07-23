@@ -232,7 +232,7 @@ export default class SortingVisualizer extends React.PureComponent {
 
     onChangeArraySize(arraySize) {
         if (this.state.arraySize !== arraySize) {
-            this.state.arraySize = arraySize;
+            this.generateArray(this.state.arrayType, arraySize);
         }
     }
 
