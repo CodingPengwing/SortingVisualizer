@@ -1,16 +1,16 @@
 import { swap } from "./util";
 
-var addToHistory;
+var addStateToHistory;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    addStateToHistory = props.addStateToHistory;
     const start = 0;
     const end = props.array.length-1;
     // Do the sorting
     const sortedArray = quickSort(props.array, start, end);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addStateToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function quickSort(array, start, end) {
@@ -36,28 +36,28 @@ function partition(array, start, end) {
     while (true) {
         // Find an element that is smaller than/equal to the pivot
         while (array[i] <= pivot && i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addStateToHistory({array: array, highlights: [start, i, j]});
             i += 1;
         }
         // Find an element that is larger than the pivot
         while (array[j] > pivot && i <= j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addStateToHistory({array: array, highlights: [start, i, j]});
             j -= 1;
         }
         // Swap the 2 elements only if i is still to the left of j
         if (i < j) {
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addStateToHistory({array: array, highlights: [start, i, j]});
             swap(array, i, j);
-            addToHistory({array: array.slice(), highlights: [start, i, j]});
+            addStateToHistory({array: array, highlights: [start, i, j]});
         } else {
             break;
         }
     }
     
     // Swap pivot into position
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addStateToHistory({array: array, highlights: [start, j]});
     swap(array, start, j)
-    addToHistory({array: array.slice(), highlights: [start, j]});
+    addStateToHistory({array: array, highlights: [start, j]});
     
     let pivotIndex = j;
     return pivotIndex;

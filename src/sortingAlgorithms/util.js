@@ -4,7 +4,7 @@ export function range(start, end) {
     for (let i = start; i < end; i++) { 
         array.push(i); 
     }
-    return array.slice();
+    return array;
 }
 
 // Generates a random integer within the given interval

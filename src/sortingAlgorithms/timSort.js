@@ -3,15 +3,15 @@
 
 import { range, swap } from "./util";
 
-var addToHistory;
+var addStateToHistory;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = timSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addStateToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 const MIN_MERGE = 16;
@@ -26,7 +26,7 @@ function timSort(array) {
         const end = Math.min(start + minRun - 1, n - 1);
         insertionSort(array, start, end);
         // Show the section that has just been sorted
-        addToHistory({array: array.slice(), highlights: range(start, end+1)});
+        addStateToHistory({array: array, highlights: range(start, end+1)});
     }
 
     let size = minRun;
@@ -42,7 +42,7 @@ function timSort(array) {
                     merge(array, start, split, end);
                 }
                 // Show the section that has just been sorted
-                addToHistory({array: array.slice(), highlights: range(start, end+1)});
+                addStateToHistory({array: array, highlights: range(start, end+1)});
             }
         }
         size *= 2;
@@ -66,10 +66,10 @@ function insertionSort(array, start, end) {
     // Sort the section using insertion method
     for (let i = start+1; i < end+1; i++) {
         let j = i;
-        addToHistory({array: array.slice(), highlights: [j-1, j]});
+        addStateToHistory({array: array, highlights: [j-1, j]});
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
-            addToHistory({array: array.slice(), highlights: [j-1, j]});
+            addStateToHistory({array: array, highlights: [j-1, j]});
             j--;
         }
     }
@@ -83,7 +83,7 @@ function merge(array, start, split, end) {
     let mergeArray = [];
     let i = start, j = split+1;
     while (i <= split && j <= end) {
-        addToHistory({array: array.slice(), highlights: [i, j]});
+        addStateToHistory({array: array, highlights: [i, j]});
         if (array[i] <= array[j]) {
             mergeArray.push(array[i++]);
         } else {
@@ -92,16 +92,16 @@ function merge(array, start, split, end) {
     }
 
     while (i <= split) {
-        addToHistory({array: array.slice(), highlights: [i, j-1]});
+        addStateToHistory({array: array, highlights: [i, j-1]});
         mergeArray.push(array[i++]);
     }
     while (j <= end) {
-        addToHistory({array: array.slice(), highlights: [i-1, j]});
+        addStateToHistory({array: array, highlights: [i-1, j]});
         mergeArray.push(array[j++]);
     }
 
     for (let k = 0; k < mergeArray.length; k++) {
-        addToHistory({array: array.slice(), highlights: [start+k]});
+        addStateToHistory({array: array, highlights: [start+k]});
         array[start+k] = mergeArray[k];
     }
 

@@ -7,18 +7,18 @@
 
 import { range, randomIntFromInterval, swap } from './util';
 
-var addToHistory;
+var addStateToHistory;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    addStateToHistory = props.addStateToHistory;
     const array = props.array;
     const start = 0;
     const end = array.length-1;
     // Do the sorting
     const sortedArray = quickSort(array, start, end);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addStateToHistory({array: sortedArray, highlights: []});
+    return sortedArray;
 }
 
 function quickSort(array, start, end) {
@@ -48,9 +48,9 @@ function partition(array, start, end) {
     if (end - start + 1 > 5) {
         // Choose pivot at random to reduce chance of O(n^2) worst case.
         let pivotIndex = randomIntFromInterval(start, end);
-        addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
+        addStateToHistory({array: array, highlights: [start, pivotIndex]});
         swap(array, start, pivotIndex);
-        addToHistory({array: array.slice(), highlights: [start, pivotIndex]});
+        addStateToHistory({array: array, highlights: [start, pivotIndex]});
     }
 
     let mid = start + 1;
@@ -59,16 +59,16 @@ function partition(array, start, end) {
     // mid holds the left of the pivot range, the pivot range is the range of elements
     // that are equal to the pivot
     while (mid <= end) {
-        addToHistory({array: array.slice(), highlights: [start, mid, end]});
+        addStateToHistory({array: array, highlights: [start, mid, end]});
         if (array[mid] < pivot) {
             swap(array, start, mid);
-            addToHistory({array: array.slice(), highlights: [start, mid]});
+            addStateToHistory({array: array, highlights: [start, mid]});
             start++;
             mid++;
         } 
         else if (array[mid] > pivot) {
             swap(array, mid, end);
-            addToHistory({array: array.slice(), highlights: [start, mid, end]});
+            addStateToHistory({array: array, highlights: [start, mid, end]});
             end--;
         } 
         else {
@@ -80,7 +80,7 @@ function partition(array, start, end) {
     // this means that everything within the pivotRange is equal to our pivot
     if (end - start >= 1) {
         let pivotRange = range(start, end+1);
-        addToHistory({array: array.slice(), highlights: pivotRange.slice()});
+        addStateToHistory({array: array, highlights: pivotRange});
     }
     return [start, end];
 }

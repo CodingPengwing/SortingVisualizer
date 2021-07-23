@@ -1,30 +1,39 @@
 import { swap } from "./util";
 
-var addToHistory;
+var addStateToHistory;
+var locallySorted;
+var comparing;
 
 export function sort(props) {
-    addToHistory = props.addToHistory;
+    locallySorted = [];
+    comparing = [];
+    addStateToHistory = props.addStateToHistory;
     // Do the sorting
     const sortedArray = gnomeSort(props.array);
     // Finish the history by adding the final sorted array.
-    addToHistory({array: sortedArray.slice(), highlights: []});
-    return sortedArray.slice();
+    addStateToHistory(sortedArray, [], [], []);
+    return sortedArray;
 }
 
 function gnomeSort(array) {
     if (array.length <= 1) return array;
-    let i = 1;
+    let i = 0;
     // Iterate from start to end, if elements are out of order, swap and go back one step.
     // Otherwise go forward one step. By the end of this, the array must be sorted.
-    while (i < array.length) {
-        addToHistory({array: array.slice(), highlights: [i-1, i]});
+    while (i < array.length-1) {
+        comparing = [i, i+1];
+        addStateToHistory(array, comparing, locallySorted, []);
         // If elements are in order, go forward.
-        if (array[i-1] <= array[i]) { i++; }
+        if (array[i] <= array[i+1]) { 
+            if (i === 0) { locallySorted.push(i); }
+            i++; 
+            locallySorted.push(i);
+        }
         // Else swap them and take a step back.
         else {
-            swap(array, i-1, i);
-            addToHistory({array: array.slice(), highlights: [i-1, i]});
-            if (i > 1) { i--; }
+            swap(array, i, i+1);
+            addStateToHistory(array, comparing, locallySorted, []);
+            if (i > 0) { i--; }
         }
     }
     return array;

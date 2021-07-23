@@ -14,7 +14,7 @@ import { sort as timSort } from './timSort';
 
 const MIN_ARRAY_SIZE = 50;
 const MAX_ARRAY_SIZE = 100;
-const TEST_RUNS = 200;
+const TEST_RUNS = 100;
 const MIN_VALUE = -2000;
 const MAX_VALUE = 2000;
 
@@ -58,7 +58,7 @@ function testSort(sortingAlgorithm) {
         const mySortedArray = sortingAlgorithm({
             array: array.slice(), 
             range: [0, array.length-1], 
-            addToHistory: () => {},
+            addStateToHistory: () => {},
         });
         if (!arraysAreEqual(javaScriptSortedArray, mySortedArray)) {
             success = false;
@@ -76,7 +76,7 @@ function randomArray() {
     for (let i = 0; i < length; i++) {
         array.push(randomIntFromInterval(MIN_VALUE, MAX_VALUE));
     }
-    return array.slice();
+    return array;
 }
 
 function randomIntFromInterval(min, max) {
