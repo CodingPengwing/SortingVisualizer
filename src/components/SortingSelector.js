@@ -7,6 +7,7 @@ import reset from '../images/icons8-reset-96.png';
 
 import "../styles/custom-dropdown.css"
 import styles from "../styles/Selector.module.scss"
+import pause_resume from "../images/play-and-pause-button.png"
 
 import { useState } from 'react';
 import { styled, Button } from '@material-ui/core';
@@ -19,7 +20,7 @@ import { RANDOM_ARRAY, STEADY_ARRAY, SORTED_ARRAY, REVERSE_SORTED_ARRAY, UNIFORM
 
 import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION_SPEED } from '../SortingVisualizer/SortingVisualizer';
 
-const StyledButton = styled(Button)({
+export const StyledButton = styled(Button)({
     marginRight: "5%",
     fontFamily: "monospace",
     fontSize: "17px",
@@ -136,27 +137,10 @@ export const Selector = (props) => {
 
             <div className = {styles.buttons}>
                 <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
-                <PauseResumeButton style = {styles.buttonStyle} onClick = {() => {props.pauseResume()}}>Pause/Resume</PauseResumeButton>
+                <PauseResumeButton style = {styles.buttonStyle} onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/></PauseResumeButton>
                 <StyledButton2 style = {styles.buttonStyle} onClick = {() => {props.reset()}}>Reset</StyledButton2>
             </div>
-
-            <div className = {styles.sliderDropdown}>
-                <Slider
-                    onChange = {(e, val) => {props.onChangeSortCycle(val)}}
-                    valueLabelDisplay="off"
-                    defaultValue={1}
-                    value={props.sortCycleValue}
-                    disabled = {props.disableSortCycleSlider}
-                    step={1}
-                    min={1}
-                    max={1000}
-                />
-            </div>
-            <div>
-                <StyledButton onClick={()=>props.stepBackward()}>Step Backward</StyledButton>
-                <StyledButton onClick={()=>props.stepForward()}>Step Forward</StyledButton>
-            </div>
-            
         </div>
+        
     )
 }

@@ -23,6 +23,7 @@ import { Footer } from '../components/Footer';
 import styles from './SortingVisualizer.module.scss';
 
 import Description from '../components/SortingDescriptor';
+import { HistoryManager } from '../components/HistoryManager';
 
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
@@ -425,12 +426,14 @@ export default class SortingVisualizer extends React.PureComponent {
                     reset = {this.reset} 
                     pauseResume = {this.pauseResume} 
                     onChangeArraySize = {this.onChangeArraySize} 
-                    onChangeSortCycle = {this.onChangeSortCycle} 
                     onChangeSortSpeed = {this.onChangeSortSpeed} 
                     disableArraySizeSlider={this.state.disableArraySizeSlider} 
-                    sortCycleValue={this.state.sortCycleValue} stepForward={this.stepForward} 
-                    stepBackward={this.stepBackward}
+                    sortCycleValue={this.state.sortCycleValue} 
                 />
+                <HistoryManager
+                onChangeSortCycle = {this.onChangeSortCycle}
+                stepForward={this.stepForward} 
+                stepBackward={this.stepBackward} />
 
                 <div className = {styles.arrayContainer}>
                     <Array array={this.state.array} highlights={this.state.highlights}/>
