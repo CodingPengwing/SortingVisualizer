@@ -17,6 +17,8 @@ import { BOGO_SORT, BUBBLE_SORT, COCKTAIL_SORT, GNOME_SORT, HEAP_SORT, INSERTION
 
 import { RANDOM_ARRAY, STEADY_ARRAY, SORTED_ARRAY, REVERSE_SORTED_ARRAY, UNIFORM_ARRAY, PARTIAL_UNIFORM_ARRAY } from '../SortingVisualizer/SortingVisualizer';
 
+import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION_SPEED } from '../SortingVisualizer/SortingVisualizer';
+
 const StyledButton = styled(Button)({
     marginRight: "5%",
     fontFamily: "monospace",
@@ -43,29 +45,20 @@ const StyledButton2 = styled(StyledButton)({
     }
 })
 
-const PauseButton = styled(StyledButton)({
+const PauseResumeButton = styled(StyledButton)({
     backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
         backgroundPosition: "right bottom",
     }
 })
-
-const ResumeButton = styled(StyledButton)({
-    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
-    '&:hover':{
-        backgroundPosition: "right bottom",
-    }
-})
-
-// const buttonStyle = {marginBottom: "2%"}
 
 export const Selector = (props) => {
 
-    const [inputType, setInputType] = useState(STEADY_ARRAY);
+    const [arrayType, setarrayType] = useState(STEADY_ARRAY);
     const [sortType, setSortType] = useState(QUICK_SORT);
 
     function changeInput(type){
-        setInputType(type);
+        setarrayType(type);
         props.onChangeInput(type);
     };
 
@@ -81,7 +74,7 @@ export const Selector = (props) => {
                     <Typography gutterBottom className = {styles.dropdownTitle}>
                         Array
                     </Typography>
-                    <DropdownButton id="dropdown-basic-button" title={inputType}>
+                    <DropdownButton id="dropdown-basic-button" title={arrayType}>
                         <Dropdown.Item onClick = {() => changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
@@ -89,18 +82,18 @@ export const Selector = (props) => {
                         <Dropdown.Item onClick = {() => changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
-                    <div onClick = {() => changeInput(inputType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
+                    <div onClick = {() => changeInput(arrayType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
                     <Typography gutterBottom className = {styles.sliderTitleArray}>
                         Array Size
                     </Typography>
                     <Slider
-                        onChange = {(e, val) => {props.onChangeSize(val, inputType)}}
-                        defaultValue={(props.disableSlider) ? 7 : 100}
+                        onChange = {(e, val) => {props.onChangeArraySize(val, arrayType)}}
+                        defaultValue={(props.disableArraySizeSlider) ? BOGO_SORT_ARRAY_SIZE : MAX_ARRAY_SIZE}
                         valueLabelDisplay="auto"
-                        disabled = {props.disableSlider}
+                        disabled = {props.disableArraySizeSlider}
                         step={1}
-                        min={5}
-                        max={100}
+                        min={MIN_ARRAY_SIZE}
+                        max={MAX_ARRAY_SIZE}
                     />
                 </div>
                 <div className = {styles.sliderDropdown}>
@@ -131,8 +124,8 @@ export const Selector = (props) => {
                         Sorting Speed
                     </Typography>
                     <Slider
-                        onChange = {(e, val) => {props.onChangeSpeed(val)}}
-                        defaultValue={100}
+                        onChange = {(e, val) => {props.onChangeSortSpeed(val)}}
+                        defaultValue={INITIAL_ANIMATION_SPEED}
                         valueLabelDisplay="auto"
                         step={1}
                         min={1}
@@ -140,11 +133,28 @@ export const Selector = (props) => {
                     />
                 </div>
             </div>
+
             <div className = {styles.buttons}>
-                <StyledButton style = {styles.buttonStyle} onClick = {() => { props.pause(); props.sort(); }}>Run</StyledButton>
-                <PauseButton style = {styles.buttonStyle} onClick = {() => { props.pause(); }}>Pause</PauseButton>
-                <ResumeButton style = {styles.buttonStyle} onClick = {() => { props.resume(); }}>Resume</ResumeButton>              
-                <StyledButton2 style = {styles.buttonStyle} onClick = {() => { props.reset(); }}>Reset</StyledButton2>
+                <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
+                <PauseResumeButton style = {styles.buttonStyle} onClick = {() => {props.pauseResume()}}>Pause/Resume</PauseResumeButton>
+                <StyledButton2 style = {styles.buttonStyle} onClick = {() => {props.reset()}}>Reset</StyledButton2>
+            </div>
+
+            <div className = {styles.sliderDropdown}>
+                <Slider
+                    onChange = {(e, val) => {props.onChangeSortCycle(val)}}
+                    valueLabelDisplay="off"
+                    defaultValue={1}
+                    value={props.sortCycleValue}
+                    disabled = {props.disableSortCycleSlider}
+                    step={1}
+                    min={1}
+                    max={1000}
+                />
+            </div>
+            <div>
+                <StyledButton onClick={()=>props.stepBackward()}>Step Backward</StyledButton>
+                <StyledButton onClick={()=>props.stepForward()}>Step Forward</StyledButton>
             </div>
             
         </div>

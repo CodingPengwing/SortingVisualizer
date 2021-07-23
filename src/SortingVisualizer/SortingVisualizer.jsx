@@ -18,7 +18,6 @@ import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
 import { sort as shellSort } from '../sortingAlgorithms/shellSort';
 import { sort as timSort } from '../sortingAlgorithms/timSort';
 
-// import { StyledButton } from '../components/NavBar';
 import { Selector } from '../components/SortingSelector';
 import { Footer } from '../components/Footer';
 import styles from './SortingVisualizer.module.scss';
@@ -46,12 +45,13 @@ export const REVERSE_SORTED_ARRAY = "Reverse Sorted Array";
 export const UNIFORM_ARRAY = "Uniform Array";
 export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
-const MAX_ARRAY_SIZE = 100;
-const MIN_VALUE = 5;
-const MAX_VALUE = 505;
+export const MIN_ARRAY_SIZE = 5;
+export const MAX_ARRAY_SIZE = 100;
+export const MIN_VALUE = 5;
+export const MAX_VALUE = 505;
 
 const INITIAL_ANIMATION_PAUSE_TIME = 10;
-const INITIAL_ANIMATION_SPEED = 100;
+export const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
@@ -60,9 +60,9 @@ const COMPARE_COLOR = '#5B1092';
 const LOCALLY_SORTED_COLOR = '#F0E68C';
 const GLOBALLY_SORTED_COLOR = '#20EF5F';
 
-const BOGO_SORT_ARRAY_SIZE = 7;
+export const BOGO_SORT_ARRAY_SIZE = 7;
 
-const TESTING = true;
+const TEST_SORTING_ALGORITHMS = false;
 
 // This component is used to produce individual bars in an array
 class Bar extends React.PureComponent {
@@ -134,7 +134,10 @@ export default class SortingVisualizer extends React.PureComponent {
                 globallySorted: [], locallySorted: [], comparing: []
             },
 
-            disableSlider: false,
+            disableArraySizeSlider: false,
+            disableSortCycleSlider: false,
+            animating: false,
+            sortCycleValue: 1
         };
 
         this.timeoutIDArray = [];
@@ -167,13 +170,17 @@ export default class SortingVisualizer extends React.PureComponent {
         this.reset = this.reset.bind(this);
         this.pause = this.pause.bind(this);
         this.resume = this.resume.bind(this);
+        this.pauseResume = this.pauseResume.bind(this);
         this.onChangeArraySize = this.onChangeArraySize.bind(this);
         this.onChangeSortSpeed = this.onChangeSortSpeed.bind(this);
+        this.onChangeSortCycle = this.onChangeSortCycle.bind(this);
+        this.stepBackward = this.stepBackward.bind(this);
+        this.stepForward = this.stepForward.bind(this);
     }
 
     componentDidMount() {
         this.generateArray(this.state.arrayType);
-        if (TESTING) { testSortingAlgorithms(); }
+        if (TEST_SORTING_ALGORITHMS) { testSortingAlgorithms(); }
     }
 
     componentWillUnmount() {
@@ -189,21 +196,32 @@ export default class SortingVisualizer extends React.PureComponent {
         sortingAlgorithm({array: this.state.array, takeSnapshot: this.takeSnapshot});
         // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.resumePoint);
+        console.log(this.history.length);
     }
 
     animateHistory(startPoint) {
+        if (this.startPoint >= this.history.length - 1) {
+            return;
+        }
         if (!startPoint) startPoint = 0;
         var pauseTime;
         var count = 1;
         for (let i = startPoint; i < this.history.length; i++) {
             pauseTime = this.animationPauseTime * count;
             let timeoutID = setTimeout(() => {
-                this.setState({array: this.history[i].array, highlights: this.history[i].highlights});
+                const sortCycleValue = Math.floor(1000 * this.resumePoint/this.history.length);
+                this.setState({
+                    array: this.history[i].array, 
+                    highlights: this.history[i].highlights, 
+                    sortCycleValue: sortCycleValue
+                });
                 this.resumePoint = i + 1;
             }, pauseTime);
+
             this.timeoutIDArray.push(timeoutID);
             count++;
         }
+        this.setState({animating: true});
     }
 
     pause() {
@@ -212,11 +230,12 @@ export default class SortingVisualizer extends React.PureComponent {
             clearTimeout(this.timeoutIDArray[i++]);
         }
         this.timeoutIDArray = [];
+        this.setState({animating: false});
     }
 
     reset() {
         this.pause();
-        if (this.history.length > 0) {
+        if (this.history.length) {
             const originalArray = this.history[0].array.slice();
             this.setState({array: originalArray, highlights: {}});
             this.clearHistory();
@@ -225,29 +244,44 @@ export default class SortingVisualizer extends React.PureComponent {
     }
 
     resume() {
-        this.pause();
-        this.animateHistory(this.resumePoint);
-    }
-
-
-
-    onChangeArraySize(arraySize) {
-        if (this.state.arraySize !== arraySize) {
-            this.generateArray(this.state.arrayType, arraySize);
-        }
-    }
-
-    onChangeSortSpeed(speed) {
-        if (this.animationSpeed !== speed) {
-            const percentageSpeed = speed/100;
-            var pauseTime = MAX_ANIMATION_PAUSE - (ANIMATION_PAUSE_RANGE * percentageSpeed);
-            this.animationSpeed = speed;
-            this.animationPauseTime = pauseTime;
-            this.pause();
+        if (!this.state.animating) {
             this.animateHistory(this.resumePoint);
         }
     }
 
+    pauseResume() {
+        if (this.state.animating) {
+            this.pause();
+        } else if (this.history.length) {
+            this.resume();
+        }
+    }
+
+    stepBackward() {
+        if (this.state.animating) {
+            this.pause();
+        }
+        if (this.history.length) {
+            if (this.resumePoint > 0) {
+                var displayState = this.history[this.resumePoint-1];
+                this.setState({array: displayState.array, highlights: displayState.highlights});
+                this.resumePoint -= 1;
+            }
+        }
+    }
+
+    stepForward() {
+        if (this.state.animating) {
+            this.pause();
+        }
+        if (this.history.length) {
+            if (this.resumePoint < this.history.length - 1) {
+                var displayState = this.history[this.resumePoint+1];
+                this.setState({array: displayState.array, highlights: displayState.highlights});
+                this.resumePoint += 1;
+            }
+        }
+    }
 
     generateArray(arrayType, arraySize) {
         if (!arraySize) arraySize = this.state.arraySize;
@@ -284,12 +318,12 @@ export default class SortingVisualizer extends React.PureComponent {
     changeSort(sortType){
         if (sortType === BOGO_SORT){
             this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
-            this.setState({disableSlider: true});
+            this.setState({disableArraySizeSlider: true});
         } 
         else {
-            if (this.state.disableSlider) {
+            if (this.state.disableArraySizeSlider) {
                 this.generateArray(this.state.arrayType, MAX_ARRAY_SIZE);
-                this.setState({disableSlider: false});
+                this.setState({disableArraySizeSlider: false});
             }
         }
 
@@ -338,12 +372,63 @@ export default class SortingVisualizer extends React.PureComponent {
         }
     }
 
+    onChangeArraySize(arraySize) {
+        if (!this.state.animating) {
+            if (this.state.arraySize !== arraySize) {
+                this.generateArray(this.state.arrayType, arraySize);
+            }
+        } else {
+            this.setState({arraySize: arraySize});
+        }
+    }
+
+    onChangeSortSpeed(speed) {
+        if (this.animationSpeed !== speed) {
+            const percentageSpeed = speed/100;
+            var pauseTime = MAX_ANIMATION_PAUSE - (ANIMATION_PAUSE_RANGE * percentageSpeed);
+            this.animationSpeed = speed;
+            this.animationPauseTime = pauseTime;
+
+            if (this.state.animating) {
+                this.pause();
+                this.animateHistory(this.resumePoint);
+            }
+        }
+    }
+
+    onChangeSortCycle(step) {
+        if (step !== this.state.sortCycleValue) {
+            this.setState({sortCycleValue: step});
+            if (this.state.animating) {
+                this.pause();
+            }
+            if (this.history.length) {
+                var resumePoint = Math.floor(this.history.length * step / 1000);
+                if (resumePoint < this.history.length - 1) {
+                    var displayState = this.history[resumePoint];
+                    this.setState({array: displayState.array, highlights: displayState.highlights});
+                    this.resumePoint = resumePoint;
+                }
+            }
+        }
+    }
+
     render() {
         return (
             <div>
-                <Selector onChangeInput = {this.generateArray} onChangeSort = {this.changeSort} sort = {this.doSort}
-                reset = {this.reset} pause = {this.pause} resume = {this.resume} onChangeSize = {this.onChangeArraySize}
-                onChangeSpeed = {this.onChangeSortSpeed} disableSlider={this.state.disableSlider}/>
+                <Selector 
+                    onChangeInput = {this.generateArray} 
+                    onChangeSort = {this.changeSort} 
+                    sort = {this.doSort} 
+                    reset = {this.reset} 
+                    pauseResume = {this.pauseResume} 
+                    onChangeArraySize = {this.onChangeArraySize} 
+                    onChangeSortCycle = {this.onChangeSortCycle} 
+                    onChangeSortSpeed = {this.onChangeSortSpeed} 
+                    disableArraySizeSlider={this.state.disableArraySizeSlider} 
+                    sortCycleValue={this.state.sortCycleValue} stepForward={this.stepForward} 
+                    stepBackward={this.stepBackward}
+                />
 
                 <div className = {styles.arrayContainer}>
                     <Array array={this.state.array} highlights={this.state.highlights}/>
