@@ -23,7 +23,7 @@ export default class Description extends React.Component{
                 render = {({toggle, setCollapsibleElement, progress}) => (
                     <div>
                         <div className = {styles.question}>
-                            <span style = {{fontSize: "180%", color: "white", fontFamily: "Lato", fontWeight: "lighter"}}>{this.props.header}</span>
+                            <span onClick = {toggle} style = {{fontSize: "180%", color: "white", fontFamily: "Lato", fontWeight: "lighter"}}>{this.props.header}</span>
                             <img onClick = {toggle} src = {dropdown_arrow} alt = "Dropdown arrow"/>
                         </div>
                         <div ref={setCollapsibleElement}>

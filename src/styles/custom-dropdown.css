@@ -1,4 +1,6 @@
 #dropdown-basic-button{
+    font-family: 'Lato', sans-serif !important;
+    font-weight: bold !important;
     background-image: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 100%) !important;
     min-width: 180px !important;
     width: 200px !important;

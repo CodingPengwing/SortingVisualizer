@@ -19,14 +19,16 @@
 .dropdownTitle{
     width: 11%;
     text-align: center;
-    font-family: monospace !important;
+    font-family: $cursiveFont !important;
+    font-weight: bold !important;
     color: white;
     margin-top: 0.5% !important;
     margin-right: 3.5% !important;
 }
 
 .sliderTitleArray{
-    font-family: monospace !important;
+    font-family: $cursiveFont !important;
+    font-weight: bold !important;
     color: white !important;
     margin-left: 7.3% !important;
     margin-right: 1% !important;
@@ -34,7 +36,8 @@
 }
 
 .sliderTitleSorting{
-    font-family: monospace !important;
+    font-family: $cursiveFont !important;
+    font-weight: bold !important;
     color: white !important;
     margin-left: 12% !important;
     margin-right: 1% !important;

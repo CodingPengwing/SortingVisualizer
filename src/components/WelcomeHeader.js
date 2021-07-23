@@ -4,7 +4,7 @@ import FadeIn from 'react-fade-in';
 
 export const WelcomeHeader = (props) => {
     const scrollClick = () => {
-        window.scrollBy(0, 69);
+        window.scrollBy(0, 100);
     }
 
     return(
