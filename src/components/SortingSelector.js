@@ -3,6 +3,7 @@ import { DropdownButton, Dropdown} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import reset from '../images/icons8-reset-96.png';
 
 import "../styles/custom-dropdown.css"
 import styles from "../styles/Selector.module.scss"
@@ -88,7 +89,8 @@ export const Selector = (props) => {
                         <Dropdown.Item onClick = {() => changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
-                    <Typography gutterBottom className = {styles.sliderTitle}>
+                    <div onClick = {() => changeInput(inputType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
+                    <Typography gutterBottom className = {styles.sliderTitleArray}>
                         Array Size
                     </Typography>
                     <Slider
@@ -125,7 +127,7 @@ export const Selector = (props) => {
                         <Dropdown.Item onClick = {() => changeSort(INTRO_SORT)}>{INTRO_SORT}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeSort(TIM_SORT)}>{TIM_SORT}</Dropdown.Item>
                     </DropdownButton>
-                    <Typography gutterBottom className = {styles.sliderTitle}>
+                    <Typography gutterBottom className = {styles.sliderTitleSorting}>
                         Sorting Speed
                     </Typography>
                     <Slider

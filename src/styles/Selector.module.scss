@@ -25,10 +25,18 @@
     margin-right: 3.5% !important;
 }
 
-.sliderTitle{
+.sliderTitleArray{
     font-family: monospace !important;
     color: white !important;
-    margin-left: 4.5% !important;
+    margin-left: 7.3% !important;
+    margin-right: 1% !important;
+    width: 15%;
+}
+
+.sliderTitleSorting{
+    font-family: monospace !important;
+    color: white !important;
+    margin-left: 12% !important;
     margin-right: 1% !important;
     width: 15%;
 }
@@ -56,4 +64,16 @@
     height: 200%;
     margin-top: 4%;
     width: 30%;
+}
+
+.resetButton{
+    margin-top: 0.6%;
+    margin-left: 2%;
+    height: 2%;
+
+    :hover{
+        cursor: pointer;
+        transform: scale(1.15);
+        transition: 0.5 ease-in;
+    }
 }
