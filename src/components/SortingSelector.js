@@ -22,17 +22,19 @@ import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION
 
 export const StyledButton = styled(Button)({
     marginRight: "5%",
-    fontFamily: "monospace",
+    fontFamily: "Lato, sans-serif",
+    fontWeight: "bold",
     fontSize: "17px",
     textAlign: "center",
-    textTransform: "uppercase",
+    textTransform: "none",
     backgroundSize: "200% auto",
     transition: "0.25s ease-in",
     color: "#FFF",
     width: "200px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
+    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 60%)",
+    opacity: "90%",
 
     '&:hover':{
         backgroundPosition: "right bottom",
