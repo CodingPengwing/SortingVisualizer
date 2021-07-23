@@ -228,9 +228,11 @@ export default class SortingVisualizer extends React.PureComponent {
         this.animateHistory(this.resumePoint);
     }
 
+
+
     onChangeArraySize(arraySize) {
         if (this.state.arraySize !== arraySize) {
-            this.generateArray(this.state.arrayType, arraySize);
+            this.state.arraySize = arraySize;
         }
     }
 

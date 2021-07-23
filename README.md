@@ -1,6 +1,6 @@
 * Sorting Visualizer *
 
-As the name suggests, this progrram is all about the sorting algorithms. We've chosen the most popular 
+As the name suggests, this program is all about the sorting algorithms. We've chosen the most popular 
 sorting algorithms to demonstrate: some simple algorithms, some more commonly used ones (the big 3 as we 
 call it: merge, quick, heap), and some hybrid algorithms. In each case, we've kept the complexity of 
 the algorithm to a minimum, meaning that there are many optimizations out there that have been published 

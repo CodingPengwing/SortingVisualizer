@@ -93,7 +93,7 @@ export const Selector = (props) => {
                     </Typography>
                     <Slider
                         onChange = {(e, val) => {props.onChangeSize(val, inputType)}}
-                        defaultValue={(props.disableSlider)? 7 : 100}
+                        defaultValue={(props.disableSlider) ? 7 : 100}
                         valueLabelDisplay="auto"
                         disabled = {props.disableSlider}
                         step={1}
