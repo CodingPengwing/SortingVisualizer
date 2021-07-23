@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../styles/History.module.scss";
 import Slider from '@material-ui/core/Slider';
 import rewind from '../images/rewind.png';
@@ -28,11 +29,11 @@ export const HistoryManager = (props) => {
                             step={1}
                             min={1}
                             max={1000}
-                            style = {{width: "95%"}}
+                            className = {styles.slider}
                         />
                         <div className = {styles.buttons}>
-                            <StyledButton onClick={()=>props.stepBackward()}><img src = {rewind} alt = "Backward"/></StyledButton>
-                            <StyledButton onClick={()=>props.stepForward()}><img className = {styles.forward} src = {rewind} alt = "Forward"/></StyledButton>
+                            <StyledButton className = {styles.button} onClick={()=>props.stepBackward()}><img src = {rewind} alt = "Backward"/></StyledButton>
+                            <StyledButton className = {styles.button} onClick={()=>props.stepForward()}><img className = {styles.forward} src = {rewind} alt = "Forward"/></StyledButton>
                         </div>
                     </div>
                 </div>

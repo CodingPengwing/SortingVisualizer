@@ -429,12 +429,12 @@ export default class SortingVisualizer extends React.PureComponent {
                     onChangeArraySize = {this.onChangeArraySize} 
                     onChangeSortSpeed = {this.onChangeSortSpeed} 
                     disableArraySizeSlider={this.state.disableArraySizeSlider} 
-                    sortCycleValue={this.state.sortCycleValue} 
                 />
                 <HistoryManager
                 onChangeSortCycle = {this.onChangeSortCycle}
                 stepForward={this.stepForward} 
-                stepBackward={this.stepBackward} />
+                stepBackward={this.stepBackward}
+                sortCycleValue={this.state.sortCycleValue}  />
 
                 <div className = {styles.arrayContainer}>
                     <Array array={this.state.array} highlights={this.state.highlights}/>
