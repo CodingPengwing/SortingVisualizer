@@ -25,8 +25,8 @@ export function sort(props) {
 // Intro sort from start (inclusive) to end (exclusive)
 function introSort(array, start, end, depthLimit) {
     const n = end - start;
-    // If the array is smaller than 16, sort with insertion sort
-    if (n < 16) {
+    // If the array is smaller than 10, sort with insertion sort
+    if (n < 10) {
         insertionSort(array, start, end);
         globallySorted.push(...range(start, end));
         return array;
@@ -43,6 +43,7 @@ function introSort(array, start, end, depthLimit) {
     introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);
 
+    locallySorted = [];
     globallySorted.push(...range(start, end));
     // Here the partition is sorted.
     takeSnapshot(array, [], [], globallySorted);
@@ -60,13 +61,15 @@ function heapSort(array, start, end) {
     let heapSize;
     for (let i = end - 1; i > start; i--) {
         comparing = [start, i];
-        takeSnapshot(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
         swap(array, start, i);
-        takeSnapshot(array, comparing, [], globallySorted);
-        globallySorted.push(i);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
+        locallySorted.push(i);
         heapSize = i - start;
         maxHeapify(array, start, end, start, heapSize);
     }
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
+    locallySorted = [];
     globallySorted.push(...range(start, end));
     return array;
 }
@@ -94,7 +97,7 @@ function maxHeapify(array, start, end, i, heapSize) {
 
     // Find the largest element between the parent, left and right children.
     comparing = [i, lChild, rChild];
-    takeSnapshot(array, comparing, [], globallySorted);
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     let largest = i;
     if (array[lChild] > array[largest]) {
         largest = lChild;
@@ -107,7 +110,7 @@ function maxHeapify(array, start, end, i, heapSize) {
     if (largest !== i) {
         swap(array, i, largest);
         comparing = [i, largest];
-        takeSnapshot(array, comparing, [], globallySorted);
+        takeSnapshot(array, comparing, locallySorted, globallySorted);
         // Heapify again for the child's children
         maxHeapify(array, start, end, largest, heapSize);
     }
