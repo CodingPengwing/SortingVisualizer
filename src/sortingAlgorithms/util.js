@@ -40,10 +40,9 @@ export function shuffle(array) {
 }
 
 export function generateRandomArray(arraySize, minValue, maxValue) {
-    const gap = Math.floor((maxValue - minValue) / arraySize);
     let array = [];
     for (let i=0; i < arraySize; i++) {
-        array.push(minValue + gap * randomIntFromInterval(0, Math.floor(maxValue/gap)));
+        array.push(randomIntFromInterval(minValue, maxValue));
     }
     return array;
 }
@@ -55,7 +54,7 @@ export function generateSteadyArray(arraySize, minValue, maxValue) {
     shuffle(multipliers);
     let array = [];
     for (let i = 0; i < multipliers.length; i++) {
-        array.push(minValue + gap * multipliers[i]);
+        array.push(maxValue - gap * multipliers[i]);
     }
     return array;
 }
@@ -63,8 +62,8 @@ export function generateSteadyArray(arraySize, minValue, maxValue) {
 export function generateSortedArray(arraySize, minValue, maxValue) {
     const gap = Math.floor((maxValue - minValue) / arraySize);
     let array = [];
-    for (let i = 1; i <= arraySize; i++) {
-        array.push(minValue + gap * i);
+    for (let i = arraySize - 1; i >= 0; i--) {
+        array.push(maxValue - gap * i);
     }
     return array;
 }
@@ -72,15 +71,15 @@ export function generateSortedArray(arraySize, minValue, maxValue) {
 export function generateReverseSortedArray(arraySize, minValue, maxValue) {
     const gap = Math.floor((maxValue - minValue) / arraySize);
     let array = [];
-    for (let i = arraySize; i > 0; i--) {
-        array.push(minValue + gap * i);
+    for (let i = 0; i < arraySize; i++) {
+        array.push(maxValue - gap * i);
     }
     return array;
 }
 
 export function generateUniformArray(arraySize, minValue, maxValue) {
-    const lowerLimit = Math.max(minValue, Math.floor(maxValue/2));
-    const upperLimit = Math.floor(maxValue/4)*3;
+    const lowerLimit = Math.floor(maxValue - (maxValue - minValue) * 1/4);
+    const upperLimit = Math.floor(maxValue);
     const value = randomIntFromInterval(lowerLimit, upperLimit);
     let array = [];
     for (let i = 0; i < arraySize; i++) { 
@@ -93,19 +92,19 @@ export function generatePartialUniformArray(arraySize, minValue, maxValue) {
     const diffValues = 5;
     const gap = Math.floor((maxValue - minValue) / diffValues);
     const values = [];
-    for (let i = 1; i <= diffValues; i++) {
-        values.push(minValue + i * gap);
+    for (let i = diffValues - 1; i >= 0; i--) {
+        values.push(maxValue - i * gap);
     }
 
     let array = [];
     for (let i = 0; i < diffValues; i++) {
         for (let j = 0; j < Math.floor(arraySize/diffValues); j++) {
-            array.push(minValue + values[i]);
+            array.push(values[i]);
         }
     }
 
     while (array.length < arraySize) {
-        array.push(minValue + values[randomIntFromInterval(0, 4)]);
+        array.push(values[randomIntFromInterval(0, 4)]);
     }
     shuffle(array);
     return array;
