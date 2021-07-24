@@ -81,12 +81,8 @@ class Bar extends React.PureComponent {
 class Array extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            array: [],
-            barWidth: 0.75,
-        }
-        this.barWidth = 0.75;
-        this.timeoutIDArray = [];
+        this.arrayLength = MAX_ARRAY_SIZE;
+        this.count = 0;
     }
 
     renderBar(i) {
@@ -103,33 +99,26 @@ class Array extends React.PureComponent {
             color = this.props.colorSet.locallySortedColor;
         }
 
+        if (this.props.array.length > this.arrayLength) {
+            this.count++;
+        }
+        this.arrayLength = this.props.array.length;
+
         return (
             <Bar
                 value={this.props.array[i]}
                 color={color}
-                key={i}
-                width={Math.min(0.75 * MAX_ARRAY_SIZE / this.props.array.length, 1)}
+                key={this.count*MAX_ARRAY_SIZE + i}
+                width={this.calculateBarWidth(this.props.array.length)}
             />
         )
     }
 
-    // gradualArrayChange(newArray) {
-    //     var barWidth = 0.75 * MAX_ARRAY_SIZE / newArray.length;
-    //     // console.log(newArray.length);
-    //     // console.log(this.state.array.length);
-    //     if (newArray.length >= this.state.array.length) {
-    //         var tempWidth = 0.35 * MAX_ARRAY_SIZE / newArray.length;
-    //         this.setState({barWidth: tempWidth, array: newArray});
-    //         clearTimeout(this.timeoutID);
-    //         this.timeoutID = setTimeout(() => {this.setState({array: newArray})}, 100);
-    //     } else {
-    //         this.setState({barWidth: barWidth, array: newArray});
-    //     }
-    // }
+    calculateBarWidth(arrayLength) {
+        return (0.75 * MAX_ARRAY_SIZE / arrayLength);
+    }
 
     render() {
-        // this.gradualArrayChange(this.props.array);
-
         var bars = [];
         let i;
         for (i = 0; i < this.props.array.length; i++) {
