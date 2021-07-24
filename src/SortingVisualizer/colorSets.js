@@ -31,10 +31,10 @@ const topGlow = {
 };
 
 const highContrast = {
-    primaryColor: "linear-gradient(0deg, #0FF 100%, #000 0%)",
+    primaryColor: "linear-gradient(0deg, #FFF 100%, #000 0%)",
     compareColor: "linear-gradient(0deg, #F00 100%, #000 0%)",
-    locallySortedColor: "linear-gradient(0deg, #F0F 100%, #000 0%)",
-    globallySortedColor: "linear-gradient(0deg, #FF0 100%, #000 0%)"
+    locallySortedColor: "linear-gradient(0deg, #88F 100%, #000 0%)",
+    globallySortedColor: "linear-gradient(0deg, #0FF 100%, #000 0%)"
 };
 
 // const greeneryScenery = {
