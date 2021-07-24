@@ -20,6 +20,8 @@ import { RANDOM_ARRAY, STEADY_ARRAY, SORTED_ARRAY, REVERSE_SORTED_ARRAY, UNIFORM
 
 import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION_SPEED } from '../SortingVisualizer/SortingVisualizer';
 
+import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
+
 export const StyledButton = styled(Button)({
     marginRight: "5%",
     fontFamily: "Lato, sans-serif",
@@ -33,8 +35,7 @@ export const StyledButton = styled(Button)({
     width: "200px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 60%)",
-    opacity: "90%",
+    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 55%)",
 
     '&:hover':{
         backgroundPosition: "right bottom",
@@ -42,14 +43,12 @@ export const StyledButton = styled(Button)({
 })
 
 const StyledButton2 = styled(StyledButton)({
-    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
         backgroundPosition: "right bottom",
     }
 })
 
 const PauseResumeButton = styled(StyledButton)({
-    backgroundImage: "linear-gradient(90deg, #00d2ff 0%, #3a7bd5 0%, #00d2ff 60%)",
     '&:hover':{
         backgroundPosition: "right bottom",
     }
@@ -57,18 +56,24 @@ const PauseResumeButton = styled(StyledButton)({
 
 export const Selector = (props) => {
 
-    const [arrayType, setarrayType] = useState(STEADY_ARRAY);
+    const [arrayType, setArrayType] = useState(STEADY_ARRAY);
     const [sortType, setSortType] = useState(QUICK_SORT);
+    const [, setColorSet] = useState(TOP_GLOW_COLOR_SET);
 
-    function changeInput(type){
-        setarrayType(type);
-        props.onChangeInput(type);
+    function changeArray(type){
+        setArrayType(type);
+        props.onChangeArray(type);
     };
 
     function changeSort(type){
         setSortType(type);
         props.onChangeSort(type);
     };
+
+    function changeColor(colorSet) {
+        setColorSet(colorSet);
+        props.onChangeColor(colorSet);
+    }
 
     return(
         <div className = {styles.container}>
@@ -78,14 +83,14 @@ export const Selector = (props) => {
                         Array
                     </Typography>
                     <DropdownButton id="dropdown-basic-button" title={arrayType}>
-                        <Dropdown.Item onClick = {() => changeInput(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeInput(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeInput(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeInput(REVERSE_SORTED_ARRAY)}>{REVERSE_SORTED_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeInput(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeInput(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(REVERSE_SORTED_ARRAY)}>{REVERSE_SORTED_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(UNIFORM_ARRAY)}>{UNIFORM_ARRAY}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeArray(PARTIAL_UNIFORM_ARRAY)}>{PARTIAL_UNIFORM_ARRAY}</Dropdown.Item>
                     </DropdownButton>
-                    <div onClick = {() => changeInput(arrayType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
+                    <div onClick = {() => changeArray(arrayType)} className = {styles.resetButton}><img style = {{marginLeft: "0%"}} alt = "reset button" src = {reset} width = {27} height = {27}/></div>
                     <Typography gutterBottom className = {styles.sliderTitleArray}>
                         Array Size
                     </Typography>
@@ -141,6 +146,13 @@ export const Selector = (props) => {
                 <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
                 <PauseResumeButton style = {styles.buttonStyle} onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/></PauseResumeButton>
                 <StyledButton2 style = {styles.buttonStyle} onClick = {() => {props.reset()}}>Reset</StyledButton2>
+                
+                <DropdownButton id="dropdown-basic-button" title="Colors">
+                    <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
+                    <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>
+                    <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
+                    <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
+                </DropdownButton>
             </div>
         </div>
         

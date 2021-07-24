@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { generateRandomArray, generateSteadyArray, generateSortedArray, 
-    generateReverseSortedArray, generateUniformArray, generatePartialUniformArray
-} from '../sortingAlgorithms/util';
+import { generateRandomArray, generateSteadyArray, generateSortedArray, generateReverseSortedArray, generateUniformArray, generatePartialUniformArray} from '../sortingAlgorithms/util';
 import { testSortingAlgorithms } from '../sortingAlgorithms/SortingTester';
 import { sort as bogoSort } from '../sortingAlgorithms/bogoSort';
 import { sort as bubbleSort } from '../sortingAlgorithms/bubbleSort';
@@ -24,6 +22,8 @@ import styles from './SortingVisualizer.module.scss';
 
 import Description from '../components/SortingDescriptor';
 import { HistoryManager, MAX_SORT_CYCLE_VALUE } from '../components/HistoryManager';
+
+import { colorSets, SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from './colorSets';
 
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
@@ -56,12 +56,6 @@ export const INITIAL_ANIMATION_SPEED = 100;
 const MAX_ANIMATION_PAUSE = 510;
 const ANIMATION_PAUSE_RANGE = 500;
 
-const BAR_OPACITY = 0.92;
-const PRIMARY_COLOR = "linear-gradient(0deg, #3a7bd5 0%, #00d2ff 80%)";
-const COMPARE_COLOR = "linear-gradient(0deg, #e37bd5 0%, #00d2ff 80%)";
-const LOCALLY_SORTED_COLOR = "linear-gradient(0deg, #e3ebd5 0%, #00d2ff 80%)";
-const GLOBALLY_SORTED_COLOR = "linear-gradient(0deg, #35d742 0%, #00d2ff 80%)";
-
 export const BOGO_SORT_ARRAY_SIZE = 7;
 
 const TEST_SORTING_ALGORITHMS = false;
@@ -75,7 +69,7 @@ class Bar extends React.PureComponent {
                 style={{
                     height: `${this.props.value}px`,
                     backgroundImage: this.props.color,
-                    opacity: BAR_OPACITY
+                    // opacity: BAR_OPACITY
                 }}>
             </div>    
         );
@@ -88,13 +82,14 @@ class Array extends React.PureComponent {
         const globallySorted = this.props.highlights.globallySorted;
         const locallySorted = this.props.highlights.locallySorted;
         const comparing = this.props.highlights.comparing;
-        let color = PRIMARY_COLOR;
+
+        let color = this.props.colorSet.primaryColor;
         if (comparing && comparing.includes(i)) {
-            color = COMPARE_COLOR;
+            color = this.props.colorSet.compareColor;
         } else if (globallySorted && globallySorted.includes(i)) {
-            color = GLOBALLY_SORTED_COLOR;
+            color = this.props.colorSet.globallySortedColor;
         } else if (locallySorted && locallySorted.includes(i)) {
-            color = LOCALLY_SORTED_COLOR;
+            color = this.props.colorSet.locallySortedColor;
         }
 
         return (
@@ -143,7 +138,8 @@ export default class SortingVisualizer extends React.PureComponent {
             disableArraySizeSlider: false,
             disableSortCycleSlider: true,
             animating: false,
-            sortCycleValue: 1
+            sortCycleValue: 1,
+            colorSet: colorSets.bottomGlow,
         };
 
         this.timeoutIDArray = [];
@@ -172,6 +168,7 @@ export default class SortingVisualizer extends React.PureComponent {
 
         this.generateArray = this.generateArray.bind(this);
         this.changeSort = this.changeSort.bind(this);
+        this.changeColor = this.changeColor.bind(this);
         this.doSort = this.doSort.bind(this);
         this.reset = this.reset.bind(this);
         this.pause = this.pause.bind(this);
@@ -203,7 +200,6 @@ export default class SortingVisualizer extends React.PureComponent {
         // Sorting complete. So now we display every step that was recorded in history while the sorting algorithm was running.
         this.animateHistory(this.resumePoint);
         this.setState({disableSortCycleSlider: false});
-        console.log(this.history.length);
     }
 
     goToState(i) {
@@ -334,6 +330,16 @@ export default class SortingVisualizer extends React.PureComponent {
         }
     }
 
+    changeColor(colorSet) {
+        switch (colorSet) {
+            case TOP_GLOW_COLOR_SET: this.setState({colorSet: colorSets.topGlow}); break;
+            case BOTTOM_GLOW_COLOR_SET: this.setState({colorSet: colorSets.bottomGlow}); break;
+            case SOLID_COLOR_SET: this.setState({colorSet: colorSets.solidColors}); break;
+            case HIGH_CONTRAST_COLOR_SET: this.setState({colorSet: colorSets.highContrast}); break;
+            default: break;
+        }
+    }
+
     onChangeArraySize(arraySize) {
         if (!this.state.animating) {
             if (this.state.arraySize !== arraySize) {
@@ -381,8 +387,9 @@ export default class SortingVisualizer extends React.PureComponent {
         return (
             <div>
                 <Selector 
-                    onChangeInput = {this.generateArray} 
+                    onChangeArray = {this.generateArray} 
                     onChangeSort = {this.changeSort} 
+                    onChangeColor = {this.changeColor} 
                     sort = {this.doSort} 
                     reset = {this.reset} 
                     pauseResume = {this.pauseResume} 
@@ -391,15 +398,19 @@ export default class SortingVisualizer extends React.PureComponent {
                     disableArraySizeSlider={this.state.disableArraySizeSlider} 
                 />
                 <HistoryManager
-                    onChangeSortCycle = {this.onChangeSortCycle}
+                    onChangeSortCycle = {this.onChangeSortCycle} 
                     stepForward={this.stepForward} 
-                    stepBackward={this.stepBackward}
+                    stepBackward={this.stepBackward} 
                     sortCycleValue={this.state.sortCycleValue} 
                     disableSortCycleSlider={this.state.disableSortCycleSlider} 
                 />
 
-                <div className = {styles.arrayContainer}>
-                    <Array array={this.state.array} highlights={this.state.highlights}/>
+                <div className = {styles.arrayContainer}> 
+                    <Array 
+                        array={this.state.array} 
+                        highlights={this.state.highlights}
+                        colorSet={this.state.colorSet}
+                    />
                 </div>
                 <div style = {{marginBottom: "5%"}}>
                     <Description header = "Description" description = "Lorem Ipsum bla bla..."/>

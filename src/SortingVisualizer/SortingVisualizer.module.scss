@@ -12,14 +12,13 @@
 .arrayBar {
     width: 0.75%;
     border-radius: 3px;
-    /* background-color: rgb(0, 161, 201); */
     display: inline-block;
-    margin: 0 1px;
+    margin: 1px;
     transition: 0.20s;
 }
 
 .arrayBar:hover{
-    transform: scale(1.08);
+    transform: scale(1.15);
 }
 
 .buttons{
