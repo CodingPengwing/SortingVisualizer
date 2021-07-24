@@ -7,9 +7,7 @@ const mainBlue = "#4dc8ff";
 const mainRed = "#f33b65";
 const mainYellow = "#f3f399";
 const mainGreen = "#35d742";
-const glowColor = "#0FF";
-
-// 88F
+const glowColor = "#0FFE";
 
 const solidColors = {
     primaryColor: "linear-gradient(0deg, " + mainBlue + " 100%, #000 0%)",
@@ -19,17 +17,17 @@ const solidColors = {
 };
 
 const bottomGlow = {
-    primaryColor: "linear-gradient(180deg, " + mainBlue + " 50%, " + glowColor + " 90%)",
-    compareColor: "linear-gradient(180deg, " + mainRed + " 50%, " + glowColor + " 90%)",
-    locallySortedColor: "linear-gradient(180deg, " + mainYellow + " 50%, " + glowColor + " 90%)",
-    globallySortedColor: "linear-gradient(180deg, " + mainGreen + " 50%, " + glowColor + " 90%)"
+    primaryColor: "linear-gradient(180deg, " + mainBlue + " 30%, " + glowColor + " 95%)",
+    compareColor: "linear-gradient(180deg, " + mainRed + " 30%, " + glowColor + " 95%)",
+    locallySortedColor: "linear-gradient(180deg, " + mainYellow + " 30%, " + glowColor + " 95%)",
+    globallySortedColor: "linear-gradient(180deg, " + mainGreen + " 30%, " + glowColor + " 95%)"
 };
 
 const topGlow = {
-    primaryColor: "linear-gradient(0deg, " + mainBlue + " 50%, " + glowColor + " 90%)",
-    compareColor: "linear-gradient(0deg, " + mainRed + " 50%, " + glowColor + " 90%)",
-    locallySortedColor: "linear-gradient(0deg, " + mainYellow + " 50%, " + glowColor + " 90%)",
-    globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 50%, " + glowColor + " 90%)"
+    primaryColor: "linear-gradient(0deg, " + mainBlue + " 30%, " + glowColor + " 95%)",
+    compareColor: "linear-gradient(0deg, " + mainRed + " 30%, " + glowColor + " 95%)",
+    locallySortedColor: "linear-gradient(0deg, " + mainYellow + " 30%, " + glowColor + " 95%)",
+    globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 30%, " + glowColor + " 95%)"
 };
 
 const highContrast = {
@@ -43,6 +41,7 @@ const highContrast = {
 
 // }
 
+// 88F
 // const pinkMania = {
 //     primaryColor: "linear-gradient(0deg, #88F 100%, #000 0%)",
 //     compareColor: "linear-gradient(0deg, #F00 100%, #000 0%)",

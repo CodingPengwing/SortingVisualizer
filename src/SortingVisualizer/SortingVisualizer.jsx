@@ -69,7 +69,8 @@ class Bar extends React.PureComponent {
                 style={{
                     height: `${this.props.value}px`,
                     backgroundImage: this.props.color,
-                    // opacity: BAR_OPACITY
+                    opacity: 0.90,
+                    width: `${this.props.width}%`
                 }}>
             </div>    
         );
@@ -78,6 +79,16 @@ class Bar extends React.PureComponent {
 
 // This component is used to produce an entire array of bars representing an array of numbers
 class Array extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            array: [],
+            barWidth: 0.75,
+        }
+        this.barWidth = 0.75;
+        this.timeoutIDArray = [];
+    }
+
     renderBar(i) {
         const globallySorted = this.props.highlights.globallySorted;
         const locallySorted = this.props.highlights.locallySorted;
@@ -97,11 +108,28 @@ class Array extends React.PureComponent {
                 value={this.props.array[i]}
                 color={color}
                 key={i}
+                width={Math.min(0.75 * MAX_ARRAY_SIZE / this.props.array.length, 1)}
             />
         )
     }
 
+    // gradualArrayChange(newArray) {
+    //     var barWidth = 0.75 * MAX_ARRAY_SIZE / newArray.length;
+    //     // console.log(newArray.length);
+    //     // console.log(this.state.array.length);
+    //     if (newArray.length >= this.state.array.length) {
+    //         var tempWidth = 0.35 * MAX_ARRAY_SIZE / newArray.length;
+    //         this.setState({barWidth: tempWidth, array: newArray});
+    //         clearTimeout(this.timeoutID);
+    //         this.timeoutID = setTimeout(() => {this.setState({array: newArray})}, 100);
+    //     } else {
+    //         this.setState({barWidth: barWidth, array: newArray});
+    //     }
+    // }
+
     render() {
+        // this.gradualArrayChange(this.props.array);
+
         var bars = [];
         let i;
         for (i = 0; i < this.props.array.length; i++) {
@@ -116,7 +144,7 @@ class Array extends React.PureComponent {
         />)
 
         return (
-            <div className={styles.array}>
+            <div className={styles.arrayContainer}>
                 {bars}
             </div>
         )
