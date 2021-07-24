@@ -139,7 +139,7 @@ export default class SortingVisualizer extends React.PureComponent {
             disableSortCycleSlider: true,
             animating: false,
             sortCycleValue: 1,
-            colorSet: colorSets.bottomGlow,
+            colorSet: colorSets.solidColors,
         };
 
         this.timeoutIDArray = [];
@@ -419,12 +419,6 @@ export default class SortingVisualizer extends React.PureComponent {
                 </div>
                 <Footer/>
                 {/* Insert  a footer element */}
-                {/* <script>
-                    function changeBg() {
-                        const images = [];
-
-                    }
-                </script> */}
             </div>
         );
     }

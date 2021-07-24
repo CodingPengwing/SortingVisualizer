@@ -13,7 +13,7 @@ export const Bar = (props) => {
 }
 
 export const StyledButton = styled(Button)({
-    color: "white",
+    color: "#EEE",
     backgroundColor: "black",
     marginRight: "2.5%",
     marginTop: "2.5%",

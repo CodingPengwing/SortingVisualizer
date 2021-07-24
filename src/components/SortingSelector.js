@@ -31,11 +31,11 @@ export const StyledButton = styled(Button)({
     textTransform: "none",
     backgroundSize: "200% auto",
     transition: "0.25s ease-in",
-    color: "#FFF",
+    color: "#EEE",
     width: "200px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 55%)",
+    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 60%)",
 
     '&:hover':{
         backgroundPosition: "right bottom",
@@ -148,9 +148,9 @@ export const Selector = (props) => {
                 <StyledButton2 style = {styles.buttonStyle} onClick = {() => {props.reset()}}>Reset</StyledButton2>
                 
                 <DropdownButton id="dropdown-basic-button" title="Colors">
+                    <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
                     <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
                     <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>
-                    <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
                     <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
                 </DropdownButton>
             </div>
