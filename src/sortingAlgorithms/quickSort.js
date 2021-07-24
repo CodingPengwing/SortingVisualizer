@@ -16,20 +16,18 @@ export function sort(props) {
 }
 
 function quickSort(array, start, end) {
-    if (end - start <= 1) {
-        globallySorted.push(start);
-        takeSnapshot(array, [], [], globallySorted);
-        return array;
-    }
+    if (end - start <= 1) { return array; }
     // Partition the array
     const p = partition(array, start, end);
     globallySorted.push(p);
+    takeSnapshot(array, [], [], globallySorted);
     // Sort the left of the partition
     quickSort(array, start, p);
+    globallySorted.push(...range(start, p));
+    takeSnapshot(array, [], [], globallySorted);
     // Sort the right of the partition
     quickSort(array, p+1, end);
-    
-    globallySorted.push(...range(start, end));
+    globallySorted.push(...range(p+1, end));
     takeSnapshot(array, [], [], globallySorted);
     return array;
 }

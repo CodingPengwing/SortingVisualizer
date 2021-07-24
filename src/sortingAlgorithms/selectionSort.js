@@ -38,8 +38,6 @@ function selectionSort(array){
         takeSnapshot(array, comparing, [], globallySorted);
         globallySorted.push(start);
     }
-    // comparing = [];
-    // takeSnapshot(array, comparing, , []);
 
     // Here the entire array is sorted.
     takeSnapshot(array, [], [], range(0, array.length));

@@ -32,12 +32,11 @@ function quickSort(array, start, end) {
     while (start < end) {
         const [pivotLeft, pivotRight] = partition(array, start, end);
         globallySorted.push(...range(pivotLeft, pivotRight));
+        takeSnapshot(array, [], [], globallySorted);
         // Pick the smaller partition to recurse into.
         // If the left partition is smaller than the right partition recurse there
         if (pivotLeft - start < end - pivotRight) {
             quickSort(array, start, pivotLeft);
-            globallySorted.push(...range(start, pivotLeft));
-            takeSnapshot(array, [], [], globallySorted);
             // start -> pivotRight is now sorted
             // move start to pivotRight
             start = pivotRight;
@@ -45,8 +44,6 @@ function quickSort(array, start, end) {
         // If the right partition is smaller, recurse there
         else {
             quickSort(array, pivotRight, end);
-            globallySorted.push(...range(pivotRight, end));
-            takeSnapshot(array, [], [], globallySorted);
             // pivotLeft -> end is now sorted
             // move end to pivotLeft
             end = pivotLeft;
@@ -59,11 +56,7 @@ function quickSort(array, start, end) {
 }
 
 function partition(array, start, end) {
-    if (end - start <= 1) {
-        globallySorted.push(start);
-        takeSnapshot(array, [], [], globallySorted);
-        return [start, end];
-    }
+    if (end - start <= 1) { return [start, end]; }
 
     //  If this section has more than 5 elements
     if (end - start > 5) {
