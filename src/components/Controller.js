@@ -31,26 +31,29 @@ export const StyledButton = styled(Button)({
     backgroundSize: "200% auto",
     transition: "0.25s ease-in",
     color: "#EEE",
-    width: "150px",
+    width: "140px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 60%)",
+    backgroundImage: "linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%)",
 
     '&:hover':{
         backgroundPosition: "right bottom",
+        backgroundColor: "#4dfa"
     }
 })
 
-const StyledButton2 = styled(StyledButton)({
+const ResetButton = styled(StyledButton)({
     '&:hover':{
         backgroundPosition: "right bottom",
+        backgroundColor: "#4dfa"
     }
 })
 
 const PauseResumeButton = styled(StyledButton)({
-    marginTop: "8%",
+    marginTop: "11%",
     '&:hover':{
         backgroundPosition: "right bottom",
+        backgroundColor: "#4dfa"
     }
 })
 
@@ -82,7 +85,7 @@ export const Controller = (props) => {
                     <Typography gutterBottom className = {styles.dropdownTitle}>
                         Array
                     </Typography>
-                    <DropdownButton id="dropdown-basic-button" title={arrayType}>
+                    <DropdownButton id="dropdown-basic-button" className = "dropdown1" title={arrayType}>
                         <Dropdown.Item onClick = {() => changeArray(STEADY_ARRAY)}>{STEADY_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeArray(RANDOM_ARRAY)}>{RANDOM_ARRAY}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeArray(SORTED_ARRAY)}>{SORTED_ARRAY}</Dropdown.Item>
@@ -108,7 +111,7 @@ export const Controller = (props) => {
                     <Typography gutterBottom className = {styles.dropdownTitle}>
                         Sort
                     </Typography>
-                    <DropdownButton id="dropdown-basic-button" title={sortType}>
+                    <DropdownButton id="dropdown-basic-button" className = "dropdown1" title={sortType}>
                         <Dropdown.Header>Simple Sorting Algorithms</Dropdown.Header>
                         <Dropdown.Item onClick = {() => changeSort(BOGO_SORT)}>{BOGO_SORT}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeSort(BUBBLE_SORT)}>{BUBBLE_SORT}</Dropdown.Item>
@@ -144,14 +147,14 @@ export const Controller = (props) => {
 
             <div className = {styles.buttons}>
                 <div className = {styles.topButton}>
-                    <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
+                    <StyledButton onClick = {() => {props.sort()}}>Sort!</StyledButton>
                     <PauseResumeButton
                     onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/>
                     </PauseResumeButton>
                 </div>
                 <div className = {styles.bottomButton}>
-                    <StyledButton2 onClick = {() => {props.reset()}}>Reset</StyledButton2>               
-                    <DropdownButton id="dropdown-basic-button" title="Colors" style = {{marginTop: "10%"}}>
+                    <ResetButton onClick = {() => {props.reset()}}>Reset</ResetButton>               
+                    <DropdownButton id = "dropdown-colors" title="Colors" style = {{marginTop: "10%"}}>
                         <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>

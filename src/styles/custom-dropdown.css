@@ -16,3 +16,21 @@
 #dropdown-basic-button:focus{
     box-shadow: none;
 }
+
+#dropdown-colors{
+    background-image: linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%);
+    font-family: 'Lato', sans-serif;
+    font-weight: bolder;
+    font-size:120%;
+    margin-top: 5%;
+    width: 100%;
+    border-radius: 17px;
+}
+
+#dropdown-colors:active{
+    box-shadow: none;
+}
+
+#dropdown-colors:focus{
+    box-shadow: none;
+}
