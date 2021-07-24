@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import reset from '../images/icons8-reset-96.png';
 
 import "../styles/custom-dropdown.css"
-import styles from "../styles/Selector.module.scss"
+import styles from "../styles/Controller.module.scss"
 import pause_resume from "../images/play-and-pause-button.png"
 
 import { useState } from 'react';
@@ -23,7 +23,6 @@ import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION
 import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
 
 export const StyledButton = styled(Button)({
-    marginRight: "5%",
     fontFamily: "Lato, sans-serif",
     fontWeight: "bold",
     fontSize: "17px",
@@ -32,7 +31,7 @@ export const StyledButton = styled(Button)({
     backgroundSize: "200% auto",
     transition: "0.25s ease-in",
     color: "#EEE",
-    width: "200px",
+    width: "150px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
     backgroundImage: "linear-gradient(90deg, #3a7bd5 0%, #00d2ff 60%)",
@@ -49,12 +48,13 @@ const StyledButton2 = styled(StyledButton)({
 })
 
 const PauseResumeButton = styled(StyledButton)({
+    marginTop: "8%",
     '&:hover':{
         backgroundPosition: "right bottom",
     }
 })
 
-export const Selector = (props) => {
+export const Controller = (props) => {
 
     const [arrayType, setArrayType] = useState(STEADY_ARRAY);
     const [sortType, setSortType] = useState(QUICK_SORT);
@@ -143,16 +143,21 @@ export const Selector = (props) => {
             </div>
 
             <div className = {styles.buttons}>
-                <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
-                <PauseResumeButton style = {styles.buttonStyle} onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/></PauseResumeButton>
-                <StyledButton2 style = {styles.buttonStyle} onClick = {() => {props.reset()}}>Reset</StyledButton2>
-                
-                <DropdownButton id="dropdown-basic-button" title="Colors">
-                    <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
-                    <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
-                    <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>
-                    <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
-                </DropdownButton>
+                <div className = {styles.topButton}>
+                    <StyledButton style = {styles.buttonStyle} onClick = {() => {props.sort()}}>Sort!</StyledButton>
+                    <PauseResumeButton
+                    onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/>
+                    </PauseResumeButton>
+                </div>
+                <div className = {styles.bottomButton}>
+                    <StyledButton2 onClick = {() => {props.reset()}}>Reset</StyledButton2>               
+                    <DropdownButton id="dropdown-basic-button" title="Colors" style = {{marginTop: "10%"}}>
+                        <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
+                    </DropdownButton>
+                </div>
             </div>
         </div>
         

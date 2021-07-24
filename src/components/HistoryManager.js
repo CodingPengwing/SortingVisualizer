@@ -4,7 +4,7 @@ import styles from "../styles/History.module.scss";
 import Slider from '@material-ui/core/Slider';
 import rewind from '../images/rewind.png';
 import dropdown from '../images/down-chevron.png';
-import {StyledButton} from "./SortingSelector";
+import {StyledButton} from "./Controller";
 import SlideToggle from "react-slide-toggle";
 
 export const MAX_SORT_CYCLE_VALUE = 1500;
