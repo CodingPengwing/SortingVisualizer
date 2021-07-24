@@ -25,3 +25,12 @@
   font-size: 575%;
   letter-spacing: 0.2em;
 }
+
+body {
+  background: no-repeat center center fixed; 
+  background: url(../images/bg1.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

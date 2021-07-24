@@ -7,7 +7,6 @@ export default function App() {
     <div className={AppStyles.App}>
       <Bar/>
       <SortingVisualizer/>
-
     </div>
   );
 }
