@@ -61,6 +61,7 @@ function quickSort(array, start, end) {
 function partition(array, start, end) {
     if (end - start <= 1) {
         globallySorted.push(start);
+        takeSnapshot(array, [], [], globallySorted);
         return [start, end];
     }
 

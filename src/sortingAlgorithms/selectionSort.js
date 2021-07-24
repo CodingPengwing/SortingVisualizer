@@ -14,7 +14,7 @@ export function sort(props) {
 }
 
 function selectionSort(array){
-    if (array.length <= 1) {return array};
+    if (array.length <= 1) { return array; }
     let length = array.length;
 
     // For each index in the array, find the smallest element in the unsorted range, and move

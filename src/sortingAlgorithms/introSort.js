@@ -24,29 +24,31 @@ export function sort(props) {
 
 // Intro sort from start (inclusive) to end (exclusive)
 function introSort(array, start, end, depthLimit) {
+    if (end - start <= 1) { 
+        globallySorted.push(start);
+        takeSnapshot(array, [], [], globallySorted);
+        return array; 
+    }
     const n = end - start;
     // If the array is smaller than 10, sort with insertion sort
     if (n < 10) {
         insertionSort(array, start, end);
-        globallySorted.push(...range(start, end));
         return array;
     }
     // If we have reached max recursion depth, use heap sort
     if (depthLimit === 0) {
         heapSort(array, start, end);
-        globallySorted.push(...range(start, end));
         return array;
     }
     // Otherwise partition the array and go ahead
     const p = partition(array, start, end);
     globallySorted.push(p);
+    takeSnapshot(array, [], [], globallySorted);
+
     introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);
 
     locallySorted = [];
-    globallySorted.push(...range(start, end));
-    // Here the partition is sorted.
-    takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
@@ -55,7 +57,7 @@ function introSort(array, start, end, depthLimit) {
 
 // Function to sort an array from start (inclusive) to end (exclusive).
 function heapSort(array, start, end) {
-    if (end - start <= 1) return array;
+    if (end - start <= 1) { return array; }
 
     bottomUpHeapify(array, start, end);
     let heapSize;
@@ -68,9 +70,11 @@ function heapSort(array, start, end) {
         heapSize = i - start;
         maxHeapify(array, start, end, start, heapSize);
     }
+    comparing = [];
     takeSnapshot(array, comparing, locallySorted, globallySorted);
     locallySorted = [];
     globallySorted.push(...range(start, end));
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     return array;
 }
 
@@ -123,10 +127,10 @@ function maxHeapify(array, start, end, i, heapSize) {
 
 // Insertion sort from start (inclusive) to end (exclusive)
 function insertionSort(array, start, end) {
-    if (end - start <= 1) return array;
+    if (end - start <= 1) { return array; }
 
     // Sort the section using insertion method
-    for (let i = start; i < end; i++) {
+    for (let i = start + 1; i < end; i++) {
         let j = i;
         comparing = [j-1, j];
         takeSnapshot(array, comparing, locallySorted, globallySorted);
@@ -136,12 +140,14 @@ function insertionSort(array, start, end) {
             takeSnapshot(array, comparing, locallySorted, globallySorted);
             j--;
         }
+        if (i === start + 1) { locallySorted.push(start); }
         locallySorted.push(i);
     }
     comparing = [];
     takeSnapshot(array, comparing, locallySorted, globallySorted);
     locallySorted = [];
     globallySorted.push(...range(start, end));
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     return array;
 }
 
@@ -187,6 +193,5 @@ function partition(array, start, end) {
     takeSnapshot(array, comparing, [], globallySorted);
     swap(array, start, j)
     takeSnapshot(array, comparing, [], globallySorted);
-    
     return j;
 }

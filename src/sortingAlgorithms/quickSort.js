@@ -18,6 +18,7 @@ export function sort(props) {
 function quickSort(array, start, end) {
     if (end - start <= 1) {
         globallySorted.push(start);
+        takeSnapshot(array, [], [], globallySorted);
         return array;
     }
     // Partition the array
