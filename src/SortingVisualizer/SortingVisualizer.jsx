@@ -418,7 +418,6 @@ export default class SortingVisualizer extends React.PureComponent {
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
                 <Footer/>
-                {/* Insert  a footer element */}
             </div>
         );
     }

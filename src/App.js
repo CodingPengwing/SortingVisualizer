@@ -30,26 +30,39 @@ export default class App extends React.Component{
         document.querySelector(".img1").style.opacity = 0;
         document.querySelector(".img2").style.opacity = 1;
         document.querySelector(".img3").style.opacity = 1;
-        this.order(["-3", "-1", "-2"], () => { this.backgroundScheduler_2() }, 1000);
-    }, 3000);
+        document.querySelector(".img4").style.opacity = 0;
+        this.order(["-4", "-1", "-2", "-3"], () => { this.backgroundScheduler_2() }, 1000);
+    }, 4000);
   }
   
   backgroundScheduler_2() {
     setTimeout(() => {
-        document.querySelector(".img1").style.opacity = 1;
+        document.querySelector(".img1").style.opacity = 0;
         document.querySelector(".img2").style.opacity = 0;
         document.querySelector(".img3").style.opacity = 1;
-        this.order(["-2", "-3", "-1"], () => { this.backgroundScheduler_3() }, 1000);
-    }, 3000);
+        document.querySelector(".img4").style.opacity = 1;
+        this.order(["-3", "-4", "-1", "-2"], () => { this.backgroundScheduler_3() }, 1000);
+    }, 4000);
   }
 
   backgroundScheduler_3() {
     setTimeout(() => {
         document.querySelector(".img1").style.opacity = 1;
+        document.querySelector(".img2").style.opacity = 0;
+        document.querySelector(".img3").style.opacity = 0;
+        document.querySelector(".img4").style.opacity = 1;
+        this.order(["-2", "-3", "-4", "-1"], () => { this.backgroundScheduler_4() }, 1000);
+    }, 4000);
+  }
+
+  backgroundScheduler_4() {
+    setTimeout(() => {
+        document.querySelector(".img1").style.opacity = 1;
         document.querySelector(".img2").style.opacity = 1;
         document.querySelector(".img3").style.opacity = 0;
-        this.order(["-1", "-2", "-3"], () => { this.backgroundScheduler_1() }, 1000);
-    }, 3000);
+        document.querySelector(".img4").style.opacity = 0;
+        this.order(["-1", "-2", "-3", "-4"], () => { this.backgroundScheduler_1() }, 1000);
+    }, 4000);
   }
 
   order(array, callback, time) {
@@ -57,6 +70,7 @@ export default class App extends React.Component{
         document.querySelector(".img1").style.zIndex = array[0];
         document.querySelector(".img2").style.zIndex = array[1];
         document.querySelector(".img3").style.zIndex = array[2];
+        document.querySelector(".img4").style.zIndex = array[3];
         callback();
     }, time);
   }
@@ -74,8 +88,9 @@ export default class App extends React.Component{
           <img className = "background-image img1" src = {background}/>
           <img className = "background-image img2" src = {background2}/>
           <img className = "background-image img3" src = {background3}/>
+          <img className = "background-image img4" src = {background4}/>
         </div>
-        <Bar/>
+        <Bar />
         <SortingVisualizer/>
       </div>
     );

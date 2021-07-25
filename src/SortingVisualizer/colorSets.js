@@ -1,4 +1,4 @@
-export const SOLID_COLOR_SET = "Solid Color Set";
+    export const SOLID_COLOR_SET = "Solid Color Set";
 export const BOTTOM_GLOW_COLOR_SET = "Bottom Glow Color Set";
 export const TOP_GLOW_COLOR_SET = "Top Glow Color Set";
 export const HIGH_CONTRAST_COLOR_SET = "High Contrast Color Set";
