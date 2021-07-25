@@ -7,11 +7,8 @@ import background2 from './images/bg2.jpg';
 import background3 from './images/bg3.jpg';
 import background4 from './images/bg4.jpg';
 import React, { useState } from 'react';
-import { render } from '@testing-library/react';
 
-const backgrounds = [background, background2, background3, background4]
-var backgroundIndex = 0;
-const opacityVals = [100, 100, 100, 100]
+const backgroundCycleTime = 30000;
 
 export default class App extends React.Component{
   constructor(props){
@@ -21,7 +18,6 @@ export default class App extends React.Component{
     this.backgroundScheduler_2 = this.backgroundScheduler_2.bind(this);
     this.backgroundScheduler_3 = this.backgroundScheduler_3.bind(this);
     this.order = this.order.bind(this);
-
   }
 
   backgroundScheduler_1() {
@@ -32,7 +28,7 @@ export default class App extends React.Component{
         document.querySelector(".img3").style.opacity = 1;
         document.querySelector(".img4").style.opacity = 0;
         this.order(["-4", "-1", "-2", "-3"], () => { this.backgroundScheduler_2() }, 1000);
-    }, 4000);
+    }, backgroundCycleTime);
   }
   
   backgroundScheduler_2() {
@@ -42,7 +38,7 @@ export default class App extends React.Component{
         document.querySelector(".img3").style.opacity = 1;
         document.querySelector(".img4").style.opacity = 1;
         this.order(["-3", "-4", "-1", "-2"], () => { this.backgroundScheduler_3() }, 1000);
-    }, 4000);
+    }, backgroundCycleTime);
   }
 
   backgroundScheduler_3() {
@@ -52,7 +48,7 @@ export default class App extends React.Component{
         document.querySelector(".img3").style.opacity = 0;
         document.querySelector(".img4").style.opacity = 1;
         this.order(["-2", "-3", "-4", "-1"], () => { this.backgroundScheduler_4() }, 1000);
-    }, 4000);
+    }, backgroundCycleTime);
   }
 
   backgroundScheduler_4() {
@@ -62,7 +58,7 @@ export default class App extends React.Component{
         document.querySelector(".img3").style.opacity = 0;
         document.querySelector(".img4").style.opacity = 0;
         this.order(["-1", "-2", "-3", "-4"], () => { this.backgroundScheduler_1() }, 1000);
-    }, 4000);
+    }, backgroundCycleTime);
   }
 
   order(array, callback, time) {
