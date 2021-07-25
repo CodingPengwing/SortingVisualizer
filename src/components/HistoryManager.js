@@ -4,7 +4,7 @@ import styles from "../styles/History.module.scss";
 import Slider from '@material-ui/core/Slider';
 import rewind from '../images/rewind.png';
 import dropdown from '../images/down-chevron.png';
-import {StyledButton} from "./SortingSelector";
+import {StyledButton} from "./Controller";
 import SlideToggle from "react-slide-toggle";
 
 export const MAX_SORT_CYCLE_VALUE = 1500;
@@ -17,7 +17,7 @@ export const HistoryManager = (props) => {
                 (
                 <div>
                     <div className = {styles.header}>
-                        <span>Advanced</span>
+                        <span onClick = {toggle}>Advanced</span>
                         <img onClick = {toggle} width = {20} alt = "dropdown arrow" src = {dropdown}/>
                     </div>
                     <div ref = {setCollapsibleElement}>

@@ -16,7 +16,7 @@ import { sort as selectionSort } from '../sortingAlgorithms/selectionSort';
 import { sort as shellSort } from '../sortingAlgorithms/shellSort';
 import { sort as timSort } from '../sortingAlgorithms/timSort';
 
-import { Selector } from '../components/SortingSelector';
+import { Controller } from '../components/Controller';
 import { Footer } from '../components/Footer';
 import styles from './SortingVisualizer.module.scss';
 
@@ -386,7 +386,7 @@ export default class SortingVisualizer extends React.PureComponent {
     render() {
         return (
             <div>
-                <Selector 
+                <Controller 
                     onChangeArray = {this.generateArray} 
                     onChangeSort = {this.changeSort} 
                     onChangeColor = {this.changeColor} 
@@ -418,7 +418,6 @@ export default class SortingVisualizer extends React.PureComponent {
                     <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
                 </div>
                 <Footer/>
-                {/* Insert  a footer element */}
             </div>
         );
     }

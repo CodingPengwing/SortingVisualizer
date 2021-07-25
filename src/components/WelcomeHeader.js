@@ -10,7 +10,7 @@ export const WelcomeHeader = (props) => {
     return(
         <div className = {styles.welcomediv}  onClick = {scrollClick}>
             <FadeIn delay = {300}>
-                <h1 className = {styles.welcome2}>sortify.io</h1> 
+                <h1 className = {styles.welcome}>sortify.io</h1> 
             </FadeIn>
         </div>
     )
