@@ -29,9 +29,6 @@ function timSort(array) {
     for (let start = 0; start < n; start += minRun) {
         const end = Math.min(start + minRun, n);
         insertionSort(array, start, end);
-        // Show the section that has just been sorted
-        locallySorted.push(...range(start, end));
-        takeSnapshot(array, [], locallySorted, []);
     }
 
     let size = minRun;
@@ -40,25 +37,33 @@ function timSort(array) {
             // Split the current sort range
             const split = start + size;
             const end = Math.min(start + 2 * size, n);
-            comparing = [];
-            for (let i = 0; i < locallySorted.length; i++) {
-                if (start <= locallySorted[i] && locallySorted[i] < end) {
-                    locallySorted[i] = -1;
-                }
-            }
-            takeSnapshot(array, comparing, locallySorted, globallySorted);
+            
+            // if split < end we need to merge the 2 partitions (else, we only have 1 partition)
             if (split < end) {
+                // If this section has been locally sorted before, it's no longer locally sorted because
+                // we need to merge it again.
+                if (locallySorted.includes(start)) {
+                    for (let i = 0; i < locallySorted.length; i++) {
+                        if (start <= locallySorted[i] && locallySorted[i] < end) {
+                            locallySorted[i] = -1;
+                        }
+                    }
+                    comparing = [];
+                    takeSnapshot(array, comparing, locallySorted, globallySorted);
+                }
+                
                 // Merge the left and right arrays if adjacent elements are 
                 // out of order, otherwise, they're already sorted.
-                if (array[split-1] >= array[split]) {
+                if (array[split-1] > array[split]) {
                     merge(array, start, split, end);
                 } else {
-                    for (let i = start; i < end; i++) {
-                        comparing = [i];
-                        takeSnapshot(array, comparing, locallySorted, globallySorted);
-                    }
+                    comparing = range(start, end);
+                    takeSnapshot(array, comparing, locallySorted, []);
+                    comparing = [];
+                    locallySorted.push(...range(start, end));
+                    takeSnapshot(array, comparing, locallySorted, []);
                 }
-            }
+            } 
         }
         size *= 2;
     }
@@ -117,12 +122,12 @@ function merge(array, start, split, end) {
     }
 
     while (i < split) {
-        comparing = [i, j-1];
+        comparing = [i];
         takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[i++]);
     }
     while (j < end) {
-        comparing = [i-1, j];
+        comparing = [j];
         takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[j++]);
     }
@@ -142,5 +147,7 @@ function merge(array, start, split, end) {
         takeSnapshot(array, comparing, locallySorted, globallySorted);
     }
 
+    comparing = [];
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     return array;
 }

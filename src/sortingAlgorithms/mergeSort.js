@@ -28,32 +28,34 @@ function mergeSort(array, start, end) {
     mergeSort(array, start, split);
     mergeSort(array, split, end);
 
-    comparing = [];
-    for (let i = 0; i < locallySorted.length; i++) {
-        if (start <= locallySorted[i] && locallySorted[i] < end) {
-            locallySorted[i] = -1;
+    // If this partition has been locally sorted before, it's no longer locally sorted
+    // because we now need to merge it.
+    if (locallySorted.includes(start)) {
+        for (let i = 0; i < locallySorted.length; i++) {
+            if (start <= locallySorted[i] && locallySorted[i] < end) {
+                locallySorted[i] = -1;
+            }
         }
+        comparing = [];
+        takeSnapshot(array, comparing, locallySorted, []);
     }
-    takeSnapshot(array, comparing, locallySorted, globallySorted);
 
     // Only merge the left and right arrays if elements are out of order.
     if (array[split-1] > array[split]) {
         merge(array, start, split, end);
     } else {
-        for (let i = start; i < end; i++) {
-            comparing = [i];
-            takeSnapshot(array, comparing, locallySorted, globallySorted);
-        }
+        comparing = range(start, end);
+        takeSnapshot(array, comparing, locallySorted, []);
+        comparing = []
+        locallySorted.push(...range(start, end));
+        takeSnapshot(array, comparing, locallySorted, []);
     }
 
-    comparing = [];
-    // Every time we get here, the range between start and end is locally sorted.
-    locallySorted.push(...range(start, end));
     if (end - start === array.length) {
         // Here the entire array is sorted.
-        globallySorted.push(...range(start, end));
+        takeSnapshot(array, [], [], range(start, end));
     }
-    takeSnapshot(array, [], locallySorted, globallySorted);
+
     return array;
 }
 
@@ -75,13 +77,13 @@ function merge(array, start, split, end) {
     }
     // If there are remaining elements on the left side, add the rest
     while (i < split) {
-        comparing = [i, j-1];
+        comparing = [i];
         takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[i++]);
     }
     // If there are remaining elements on the right side, add the rest
     while (j < end) {
-        comparing = [i-1, j];
+        comparing = [j];
         takeSnapshot(array, comparing, locallySorted, []);
         mergeArray.push(array[j++]);
     }
@@ -95,10 +97,13 @@ function merge(array, start, split, end) {
     // Write the sorted elements back into the original array
     for (let k = 0; k < mergeArray.length; k++) {
         array[start+k] = mergeArray[k];
+        locallySorted.push(start+k);
         if (lastMerge) { globallySorted.push(start+k); }
         comparing = [start+k];
         takeSnapshot(array, comparing, locallySorted, globallySorted);
     }
 
+    comparing = [];
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
     return array;
 }

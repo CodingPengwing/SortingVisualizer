@@ -226,8 +226,13 @@ export default class SortingVisualizer extends React.PureComponent {
             var comparing = displayState.highlights.comparing.slice();
             var locallySorted = displayState.highlights.locallySorted.slice();
             var globallySorted = displayState.highlights.globallySorted.slice();
-            this.setState({array: array, highlights: {comparing: comparing, locallySorted: locallySorted, globallySorted: globallySorted}});
             this.resumePoint = i;
+            const sortCycleValue = Math.floor(MAX_SORT_CYCLE_VALUE * this.resumePoint/this.history.length);
+            this.setState({
+                array: array, 
+                highlights: {comparing: comparing, locallySorted: locallySorted, globallySorted: globallySorted},
+                sortCycleValue: sortCycleValue
+            });
         }
     }
 
@@ -236,21 +241,19 @@ export default class SortingVisualizer extends React.PureComponent {
             return;
         }
         if (!startPoint) { startPoint = 0; }
+        this.setState({animating: true});
         var pauseTime;
         var count = 1;
         for (let i = startPoint; i < this.history.length; i++) {
             pauseTime = this.animationPauseTime * count;
             let timeoutID = setTimeout(() => {
-                const sortCycleValue = Math.floor(MAX_SORT_CYCLE_VALUE * this.resumePoint/this.history.length);
                 this.goToState(i);
-                this.setState({sortCycleValue: sortCycleValue});
                 if (i === this.history.length - 1) { this.setState({animating: false}); }
             }, pauseTime);
 
             this.timeoutIDArray.push(timeoutID);
             count++;
         }
-        this.setState({animating: true});
     }
 
     pause() {
