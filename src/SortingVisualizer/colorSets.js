@@ -16,25 +16,28 @@ const solidColors = {
     globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 100%, #000 0%)"
 };
 
+const glowPosition = "35%";
+const nonGlowPosition = "90%";
+
 const bottomGlow = {
-    primaryColor: "linear-gradient(180deg, " + mainBlue + " 30%, " + glowColor + " 95%)",
-    compareColor: "linear-gradient(180deg, " + mainRed + " 30%, " + glowColor + " 95%)",
-    locallySortedColor: "linear-gradient(180deg, " + mainYellow + " 30%, " + glowColor + " 95%)",
-    globallySortedColor: "linear-gradient(180deg, " + mainGreen + " 30%, " + glowColor + " 95%)"
+    primaryColor: `linear-gradient(180deg, ${mainBlue} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    compareColor: `linear-gradient(180deg, ${mainRed} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    locallySortedColor: `linear-gradient(180deg, ${mainYellow} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    globallySortedColor: `linear-gradient(180deg, ${mainGreen} ${glowPosition}, ${glowColor} ${nonGlowPosition}`
 };
 
 const topGlow = {
-    primaryColor: "linear-gradient(0deg, " + mainBlue + " 30%, " + glowColor + " 95%)",
-    compareColor: "linear-gradient(0deg, " + mainRed + " 30%, " + glowColor + " 95%)",
-    locallySortedColor: "linear-gradient(0deg, " + mainYellow + " 30%, " + glowColor + " 95%)",
-    globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 30%, " + glowColor + " 95%)"
+    primaryColor: `linear-gradient(0deg, ${mainBlue} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    compareColor: `linear-gradient(0deg, ${mainRed} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    locallySortedColor: `linear-gradient(0deg, ${mainYellow} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    globallySortedColor: `linear-gradient(0deg, ${mainGreen} ${glowPosition}, ${glowColor} ${nonGlowPosition}`
 };
 
 const highContrast = {
     primaryColor: "linear-gradient(0deg, #FFF 100%, #000 0%)",
-    compareColor: "linear-gradient(0deg, #F00 100%, #000 0%)",
-    locallySortedColor: "linear-gradient(0deg, #88F 100%, #000 0%)",
-    globallySortedColor: "linear-gradient(0deg, #0FF 100%, #000 0%)"
+    compareColor: "linear-gradient(0deg, #FA4 100%, #000 0%)",
+    locallySortedColor: "linear-gradient(0deg, #F4A 100%, #000 0%)",
+    globallySortedColor: "linear-gradient(0deg, #4FF 100%, #000 0%)"
 };
 
 // const greeneryScenery = {

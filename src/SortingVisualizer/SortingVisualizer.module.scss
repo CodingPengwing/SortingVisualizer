@@ -11,15 +11,15 @@
 }
 
 .arrayBar {
-    // width: 0.75%;
-    border-radius: 3px;
+    // border-radius: 30%;
+    border-radius: 4px;
     display: inline-block;
     margin: 1px;
     transition: 0.20s;
 }
 
-.arrayBar:hover{
-    transform: scale(1.15);
+.arrayBar:hover {
+    transform: scale(1.2);
 }
 
 .buttons{
