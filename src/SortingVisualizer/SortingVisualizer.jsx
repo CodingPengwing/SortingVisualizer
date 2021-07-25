@@ -69,7 +69,8 @@ class Bar extends React.PureComponent {
                 style={{
                     height: `${this.props.value}px`,
                     backgroundImage: this.props.color,
-                    // opacity: BAR_OPACITY
+                    opacity: 0.90,
+                    width: `${this.props.width}%`
                 }}>
             </div>    
         );
@@ -78,6 +79,12 @@ class Bar extends React.PureComponent {
 
 // This component is used to produce an entire array of bars representing an array of numbers
 class Array extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.arrayLength = MAX_ARRAY_SIZE;
+        this.count = 0;
+    }
+
     renderBar(i) {
         const globallySorted = this.props.highlights.globallySorted;
         const locallySorted = this.props.highlights.locallySorted;
@@ -92,13 +99,23 @@ class Array extends React.PureComponent {
             color = this.props.colorSet.locallySortedColor;
         }
 
+        if (this.props.array.length > this.arrayLength) {
+            this.count++;
+        }
+        this.arrayLength = this.props.array.length;
+
         return (
             <Bar
                 value={this.props.array[i]}
                 color={color}
-                key={i}
+                key={this.count*MAX_ARRAY_SIZE + i}
+                width={this.calculateBarWidth(this.props.array.length)}
             />
         )
+    }
+
+    calculateBarWidth(arrayLength) {
+        return (0.75 * MAX_ARRAY_SIZE / arrayLength);
     }
 
     render() {
@@ -116,7 +133,7 @@ class Array extends React.PureComponent {
         />)
 
         return (
-            <div className={styles.array}>
+            <div className={styles.arrayContainer}>
                 {bars}
             </div>
         )

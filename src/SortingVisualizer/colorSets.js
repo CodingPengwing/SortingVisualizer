@@ -7,9 +7,7 @@ const mainBlue = "#4dc8ff";
 const mainRed = "#f33b65";
 const mainYellow = "#f3f399";
 const mainGreen = "#35d742";
-const glowColor = "#0FF";
-
-// 88F
+const glowColor = "#0FFE";
 
 const solidColors = {
     primaryColor: "linear-gradient(0deg, " + mainBlue + " 100%, #000 0%)",
@@ -18,31 +16,35 @@ const solidColors = {
     globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 100%, #000 0%)"
 };
 
+const glowPosition = "35%";
+const nonGlowPosition = "90%";
+
 const bottomGlow = {
-    primaryColor: "linear-gradient(180deg, " + mainBlue + " 50%, " + glowColor + " 90%)",
-    compareColor: "linear-gradient(180deg, " + mainRed + " 50%, " + glowColor + " 90%)",
-    locallySortedColor: "linear-gradient(180deg, " + mainYellow + " 50%, " + glowColor + " 90%)",
-    globallySortedColor: "linear-gradient(180deg, " + mainGreen + " 50%, " + glowColor + " 90%)"
+    primaryColor: `linear-gradient(180deg, ${mainBlue} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    compareColor: `linear-gradient(180deg, ${mainRed} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    locallySortedColor: `linear-gradient(180deg, ${mainYellow} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    globallySortedColor: `linear-gradient(180deg, ${mainGreen} ${glowPosition}, ${glowColor} ${nonGlowPosition}`
 };
 
 const topGlow = {
-    primaryColor: "linear-gradient(0deg, " + mainBlue + " 50%, " + glowColor + " 90%)",
-    compareColor: "linear-gradient(0deg, " + mainRed + " 50%, " + glowColor + " 90%)",
-    locallySortedColor: "linear-gradient(0deg, " + mainYellow + " 50%, " + glowColor + " 90%)",
-    globallySortedColor: "linear-gradient(0deg, " + mainGreen + " 50%, " + glowColor + " 90%)"
+    primaryColor: `linear-gradient(0deg, ${mainBlue} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    compareColor: `linear-gradient(0deg, ${mainRed} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    locallySortedColor: `linear-gradient(0deg, ${mainYellow} ${glowPosition}, ${glowColor} ${nonGlowPosition}`,
+    globallySortedColor: `linear-gradient(0deg, ${mainGreen} ${glowPosition}, ${glowColor} ${nonGlowPosition}`
 };
 
 const highContrast = {
-    primaryColor: "linear-gradient(0deg, #0FF 100%, #000 0%)",
-    compareColor: "linear-gradient(0deg, #F00 100%, #000 0%)",
-    locallySortedColor: "linear-gradient(0deg, #F0F 100%, #000 0%)",
-    globallySortedColor: "linear-gradient(0deg, #FF0 100%, #000 0%)"
+    primaryColor: "linear-gradient(0deg, #FFF 100%, #000 0%)",
+    compareColor: "linear-gradient(0deg, #FA4 100%, #000 0%)",
+    locallySortedColor: "linear-gradient(0deg, #F4A 100%, #000 0%)",
+    globallySortedColor: "linear-gradient(0deg, #4FF 100%, #000 0%)"
 };
 
 // const greeneryScenery = {
 
 // }
 
+// 88F
 // const pinkMania = {
 //     primaryColor: "linear-gradient(0deg, #88F 100%, #000 0%)",
 //     compareColor: "linear-gradient(0deg, #F00 100%, #000 0%)",
