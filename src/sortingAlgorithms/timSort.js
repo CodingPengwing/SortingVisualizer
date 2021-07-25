@@ -40,11 +40,23 @@ function timSort(array) {
             // Split the current sort range
             const split = start + size;
             const end = Math.min(start + 2 * size, n);
+            comparing = [];
+            for (let i = 0; i < locallySorted.length; i++) {
+                if (start <= locallySorted[i] && locallySorted[i] < end) {
+                    locallySorted[i] = -1;
+                }
+            }
+            takeSnapshot(array, comparing, locallySorted, globallySorted);
             if (split < end) {
                 // Merge the left and right arrays if adjacent elements are 
                 // out of order, otherwise, they're already sorted.
                 if (array[split-1] >= array[split]) {
                     merge(array, start, split, end);
+                } else {
+                    for (let i = start; i < end; i++) {
+                        comparing = [i];
+                        takeSnapshot(array, comparing, locallySorted, globallySorted);
+                    }
                 }
             }
         }
@@ -124,6 +136,7 @@ function merge(array, start, split, end) {
     // Write the sorted elements back into the original array
     for (let k = 0; k < mergeArray.length; k++) {
         array[start+k] = mergeArray[k];
+        locallySorted.push(start+k);
         if (lastMerge) { globallySorted.push(start+k); }
         comparing = [start+k];
         takeSnapshot(array, comparing, locallySorted, globallySorted);

@@ -21,14 +21,20 @@ export function sort(props) {
 // end is the last index of the array (exclusive)
 function mergeSort(array, start, end) {
     if (end - start <= 1) return array;
-    comparing = [];
-    locallySorted.remove();
 
     // Split down the middle and recurse left, right
     const len = end - start;
     const split = start + Math.ceil(len/2);
     mergeSort(array, start, split);
     mergeSort(array, split, end);
+
+    comparing = [];
+    for (let i = 0; i < locallySorted.length; i++) {
+        if (start <= locallySorted[i] && locallySorted[i] < end) {
+            locallySorted[i] = -1;
+        }
+    }
+    takeSnapshot(array, comparing, locallySorted, globallySorted);
 
     // Only merge the left and right arrays if elements are out of order.
     if (array[split-1] > array[split]) {
