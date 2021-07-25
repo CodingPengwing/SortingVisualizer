@@ -22,7 +22,7 @@ import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION
 
 import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
 
-export const buttonColor1 = "linear-gradient(0deg, #3646f0dd 15%, #0000 100%)"
+export const buttonColor1 = "linear-gradient(0deg, #2046f0dd 15%, #0000 100%)"
 export const buttonColorHover = "linear-gradient(0deg, #cc6d 20%, #0000 100%)"
 
 export const StyledButton = styled(Button)({
