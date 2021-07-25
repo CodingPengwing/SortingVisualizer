@@ -1,29 +1,31 @@
 {
   "files": {
-    "main.css": "/SortingVisualizer/static/css/main.2b81793f.chunk.css",
-    "main.js": "/SortingVisualizer/static/js/main.19621178.chunk.js",
-    "main.js.map": "/SortingVisualizer/static/js/main.19621178.chunk.js.map",
+    "main.css": "/SortingVisualizer/static/css/main.c4e68a66.chunk.css",
+    "main.js": "/SortingVisualizer/static/js/main.dfbb1eb2.chunk.js",
+    "main.js.map": "/SortingVisualizer/static/js/main.dfbb1eb2.chunk.js.map",
     "runtime-main.js": "/SortingVisualizer/static/js/runtime-main.b55a2aa6.js",
     "runtime-main.js.map": "/SortingVisualizer/static/js/runtime-main.b55a2aa6.js.map",
     "static/css/2.d45d6843.chunk.css": "/SortingVisualizer/static/css/2.d45d6843.chunk.css",
-    "static/js/2.e626b783.chunk.js": "/SortingVisualizer/static/js/2.e626b783.chunk.js",
-    "static/js/2.e626b783.chunk.js.map": "/SortingVisualizer/static/js/2.e626b783.chunk.js.map",
+    "static/js/2.5520116c.chunk.js": "/SortingVisualizer/static/js/2.5520116c.chunk.js",
+    "static/js/2.5520116c.chunk.js.map": "/SortingVisualizer/static/js/2.5520116c.chunk.js.map",
     "static/js/3.3a101d1a.chunk.js": "/SortingVisualizer/static/js/3.3a101d1a.chunk.js",
     "static/js/3.3a101d1a.chunk.js.map": "/SortingVisualizer/static/js/3.3a101d1a.chunk.js.map",
     "index.html": "/SortingVisualizer/index.html",
     "static/css/2.d45d6843.chunk.css.map": "/SortingVisualizer/static/css/2.d45d6843.chunk.css.map",
-    "static/css/main.2b81793f.chunk.css.map": "/SortingVisualizer/static/css/main.2b81793f.chunk.css.map",
-    "static/js/2.e626b783.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.e626b783.chunk.js.LICENSE.txt",
+    "static/css/main.c4e68a66.chunk.css.map": "/SortingVisualizer/static/css/main.c4e68a66.chunk.css.map",
+    "static/js/2.5520116c.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.5520116c.chunk.js.LICENSE.txt",
     "static/media/bg1.8bbe6fe2.jpg": "/SortingVisualizer/static/media/bg1.8bbe6fe2.jpg",
-    "static/media/bg2.6e47d246.jpg": "/SortingVisualizer/static/media/bg2.6e47d246.jpg",
-    "static/media/bg3.9eb12a1c.jpg": "/SortingVisualizer/static/media/bg3.9eb12a1c.jpg",
-    "static/media/bg4.b8f46da3.jpg": "/SortingVisualizer/static/media/bg4.b8f46da3.jpg"
+    "static/media/bg2.2c6d75d9.jpg": "/SortingVisualizer/static/media/bg2.2c6d75d9.jpg",
+    "static/media/bg3.f988f34e.jpg": "/SortingVisualizer/static/media/bg3.f988f34e.jpg",
+    "static/media/bg4.0f29ac89.jpg": "/SortingVisualizer/static/media/bg4.0f29ac89.jpg",
+    "static/media/play-and-pause-button.4d0d50e5.png": "/SortingVisualizer/static/media/play-and-pause-button.4d0d50e5.png",
+    "static/media/rewind.8cd29f64.png": "/SortingVisualizer/static/media/rewind.8cd29f64.png"
   },
   "entrypoints": [
     "static/js/runtime-main.b55a2aa6.js",
     "static/css/2.d45d6843.chunk.css",
-    "static/js/2.e626b783.chunk.js",
-    "static/css/main.2b81793f.chunk.css",
-    "static/js/main.19621178.chunk.js"
+    "static/js/2.5520116c.chunk.js",
+    "static/css/main.c4e68a66.chunk.css",
+    "static/js/main.dfbb1eb2.chunk.js"
   ]
 }
