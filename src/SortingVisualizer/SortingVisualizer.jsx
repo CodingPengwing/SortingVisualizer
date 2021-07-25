@@ -69,7 +69,7 @@ class Bar extends React.PureComponent {
                 style={{
                     height: `${this.props.value}px`,
                     backgroundImage: this.props.color,
-                    opacity: 0.90,
+                    opacity: 1,
                     width: `${this.props.width}%`
                 }}>
             </div>    
