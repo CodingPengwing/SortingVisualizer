@@ -108,7 +108,7 @@ class Array extends React.PureComponent {
             <Bar
                 value={this.props.array[i]}
                 color={color}
-                key={this.count*MAX_ARRAY_SIZE + i}
+                key={this.count * MAX_ARRAY_SIZE + i}
                 width={this.calculateBarWidth(this.props.array.length)}
             />
         )
