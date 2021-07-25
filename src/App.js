@@ -6,9 +6,9 @@ import background from './images/bg1.jpg';
 import background2 from './images/bg2.jpg';
 import background3 from './images/bg3.jpg';
 import background4 from './images/bg4.jpg';
-import React, { useState } from 'react';
+import React from 'react';
 
-const backgroundCycleTime = 30000;
+const backgroundCycleTime = 60000;
 
 export default class App extends React.Component{
   constructor(props){
@@ -79,12 +79,11 @@ export default class App extends React.Component{
   render(){
     return (
       <div className = {AppStyles.App}>
-        {/* <button onClick = {handleClick}>Click Me!</button> */}
         <div className = "background-container">
-          <img className = "background-image img1" src = {background}/>
-          <img className = "background-image img2" src = {background2}/>
-          <img className = "background-image img3" src = {background3}/>
-          <img className = "background-image img4" src = {background4}/>
+          <img className = "background-image img1" src = {background} alt="bg1"/>
+          <img className = "background-image img2" src = {background2} alt="bg2"/>
+          <img className = "background-image img3" src = {background3} alt="bg3"/>
+          <img className = "background-image img4" src = {background4} alt="bg4"/>
         </div>
         <Bar />
         <SortingVisualizer/>
