@@ -62,8 +62,8 @@
 }
 
 .buttons{
+    //border: solid white;
     display: flex;
-    float:right;
     height: 200%;
     margin-top: 2%;
     width: 100%;
@@ -82,5 +82,12 @@
 }
 
 .topButton{
-    width: 50%;
+    max-width: 50%;
+    //border: solid gray;
+}
+
+.bottomButton{
+    //border: solid gray;
+    width: 32%;
+    margin-left: 1%;
 }

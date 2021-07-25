@@ -44,6 +44,10 @@ export const StyledButton = styled(Button)({
     }
 })
 
+const SortButton = styled(StyledButton)({
+    marginBottom: "10%",
+})
+
 const ResetButton = styled(StyledButton)({
     '&:hover':{
         backgroundImage: buttonColorHover,
@@ -51,7 +55,7 @@ const ResetButton = styled(StyledButton)({
 })
 
 const PauseResumeButton = styled(StyledButton)({
-    marginTop: "10%",
+    bottom: "0",
     '&:hover':{
         backgroundImage: buttonColorHover,
     }
@@ -147,9 +151,9 @@ export const Controller = (props) => {
 
             <div className = {styles.buttons}>
                 <div className = {styles.topButton}>
-                    <StyledButton onClick = {() => {props.sort()}}>Sort!</StyledButton>
+                    <SortButton onClick = {() => {props.sort()}}>Sort!</SortButton>
                     <PauseResumeButton
-                    onClick = {() => {props.pauseResume()}}><img width = {23} src = {pause_resume} alt = "Pause and Resume"/>
+                    onClick = {() => {props.pauseResume()}}><img width = {22} src = {pause_resume} alt = "Pause and Resume"/>
                     </PauseResumeButton>
                 </div>
                 <div className = {styles.bottomButton}>
