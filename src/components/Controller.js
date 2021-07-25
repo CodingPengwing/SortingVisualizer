@@ -22,7 +22,7 @@ import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION
 
 import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
 
-export const buttonColor1 = "linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%)"
+export const buttonColor1 = "linear-gradient(0deg, #3646f0ab 0%, #00d2ffbb 100%)"
 export const buttonColorHover = "#4dfa"
 
 export const StyledButton = styled(Button)({
@@ -38,8 +38,7 @@ export const StyledButton = styled(Button)({
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
     backgroundImage: buttonColor1,
-
-    backgroundImage: "linear-gradient(0deg, #3646f0ab 0%, #00d2ffbb 100%)",
+    
     '&:hover':{
         backgroundPosition: "right bottom",
         backgroundColor: buttonColorHover

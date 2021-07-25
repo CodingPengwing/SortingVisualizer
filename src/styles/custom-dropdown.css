@@ -1,7 +1,7 @@
 #dropdown-basic-button{
     font-family: 'Lato', sans-serif !important;
     font-weight: bold !important;
-    background-image: linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%) !important;
+    background-image: linear-gradient(0deg, #3646f0ab 0%, #00d2ffbb 100%) !important;
     min-width: 180px !important;
     width: 200px !important;
     text-align: center;
@@ -18,7 +18,7 @@
 }
 
 #dropdown-colors{
-    background-image: linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%);
+    background-image: linear-gradient(0deg, #3646f0ab 0%, #00d2ffbb 100%);
     font-family: 'Lato', sans-serif;
     font-weight: bolder;
     margin-top: 5%;
