@@ -17,7 +17,7 @@ export const HistoryManager = (props) => {
                 (
                 <div>
                     <div className = {styles.header}>
-                        <span>Advanced</span>
+                        <span onClick = {toggle}>Advanced</span>
                         <img onClick = {toggle} width = {20} alt = "dropdown arrow" src = {dropdown}/>
                     </div>
                     <div ref = {setCollapsibleElement}>
