@@ -21,6 +21,8 @@ export function sort(props) {
 // end is the last index of the array (exclusive)
 function mergeSort(array, start, end) {
     if (end - start <= 1) return array;
+    comparing = [];
+    locallySorted.remove();
 
     // Split down the middle and recurse left, right
     const len = end - start;
@@ -31,8 +33,14 @@ function mergeSort(array, start, end) {
     // Only merge the left and right arrays if elements are out of order.
     if (array[split-1] > array[split]) {
         merge(array, start, split, end);
+    } else {
+        for (let i = start; i < end; i++) {
+            comparing = [i];
+            takeSnapshot(array, comparing, locallySorted, globallySorted);
+        }
     }
 
+    comparing = [];
     // Every time we get here, the range between start and end is locally sorted.
     locallySorted.push(...range(start, end));
     if (end - start === array.length) {

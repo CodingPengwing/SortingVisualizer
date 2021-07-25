@@ -33,12 +33,13 @@ export const StyledButton = styled(Button)({
     textTransform: "none",
     backgroundSize: "200% auto",
     transition: "0.25s ease-in",
-    color: "#EEE",
+    color: "#FFF",
     width: "140px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
     backgroundImage: buttonColor1,
 
+    backgroundImage: "linear-gradient(0deg, #3646f0ab 0%, #00d2ffbb 100%)",
     '&:hover':{
         backgroundPosition: "right bottom",
         backgroundColor: buttonColorHover

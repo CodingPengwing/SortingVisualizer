@@ -61,7 +61,8 @@ function heapSort(array, start, end) {
 
     bottomUpHeapify(array, start, end);
     let heapSize;
-    for (let i = end - 1; i > start; i--) {
+    let i;
+    for (i = end - 1; i > start; i--) {
         comparing = [start, i];
         takeSnapshot(array, comparing, locallySorted, globallySorted);
         swap(array, start, i);
@@ -71,6 +72,7 @@ function heapSort(array, start, end) {
         maxHeapify(array, start, end, start, heapSize);
     }
     comparing = [];
+    locallySorted.push(i);
     takeSnapshot(array, comparing, locallySorted, globallySorted);
     locallySorted = [];
     globallySorted.push(...range(start, end));
@@ -136,7 +138,7 @@ function insertionSort(array, start, end) {
         takeSnapshot(array, comparing, locallySorted, globallySorted);
         while (j > start && array[j] < array[j-1]) {
             swap(array, j-1, j);
-            comparing = [j-1, j]
+            comparing = [j-1, j];
             takeSnapshot(array, comparing, locallySorted, globallySorted);
             j--;
         }
