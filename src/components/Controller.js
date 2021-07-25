@@ -22,6 +22,9 @@ import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION
 
 import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
 
+const buttonColor1 = "linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%)"
+const buttonColorHover = "#4dfa"
+
 export const StyledButton = styled(Button)({
     fontFamily: "Lato, sans-serif",
     fontWeight: "bold",
@@ -34,11 +37,11 @@ export const StyledButton = styled(Button)({
     width: "140px",
     boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
     cursor: "pointer",
-    backgroundImage: "linear-gradient(0deg, #bdb8ffbb 0%, #00d2ffbb 100%)",
+    backgroundImage: buttonColor1,
 
     '&:hover':{
         backgroundPosition: "right bottom",
-        backgroundColor: "#4dfa"
+        backgroundColor: buttonColorHover
     }
 })
 
@@ -50,7 +53,7 @@ const ResetButton = styled(StyledButton)({
 })
 
 const PauseResumeButton = styled(StyledButton)({
-    marginTop: "11%",
+    marginTop: "10%",
     '&:hover':{
         backgroundPosition: "right bottom",
         backgroundColor: "#4dfa"
