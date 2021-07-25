@@ -1,4 +1,4 @@
-import { range, swap } from "./util";
+import { swap } from "./util";
 
 var takeSnapshot;
 var globallySorted;
@@ -16,27 +16,27 @@ export function sort(props) {
 }
 
 function quickSort(array, start, end) {
-    if (end - start <= 1) { return array; }
+    if (end - start <= 1) { 
+        globallySorted.push(start);
+        takeSnapshot(array, [], [], globallySorted);
+        return array;
+    }
     // Partition the array
     const p = partition(array, start, end);
-    globallySorted.push(p);
-    takeSnapshot(array, [], [], globallySorted);
+    if (p !== start && p !== end) {
+        globallySorted.push(p);
+        takeSnapshot(array, [], [], globallySorted);
+    }
     // Sort the left of the partition
     quickSort(array, start, p);
-    globallySorted.push(...range(start, p));
-    takeSnapshot(array, [], [], globallySorted);
     // Sort the right of the partition
     quickSort(array, p+1, end);
-    globallySorted.push(...range(p+1, end));
-    takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
 // Partition the range so that the left side is smaller than the pivot and the right side is 
 // larger than the pivot.
 function partition(array, start, end) {
-    if (end - start <= 1) return start;
-
     // Pick the pivot
     const pivot = array[start];
     let i = start + 1;

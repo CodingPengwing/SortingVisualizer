@@ -1,11 +1,11 @@
 import { range, swap } from './util';
 
 var takeSnapshot;
-var globallySorted;
+var locallySorted;
 var comparing;
 
 export function sort(props) {
-    globallySorted = [];
+    locallySorted = [];
     comparing = [];
     takeSnapshot = props.takeSnapshot;
     // Do the sorting
@@ -30,21 +30,23 @@ function shellSort(array) {
         for (let i = h; i < array.length; i++) {
             let j = i;
             comparing = [j-h, j];
-            takeSnapshot(array, comparing, [], globallySorted);
+            takeSnapshot(array, comparing, locallySorted, []);
             // If elements are out of order, propagate them backwards
             while (array[j] < array[j-h]) {
                 swap(array, j, j-h);
                 comparing = [j-h, j];
-                takeSnapshot(array, comparing, [], globallySorted);
+                takeSnapshot(array, comparing, locallySorted, []);
                 j = j - h;
                 if (j < h) break;
             }
             if (h === 1) { 
-                if (i === 1) { globallySorted.push(0); }
-                globallySorted.push(i);
+                if (i === 1) { locallySorted.push(0); }
+                locallySorted.push(i);
             }
         }
     }
+
+    takeSnapshot(array, [], range(0, array.length), []);
 
     // Here the entire array is sorted.
     takeSnapshot(array, [], [], range(0, array.length));

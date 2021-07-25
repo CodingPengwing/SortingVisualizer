@@ -18,7 +18,9 @@ function insertionSort(array) {
     // Iterate from start to end of the array, for each element, check whether they are larger than 
     // all previous elements. If yes, continue. Otherwise, go backwards and find the correct place for 
     // this element.
+    locallySorted.push(0);
     for (let i = 1; i < array.length; i++) {
+        locallySorted.push(i);
         let j = i;
         comparing = [j-1, j];
         takeSnapshot(array, comparing, locallySorted, []);
@@ -29,8 +31,6 @@ function insertionSort(array) {
             takeSnapshot(array, comparing, locallySorted, []);
             j--;
         }
-        if (i === 1) { locallySorted.push(0); }
-        locallySorted.push(i);
     }
     comparing = [];
     takeSnapshot(array, comparing, locallySorted, []);

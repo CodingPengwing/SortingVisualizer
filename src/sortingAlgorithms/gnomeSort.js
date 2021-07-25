@@ -15,23 +15,23 @@ export function sort(props) {
 
 function gnomeSort(array) {
     if (array.length <= 1) return array;
-    let i = 0;
+    locallySorted.push(0);
+    let i = 1;
     // Iterate from start to end, if elements are out of order, swap and go back one step.
     // Otherwise go forward one step. By the end of this, the array must be sorted.
-    while (i < array.length - 1) {
-        comparing = [i, i+1];
+    while (i < array.length) {
+        comparing = [i-1, i];
         takeSnapshot(array, comparing, locallySorted, []);
+        locallySorted.push(i);
         // If elements are in order, go forward.
-        if (array[i] <= array[i+1]) { 
-            if (i === 0) { locallySorted.push(i); }
+        if (array[i-1] <= array[i]) { 
             i++; 
-            locallySorted.push(i);
         }
         // Else swap them and take a step back.
         else {
-            swap(array, i, i+1);
+            swap(array, i-1, i);
             takeSnapshot(array, comparing, locallySorted, []);
-            if (i > 0) { i--; }
+            if (i > 1) { i--; } else { i++; }
         }
     }
     // Here the entire array is sorted.

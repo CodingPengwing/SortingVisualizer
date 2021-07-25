@@ -68,8 +68,8 @@ function timSort(array) {
         size *= 2;
     }
 
-    // Here the entire array is sorted.
-    takeSnapshot(array, [], [], range(0, array.length));
+    // // Here the entire array is sorted.
+    // takeSnapshot(array, [], [], range(0, array.length));
     return array;
 }
 
