@@ -23,7 +23,7 @@ import styles from './SortingVisualizer.module.scss';
 import Description from '../components/SortingDescriptor';
 import { HistoryManager, MAX_SORT_CYCLE_VALUE } from '../components/HistoryManager';
 
-import { colorSets, SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from './colorSets';
+import { colorSets, CLASSIC_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET, PURPLE_PINK_COLOR_SET, GREY_COLOR_SET, GREEN_YELLOW_COLOR_SET } from './colorSets';
 
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
@@ -48,8 +48,8 @@ export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
 export const MIN_ARRAY_SIZE = 5;
 export const MAX_ARRAY_SIZE = 100;
-export const MIN_VALUE = 5;
-export const MAX_VALUE = 505;
+export const MIN_VALUE = 50;
+export const MAX_VALUE = 450;
 
 const INITIAL_ANIMATION_PAUSE_TIME = 10;
 export const INITIAL_ANIMATION_SPEED = 100;
@@ -156,7 +156,7 @@ export default class SortingVisualizer extends React.PureComponent {
             disableSortCycleSlider: true,
             animating: false,
             sortCycleValue: 1,
-            colorSet: colorSets.solidColors,
+            colorSet: colorSets.bottomGlow,
         };
 
         this.timeoutIDArray = [];
@@ -352,10 +352,13 @@ export default class SortingVisualizer extends React.PureComponent {
 
     changeColor(colorSet) {
         switch (colorSet) {
+            case CLASSIC_COLOR_SET: this.setState({colorSet: colorSets.classicColors}); break;
             case TOP_GLOW_COLOR_SET: this.setState({colorSet: colorSets.topGlow}); break;
             case BOTTOM_GLOW_COLOR_SET: this.setState({colorSet: colorSets.bottomGlow}); break;
-            case SOLID_COLOR_SET: this.setState({colorSet: colorSets.solidColors}); break;
             case HIGH_CONTRAST_COLOR_SET: this.setState({colorSet: colorSets.highContrast}); break;
+            case PURPLE_PINK_COLOR_SET: this.setState({colorSet: colorSets.purplePink}); break;
+            case GREEN_YELLOW_COLOR_SET: this.setState({colorSet: colorSets.greenYellow}); break;
+            case GREY_COLOR_SET: this.setState({colorSet: colorSets.fourShadesOfGrey}); break;
             default: break;
         }
     }

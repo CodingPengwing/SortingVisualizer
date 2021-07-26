@@ -42,8 +42,10 @@ function introSort(array, start, end, depthLimit) {
     }
     // Otherwise partition the array and go ahead
     const p = partition(array, start, end);
-    globallySorted.push(p);
-    takeSnapshot(array, [], [], globallySorted);
+    if (p !== start && p !== end) {
+        globallySorted.push(p);
+        takeSnapshot(array, [], [], globallySorted);
+    }
 
     introSort(array, start, p, depthLimit-1);
     introSort(array, p+1, end, depthLimit-1);

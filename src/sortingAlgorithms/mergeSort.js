@@ -49,11 +49,10 @@ function mergeSort(array, start, end) {
         comparing = []
         locallySorted.push(...range(start, end));
         takeSnapshot(array, comparing, locallySorted, []);
-    }
-
-    if (end - start === array.length) {
-        // Here the entire array is sorted.
-        takeSnapshot(array, [], [], range(start, end));
+        if (end - start === array.length) {
+            // Here the entire array is sorted.
+            takeSnapshot(array, [], [], range(start, end));
+        }
     }
 
     return array;

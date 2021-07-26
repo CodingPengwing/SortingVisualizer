@@ -20,10 +20,10 @@ import { RANDOM_ARRAY, STEADY_ARRAY, SORTED_ARRAY, REVERSE_SORTED_ARRAY, UNIFORM
 
 import { MIN_ARRAY_SIZE, MAX_ARRAY_SIZE, BOGO_SORT_ARRAY_SIZE, INITIAL_ANIMATION_SPEED } from '../SortingVisualizer/SortingVisualizer';
 
-import { SOLID_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET } from '../SortingVisualizer/colorSets';
+import { CLASSIC_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET, PURPLE_PINK_COLOR_SET, GREEN_YELLOW_COLOR_SET, GREY_COLOR_SET } from '../SortingVisualizer/colorSets';
 
-export const buttonColor1 = "linear-gradient(0deg, #2057f0dd 10%, #0000 100%)"
-export const buttonColorHover = "linear-gradient(0deg, #cc6d 20%, #0000 100%)"
+export const buttonColor1 = "linear-gradient(0deg, #5587ffee 10%, #fff2 100%)"
+export const buttonColorHover = "linear-gradient(0deg, #cc6d 20%, #fff2 100%)"
 
 export const StyledButton = styled(Button)({
     fontFamily: "Lato, sans-serif",
@@ -159,9 +159,12 @@ export const Controller = (props) => {
                 <div className = {styles.bottomButton}>
                     <ResetButton onClick = {() => {props.reset()}}>Reset</ResetButton>               
                     <DropdownButton id = "dropdown-colors" title="Colors" style = {{marginTop: "10%"}}>
-                        <Dropdown.Item onClick = {() => changeColor(SOLID_COLOR_SET)}>{SOLID_COLOR_SET}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>{BOTTOM_GLOW_COLOR_SET}</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>{TOP_GLOW_COLOR_SET}</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(CLASSIC_COLOR_SET)}>Good'Ol Classics</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>Classic Bottom Glow</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>Classic Top Glow</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(PURPLE_PINK_COLOR_SET)}>Hokkaido Cherry Snow</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(GREEN_YELLOW_COLOR_SET)}>Lemon Lime Matcha Snow</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(GREY_COLOR_SET)}>Four Shades of Grey</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
                     </DropdownButton>
                 </div>

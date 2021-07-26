@@ -50,8 +50,8 @@ function quickSort(array, start, end) {
         }
     }
 
-    globallySorted.push(...range(start, end));
-    takeSnapshot(array, [], [], globallySorted);
+    // globallySorted.push(...range(start, end));
+    // takeSnapshot(array, [], [], globallySorted);
     return array;
 }
 
