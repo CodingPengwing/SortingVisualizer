@@ -21,6 +21,17 @@
         transform: scale(1.2);
         cursor: pointer;
     }
+
+    span:hover{
+        cursor: pointer;
+    }
+}
+
+.questionHeader{
+    font-size: 180%;
+    color: #EEE;
+    font-family: "Lato";
+    font-weight: lighter; 
 }
 
 .answer{
