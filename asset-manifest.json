@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/SortingVisualizer/static/css/main.7c14931b.chunk.css",
-    "main.js": "/SortingVisualizer/static/js/main.1ec4bd2f.chunk.js",
-    "main.js.map": "/SortingVisualizer/static/js/main.1ec4bd2f.chunk.js.map",
+    "main.css": "/SortingVisualizer/static/css/main.18c83db9.chunk.css",
+    "main.js": "/SortingVisualizer/static/js/main.7fcf9373.chunk.js",
+    "main.js.map": "/SortingVisualizer/static/js/main.7fcf9373.chunk.js.map",
     "runtime-main.js": "/SortingVisualizer/static/js/runtime-main.b55a2aa6.js",
     "runtime-main.js.map": "/SortingVisualizer/static/js/runtime-main.b55a2aa6.js.map",
     "static/css/2.d45d6843.chunk.css": "/SortingVisualizer/static/css/2.d45d6843.chunk.css",
-    "static/js/2.a308d856.chunk.js": "/SortingVisualizer/static/js/2.a308d856.chunk.js",
-    "static/js/2.a308d856.chunk.js.map": "/SortingVisualizer/static/js/2.a308d856.chunk.js.map",
+    "static/js/2.0ef5872a.chunk.js": "/SortingVisualizer/static/js/2.0ef5872a.chunk.js",
+    "static/js/2.0ef5872a.chunk.js.map": "/SortingVisualizer/static/js/2.0ef5872a.chunk.js.map",
     "static/js/3.3a101d1a.chunk.js": "/SortingVisualizer/static/js/3.3a101d1a.chunk.js",
     "static/js/3.3a101d1a.chunk.js.map": "/SortingVisualizer/static/js/3.3a101d1a.chunk.js.map",
     "index.html": "/SortingVisualizer/index.html",
     "static/css/2.d45d6843.chunk.css.map": "/SortingVisualizer/static/css/2.d45d6843.chunk.css.map",
-    "static/css/main.7c14931b.chunk.css.map": "/SortingVisualizer/static/css/main.7c14931b.chunk.css.map",
-    "static/js/2.a308d856.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.a308d856.chunk.js.LICENSE.txt",
+    "static/css/main.18c83db9.chunk.css.map": "/SortingVisualizer/static/css/main.18c83db9.chunk.css.map",
+    "static/js/2.0ef5872a.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.0ef5872a.chunk.js.LICENSE.txt",
     "static/media/bg1.8bbe6fe2.jpg": "/SortingVisualizer/static/media/bg1.8bbe6fe2.jpg",
     "static/media/bg2.d8e570a2.jpg": "/SortingVisualizer/static/media/bg2.d8e570a2.jpg",
     "static/media/bg3.2c6d75d9.jpg": "/SortingVisualizer/static/media/bg3.2c6d75d9.jpg",
@@ -24,8 +24,8 @@
   "entrypoints": [
     "static/js/runtime-main.b55a2aa6.js",
     "static/css/2.d45d6843.chunk.css",
-    "static/js/2.a308d856.chunk.js",
-    "static/css/main.7c14931b.chunk.css",
-    "static/js/main.1ec4bd2f.chunk.js"
+    "static/js/2.0ef5872a.chunk.js",
+    "static/css/main.18c83db9.chunk.css",
+    "static/js/main.7fcf9373.chunk.js"
   ]
 }
