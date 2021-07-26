@@ -163,7 +163,7 @@ export const Controller = (props) => {
                         <Dropdown.Item onClick = {() => changeColor(BOTTOM_GLOW_COLOR_SET)}>Classic Bottom Glow</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(TOP_GLOW_COLOR_SET)}>Classic Top Glow</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(PURPLE_PINK_COLOR_SET)}>Hokkaido Cherry Snow</Dropdown.Item>
-                        <Dropdown.Item onClick = {() => changeColor(GREEN_YELLOW_COLOR_SET)}>Matcha Lemon Ice Cream</Dropdown.Item>
+                        <Dropdown.Item onClick = {() => changeColor(GREEN_YELLOW_COLOR_SET)}>Vanilla Matcha Ice Cream</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(GREY_COLOR_SET)}>Four Shades of Grey</Dropdown.Item>
                         <Dropdown.Item onClick = {() => changeColor(HIGH_CONTRAST_COLOR_SET)}>{HIGH_CONTRAST_COLOR_SET}</Dropdown.Item>
                     </DropdownButton>
