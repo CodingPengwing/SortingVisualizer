@@ -48,8 +48,8 @@ export const PARTIAL_UNIFORM_ARRAY = "Partial Uniform Array";
 
 export const MIN_ARRAY_SIZE = 5;
 export const MAX_ARRAY_SIZE = 100;
-export const MIN_VALUE = 5;
-export const MAX_VALUE = 455;
+export const MIN_VALUE = 50;
+export const MAX_VALUE = 450;
 
 const INITIAL_ANIMATION_PAUSE_TIME = 10;
 export const INITIAL_ANIMATION_SPEED = 100;
