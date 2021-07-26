@@ -156,7 +156,7 @@ export default class SortingVisualizer extends React.PureComponent {
             disableSortCycleSlider: true,
             animating: false,
             sortCycleValue: 1,
-            colorSet: colorSets.greenYellow,
+            colorSet: colorSets.bottomGlow,
         };
 
         this.timeoutIDArray = [];

@@ -19,7 +19,7 @@ const classicColors = {
     globallySortedColor: `linear-gradient(0deg, ${mainGreen} 100%, #000 0%)`
 };
 
-const glowPosition = "35%";
+const glowPosition = "50%";
 const nonGlowPosition = "90%";
 
 const bottomGlow = {
@@ -44,24 +44,24 @@ const highContrast = {
 };
 
 const greenYellow = {
-    primaryColor: `linear-gradient(0deg, #FFF 100%, #000 0%)`,
-    compareColor: `linear-gradient(0deg, #FA4 100%, #000 0%)`,
-    locallySortedColor: `linear-gradient(0deg, #F4A 100%, #000 0%)`,
-    globallySortedColor: `linear-gradient(0deg, #4FF 100%, #000 0%)`
+    primaryColor: `linear-gradient(180deg, #6faf6f ${glowPosition}, #eee ${nonGlowPosition})`,
+    compareColor: `linear-gradient(180deg, #ff3b55 ${glowPosition}, #eee ${nonGlowPosition})`,
+    locallySortedColor: `linear-gradient(180deg, #C4FF37 ${glowPosition}, #eee ${nonGlowPosition})`,
+    globallySortedColor: `linear-gradient(180deg, #FF8 ${glowPosition}, #eee ${nonGlowPosition})`
 }
 
 const purplePink = {
-    primaryColor: `linear-gradient(0deg, #88F 100%, #000 0%)`,
-    compareColor: `linear-gradient(0deg, #f33b65 100%, #000 0%)`,
-    locallySortedColor: `linear-gradient(0deg, #DA5FFF 100%, #000 0%)`,
-    globallySortedColor: `linear-gradient(0deg, #FFB2D7 100%, #000 0%)`
+    primaryColor: `linear-gradient(180deg, #88F ${glowPosition}, #eee ${nonGlowPosition})`,
+    compareColor: `linear-gradient(180deg, #ff4b65 ${glowPosition}, #eee ${nonGlowPosition})`,
+    locallySortedColor: `linear-gradient(180deg, #DA5FFF ${glowPosition}, #eee ${nonGlowPosition})`,
+    globallySortedColor: `linear-gradient(180deg, #FFB2D7 ${glowPosition}, #eee ${nonGlowPosition})`
 }
 
 const fourShadesOfGrey = {
-    primaryColor: `linear-gradient(0deg, #444 100%, #000 0%)`,
-    compareColor: `linear-gradient(0deg, #AAA 100%, #000 0%)`,
-    locallySortedColor: `linear-gradient(0deg, #777 100%, #000 0%)`,
-    globallySortedColor: `linear-gradient(0deg, #F5F5F5 100%, #000 0%)`
+    primaryColor: `linear-gradient(180deg, #555 ${glowPosition}, #000 100%)`,
+    compareColor: `linear-gradient(180deg, #BBB ${glowPosition}, #000 100%)`,
+    locallySortedColor: `linear-gradient(180deg, #888 ${glowPosition}, #000 100%)`,
+    globallySortedColor: `linear-gradient(180deg, #F7F7F7 ${glowPosition}, #000 100%)`
 }
 
 export const colorSets = {
