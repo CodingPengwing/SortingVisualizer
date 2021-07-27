@@ -172,7 +172,11 @@ export default class SortingVisualizer extends React.PureComponent {
         this.takeSnapshot = (array, comparing, locallySorted, globallySorted) => {
             // We have to use .slice() to save a copy of the arrays in their current state, otherwise,
             // those arrays may change and affect the animations later on.
-            this.history.push({array: array.slice(), highlights: {comparing: comparing.slice(), locallySorted: locallySorted.slice(), globallySorted: globallySorted.slice()}});
+            try {
+                this.history.push({array: array.slice(), highlights: {comparing: comparing.slice(), locallySorted: locallySorted.slice(), globallySorted: globallySorted.slice()}});
+            } catch (e) {
+                console.error("Error: takeSnapshot arguments are not well defined.\n", e);
+            }
         };
 
         this.clearHistory = () => {
