@@ -241,10 +241,10 @@ export default class SortingVisualizer extends React.PureComponent {
     }
 
     animateHistory(startPoint) {
+        if (!startPoint) { startPoint = 0; }
         if (this.startPoint >= this.history.length - 1) {
             return;
         }
-        if (!startPoint) { startPoint = 0; }
         this.setState({animating: true});
         var pauseTime;
         var count = 1;
