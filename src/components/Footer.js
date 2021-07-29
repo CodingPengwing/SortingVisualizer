@@ -10,8 +10,8 @@ export const Footer = (props) => {
                 2021 © sortify.io. All Rights Reserved.          
             </div>
             <div className = {styles.icons}>
-                <a href ="https://github.com/ilaylow"><AiOutlineGithub size = {40} style = {{marginRight: "2.5%"}}/></a>
-                <a href = "https://github.com/CodingPengwing"><AiOutlineGithub size = {40}/></a>
+                <a href ="https://github.com/ilaylow" target="_blank" rel="noopener noreferrer"><AiOutlineGithub size = {40} style = {{marginRight: "2.5%"}}/></a>
+                <a href = "https://github.com/CodingPengwing" target="_blank" rel="noopener noreferrer"><AiOutlineGithub size = {40}/></a>
             </div>
         </footer>
     )
