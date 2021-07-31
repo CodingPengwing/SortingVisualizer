@@ -37,8 +37,13 @@
 .answer{
     color: white;
     font-family: monospace;
+    text-align: center;
+    width: 50%;
+    margin: auto;
 
     h3{
+        margin: auto;
         font-size: 125%;
+        width: 100%;
     }
 }

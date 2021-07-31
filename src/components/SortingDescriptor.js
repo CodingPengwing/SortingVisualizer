@@ -28,7 +28,9 @@ export default class Description extends React.Component{
                         </div>
                         <div ref={setCollapsibleElement}>
                             <div className = {styles.answer}>
-                                <h3>{this.props.description}</h3>
+                                {(Array.isArray(this.props.description)) ? 
+                                this.props.description.map((val) => <h3 style = {{marginBottom: "3%"}}>{val}</h3>)
+                            : <h3>{this.props.description}</h3>}
                             </div>
                         </div>
                     </div>

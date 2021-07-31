@@ -25,6 +25,9 @@ import { HistoryManager, MAX_SORT_CYCLE_VALUE } from '../components/HistoryManag
 
 import { colorSets, CLASSIC_COLOR_SET, BOTTOM_GLOW_COLOR_SET, TOP_GLOW_COLOR_SET, HIGH_CONTRAST_COLOR_SET, PURPLE_PINK_COLOR_SET, GREY_COLOR_SET, GREEN_YELLOW_COLOR_SET } from './colorSets';
 
+import { BOGO_DESC, BUBBLE_DESC, COCKTAIL_DESC, GNOME_DESC, INSERTION_DESC, SELECTION_DESC,
+SHELL_DESC, HEAP_DESC, MERGE_DESC, QUICK_DESC, QUICK_OPT_DESC, INTRO_DESC, TIM_DESC } from "../components/descriptions";
+
 export const BOGO_SORT = "Bogo Sort";
 export const BUBBLE_SORT = "Bubble Sort";
 export const COCKTAIL_SORT = "Cocktail Shaker Sort";
@@ -151,7 +154,7 @@ export default class SortingVisualizer extends React.PureComponent {
             highlights: {
                 globallySorted: [], locallySorted: [], comparing: []
             },
-
+            currDesc: QUICK_DESC,
             disableArraySizeSlider: false,
             disableSortCycleSlider: true,
             animating: false,
@@ -328,7 +331,7 @@ export default class SortingVisualizer extends React.PureComponent {
     changeSort(sortType){
         if (sortType === BOGO_SORT){
             this.generateArray(this.state.arrayType, BOGO_SORT_ARRAY_SIZE);
-            this.setState({disableArraySizeSlider: true});
+            this.setState({disableArraySizeSlider: true, currDesc: BOGO_DESC});
         } 
         else {
             if (this.state.disableArraySizeSlider) {
@@ -337,20 +340,20 @@ export default class SortingVisualizer extends React.PureComponent {
             }
         }
         switch (sortType) {
-            case BOGO_SORT: this.sort = bogoSort; break;
-            case BUBBLE_SORT: this.sort = bubbleSort; break;
-            case COCKTAIL_SORT: this.sort = cocktailShakerSort; break;
-            case GNOME_SORT: this.sort = gnomeSort; break;
-            case HEAP_SORT: this.sort = heapSort; break;
-            case INSERTION_SORT: this.sort = insertionSort; break;
-            case INTRO_SORT: this.sort = introSort; break;
-            case MERGE_SORT: this.sort = mergeSort; break;
-            case QUICK_SORT: this.sort = quickSort; break;
-            case QUICK_SORT_OPTIMIZED: this.sort = quickSortOptimized; break;
-            case SELECTION_SORT: this.sort = selectionSort; break;
-            case SHELL_SORT: this.sort = shellSort; break;
-            case TIM_SORT: this.sort = timSort; break;
-            default: this.sort = introSort; break;
+            case BOGO_SORT: this.sort = bogoSort; this.setState({currDesc: BOGO_DESC});break;
+            case BUBBLE_SORT: this.sort = bubbleSort; this.setState({currDesc: BUBBLE_DESC});break;
+            case COCKTAIL_SORT: this.sort = cocktailShakerSort; this.setState({currDesc: COCKTAIL_DESC});break;
+            case GNOME_SORT: this.sort = gnomeSort; this.setState({currDesc: GNOME_DESC});break;
+            case HEAP_SORT: this.sort = heapSort; this.setState({currDesc: HEAP_DESC});break;
+            case INSERTION_SORT: this.sort = insertionSort; this.setState({currDesc: INSERTION_DESC});break;
+            case INTRO_SORT: this.sort = introSort; this.setState({currDesc: INTRO_DESC});break;
+            case MERGE_SORT: this.sort = mergeSort; this.setState({currDesc: MERGE_DESC});break;
+            case QUICK_SORT: this.sort = quickSort; this.setState({currDesc: QUICK_DESC});break;
+            case QUICK_SORT_OPTIMIZED: this.sort = quickSortOptimized; this.setState({currDesc: QUICK_OPT_DESC});break;
+            case SELECTION_SORT: this.sort = selectionSort; this.setState({currDesc: SELECTION_DESC});break;
+            case SHELL_SORT: this.sort = shellSort; this.setState({currDesc: SHELL_DESC});break;
+            case TIM_SORT: this.sort = timSort; this.setState({currDesc: TIM_DESC});break;
+            default: this.sort = introSort; this.setState({currDesc: INTRO_DESC});break;
         }
     }
 
@@ -440,9 +443,10 @@ export default class SortingVisualizer extends React.PureComponent {
                     />
                 </div>
                 <div style = {{marginBottom: "5%"}}>
-                    <Description header = "Description" description = "Lorem Ipsum bla bla..."/>
-                    <Description header = "Complexity" description = "Lorem Ipsum bla bla..."/>
-                    <Description header = "Founders & Fun Facts" description = "Lorem Ipsum bla bla..."/>
+                    {console.log(this.state.currDesc)}
+                    <Description header = "Description" description = {this.state.currDesc.description}/>
+                    <Description header = "Complexity" description = {this.state.currDesc.time_complexity}/>
+                    <Description header = "Founders & Fun Facts" description = {this.state.currDesc.fun_facts}/>
                 </div>
                 <Footer/>
             </div>
