@@ -3,24 +3,21 @@ import './styles/background.css';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
 import {Bar} from './components/NavBar';
 import background from './images/bg1.jpg';
-import background2 from './images/bg2.jpg';
-import background3 from './images/bg3.jpg';
-import background4 from './images/bg4.jpg';
 import React from 'react';
 
-const backgroundCycleTime = 60000;
+/* const backgroundCycleTime = 60000; */
 
 export default class App extends React.Component{
   constructor(props){
     super(props);
 
-    this.backgroundScheduler_1 = this.backgroundScheduler_1.bind(this);
+    /* this.backgroundScheduler_1 = this.backgroundScheduler_1.bind(this);
     this.backgroundScheduler_2 = this.backgroundScheduler_2.bind(this);
     this.backgroundScheduler_3 = this.backgroundScheduler_3.bind(this);
-    this.order = this.order.bind(this);
+    this.order = this.order.bind(this); */
   }
 
-  backgroundScheduler_1() {
+  /* backgroundScheduler_1() {
     console.log(document.querySelector(".img1").style);
     setTimeout(() => {
         document.querySelector(".img1").style.opacity = 0;
@@ -74,16 +71,13 @@ export default class App extends React.Component{
 
   componentDidMount(){
     this.backgroundScheduler_1();
-  }
+  } */
 
   render(){
     return (
       <div className = {AppStyles.App}>
         <div className = "background-container">
           <img className = "background-image img1" src = {background} alt="bg1"/>
-          <img className = "background-image img2" src = {background2} alt="bg2"/>
-          <img className = "background-image img3" src = {background3} alt="bg3"/>
-          <img className = "background-image img4" src = {background4} alt="bg4"/>
         </div>
         <Bar />
         <SortingVisualizer/>
